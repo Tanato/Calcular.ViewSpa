@@ -13,7 +13,6 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 	selector: 'login-cmp',
 	templateUrl: 'login.component.html'
 })
-
 export class LoginComponent {
 
 	username: string;

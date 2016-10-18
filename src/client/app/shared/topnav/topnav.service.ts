@@ -6,22 +6,29 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 
+import { Config } from '../../shared/config/env.config';
+
 @Injectable()
 export class TopnavService {
 
-    private url: string = 'http://localhost:5000/api/account';
+    private url: string = Config.API + 'account';
 
     constructor(private http: Http) { }
 
     getLoggedUser() {
         return this.http.get(this.url + '/loggeduser')
-            .map(res => res.json().result)
+            .map(this.handleResult)
             .catch(this.handleError);
     }
 
     logout() {
         return this.clearCookie(this.http.get(this.url + '/logout')
             .catch(this.handleError));
+    }
+
+    private handleResult(res: Response) {
+        let body = res.json();
+        return body || {};
     }
 
     handleError(error: any) {

@@ -1,2 +1,37 @@
 @import "../bootstrap/variables.scss";
 @import "app-base.scss";
+
+.sidebar{
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.pagination-sm{
+    align-self: center
+}
+
+.nested-menu {
+    .list-group-item {
+        cursor: pointer;
+    }
+    .nested {
+        list-style-type: none;
+    }
+    ul.submenu {
+        height: 0;
+        padding-left: 25px;
+    }
+    & .expand {
+        ul.submenu {
+            list-style-type: none;
+            height: auto;
+            li {
+                a {
+                    color: #FFF;
+                    padding: 8px;
+                    display: block;
+                }
+            }
+        }
+    }
+}

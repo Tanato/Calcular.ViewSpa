@@ -3,6 +3,52 @@
 </button>
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('cliente')">
+                <span><i class="fa fa-chevron-right"></i>&nbsp; Cliente</span>
+            </a>
+            <li class="nested" [ngClass]="{'expand' : showMenu === 'cliente' }">
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/dashboard/cliente" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-table"></i> Cadastro
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('processo')">
+                <span><i class="fa fa-chevron-right"></i>&nbsp; Processo</span>
+            </a>
+            <li class="nested" [ngClass]="{'expand' : showMenu === 'processo' }">
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/dashboard/processo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-table"></i> Cadastro
+                        </a>
+                    </li>
+                </ul>
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/dashboard/processo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-table"></i> Registro de Serviço
+                        </a>
+                    </li>
+                </ul>
+                <ul class="submenu">
+                    <li>
+                        <a routerLink="/dashboard/processo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+                            <i class="fa fa-fw fa-table"></i> Registro de Honorários
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+
+
+
         <a routerLink="/dashboard/home" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i> Dashboard
         </a>
@@ -41,9 +87,6 @@
         </div>
         <a [routerLink]="['blankpage']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-file-o"></i> &nbsp;BlankPage
-        </a>
-        <a class="list-group-item more-themes" href="http://www.strapui.com/" >
-            More Themes
         </a>
     </ul>
 </nav>

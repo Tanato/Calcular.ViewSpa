@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
 
+import { ClienteRoutes } from './cliente/index';
+
 import { HomeRoutes } from './home/index';
 import { ChartRoutes } from './charts/index';
 import { BlankPageRoutes } from './blank-page/index';
@@ -19,11 +21,12 @@ export const DashboardRoutes: Route[] = [
 	    	...HomeRoutes,
 	    	...ChartRoutes,
 	    	...BSComponentRoutes,
-        ...TableRoutes,
+        	...TableRoutes,
 	    	...BlankPageRoutes,
-        ...FormRoutes,
-        ...GridRoutes,
-        ...BSElementRoutes
+        	...FormRoutes,
+        	...GridRoutes,
+        	...BSElementRoutes,
+			...ClienteRoutes
     	]
   	}
 ];

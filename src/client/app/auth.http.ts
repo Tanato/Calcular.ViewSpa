@@ -43,7 +43,7 @@ export class AuthHttp extends Http {
 
     intercept(observable: Observable<Response>): Observable<Response> {
         return observable.catch((err, source) => {
-            if (err.status == 401 && !_.endsWith(err.url, 'api/account/login')) {
+            if (err.status === 401 && !_.endsWith(err.url, 'api/account/login')) {
                 this.router.navigate(['/']);
                 return Observable.empty();
             } else {

@@ -5,18 +5,20 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 
-import { Config } from '../shared/config/env.config';
-import { ILogin } from '../shared/interfaces';
+import { Config } from '../../shared/config/env.config';
+
+import { Cliente } from './cliente.model';
 
 @Injectable()
-export class LoginService {
+export class ClienteService {
 
-    private url: string = Config.API + 'account';
+    private url: string = Config.API + 'cliente';
 
     constructor(private http: Http) { }
 
-    userLogin(body: ILogin): Observable<Response> {
-        return this.http.post(this.url + '/login', body)
+    getClientes(): Observable<Cliente[]> {
+        return this.http.get(this.url)
+            .map((res: Response) => res.json())
             .catch(this.handleError);
     }
 
@@ -24,5 +26,6 @@ export class LoginService {
         console.error(error);
         return Observable.throw(error.json().Error || 'Server error');
     }
+
 }
 

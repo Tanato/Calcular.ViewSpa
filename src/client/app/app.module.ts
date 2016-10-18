@@ -15,6 +15,10 @@ import { SignupModule } from './signup/signup.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/shared.module';
 
+export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions, router: Router) {
+	return new AuthHttp(backend, defaultOptions, router);
+}
+
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -30,15 +34,13 @@ import { SharedModule } from './shared/shared.module';
 	providers: [{
 		provide: APP_BASE_HREF,
 		useValue: '<%= APP_BASE %>',
-
-	},
-		TopnavService,
-	{
+	}, {
 		provide: Http,
-		useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, router: Router) => new AuthHttp(backend, defaultOptions, router),
+		useFactory: httpFactory,
 		deps: [XHRBackend, RequestOptions, Router]
-	}],
+	},
+		TopnavService
+	],
 	bootstrap: [AppComponent]
 })
-
 export class AppModule { }
