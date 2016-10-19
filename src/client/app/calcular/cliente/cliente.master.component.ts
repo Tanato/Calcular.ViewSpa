@@ -17,13 +17,18 @@ export class ClienteMasterComponent {
     public maxSize: number = 6;
     public itemsPerPage: number = 10;
 
-    constructor(private service: ClienteService) {
+    public filterText: string = '';
 
-        this.service.getClientes()
+    constructor(private service: ClienteService) {
+        this.filter();
+    }
+
+    public filter() {
+        this.service.getClientes(this.filterText)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
-                this.onPageChange({page: this.currentPage, itemsPerPage: this.itemsPerPage})
+                this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage })
             },
             error => {
                 alert(error);

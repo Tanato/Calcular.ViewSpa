@@ -8,5 +8,5 @@ export class Cliente {
     nascimento: Date;
     empresa: string;
     honorarios: number;
-
+    processos: number;
 }

@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import { LoginModule } from './login/login.module';
 import { SignupModule } from './signup/signup.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { CalcularModule } from './calcular/calcular.module';
 import { SharedModule } from './shared/shared.module';
 
 export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions, router: Router) {
@@ -27,7 +28,8 @@ export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
 		RouterModule.forRoot(routes),
 		LoginModule,
 		SignupModule,
-		DashboardModule,
+		//DashboardModule,
+		CalcularModule,
 		SharedModule.forRoot()
 	],
 	declarations: [AppComponent],

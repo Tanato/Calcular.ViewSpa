@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response, Http } from '@angular/http';
+import { Response, Http, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -16,8 +16,11 @@ export class ClienteService {
 
     constructor(private http: Http) { }
 
-    getClientes(): Observable<Cliente[]> {
-        return this.http.get(this.url)
+    getClientes(filterText: string): Observable<Cliente[]> {
+        let params: URLSearchParams = new URLSearchParams();
+            params.set('filter', filterText);
+
+        return this.http.get(this.url, { search: params  })
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }

@@ -7,7 +7,38 @@
 }
 
 .pagination-sm{
-    align-self: center
+    text-align: center;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.centered {
+   text-align: center;
+}
+.centered > div {
+   display: inline-block;
+   text-align: left;
+}
+
+a:hover {
+ cursor:pointer;
+}
+
+table{
+    font-size: 0.9rem;
+}
+.sidebar{
+    .list-group{
+        a.list-group-item{
+                color : #BBB;
+        }
+    }
+}
+
+.breadcrumb {
+  > .active {
+    color: #000;
+  }
 }
 
 .nested-menu {
@@ -18,18 +49,33 @@
         list-style-type: none;
     }
     ul.submenu {
-        height: 0;
-        padding-left: 25px;
+        list-style-type: none;
+        display: none;
     }
     & .expand {
         ul.submenu {
             list-style-type: none;
             height: auto;
+            display: block;
+            padding-left: 25px;
             li {
+                a.list-group-item{
+                background: $topnav-background-color;
+                border: 0;
+                border-radius: 0;
+                color: #BBB;
+                text-decoration: none;
+                }
+                a:hover{
+                    background: darken($topnav-background-color, 5%);
+                    color: #fff;
+                }
+                a.router-link-active{
+                    background: darken($topnav-background-color, 5%);
+                    color: #fff;
+                }
                 a {
-                    color: #FFF;
                     padding: 8px;
-                    display: block;
                 }
             }
         }
