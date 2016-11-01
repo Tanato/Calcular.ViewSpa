@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente.model';
 import { ClienteService } from './cliente.service';
 import { Observable } from 'rxjs/Observable';
@@ -29,7 +29,7 @@ export class ClienteDetailComponent implements OnInit {
 
     constructor(private service: ClienteService,
         private route: ActivatedRoute,
-        private router: Router, 
+        private router: Router,
         private toastr: ToastsManager) { }
 
     dateMask(data: any) {
@@ -54,25 +54,24 @@ export class ClienteDetailComponent implements OnInit {
                 this.service.getClienteById(id)
                     .subscribe((data: Cliente) => {
                         data.nascimento = data.nascimento.slice(0, 10);
-                        this.model = data
+                        this.model = data;
                     });
             }
         });
     }
 
     onSubmit() {
-        if (this.formType == 'new') {
+        if (this.formType === 'new') {
             this.service.postCliente(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
-                    this.onCancel()
+                    this.onCancel();
                 });
-        }
-        else {
+        } else {
             this.service.putCliente(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
-                    this.onCancel()
+                    this.onCancel();
                 });
         }
     }

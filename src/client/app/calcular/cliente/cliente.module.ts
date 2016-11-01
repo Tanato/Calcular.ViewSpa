@@ -9,11 +9,11 @@ import { ClienteService } from './cliente.service';
 
 import { PaginationModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TextMaskModule } from 'angular2-text-mask';
-import {ToastModule, ToastOptions} from 'ng2-toastr/ng2-toastr';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 let options: any = {
-  animate: 'flyRight',
-  positionClass: 'toast-bottom-right',
+    animate: 'flyRight',
+    positionClass: 'toast-bottom-right',
 };
 
 @NgModule({

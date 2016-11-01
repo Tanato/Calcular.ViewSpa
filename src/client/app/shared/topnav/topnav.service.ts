@@ -26,7 +26,7 @@ export class TopnavService {
             .catch(this.handleError));
     }
 
-    private handleResult(res: Response) {
+    handleResult(res: Response) {
         let body = res.json();
         return body || {};
     }

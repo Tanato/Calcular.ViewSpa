@@ -18,14 +18,14 @@ export class ClienteService {
 
     postCliente(cliente: Cliente) {
         return this.http.post(this.url, cliente)
-            .catch(this.handleError);;
+            .catch(this.handleError);
     }
 
     putCliente(cliente: Cliente) {
         return this.http
             .put(this.url, JSON.stringify(cliente))
             .map(this.handleResult)
-            .catch(this.handleError);;
+            .catch(this.handleError);
     }
 
     getClientes(filterText: string): Observable<Cliente[]> {

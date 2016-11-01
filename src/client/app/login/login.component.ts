@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { ILogin } from '../shared/interfaces';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 /**
 *	This class represents the lazy loaded LoginComponent.

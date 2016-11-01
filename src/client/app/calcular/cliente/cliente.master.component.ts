@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente.model';
 import { ClienteService } from './cliente.service';
 
-import { ModalDirective, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -13,19 +11,20 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class ClienteMasterComponent implements OnInit {
 
-    public modelName = 'Cliente';
+    private modelName = 'Cliente';
 
-    public data: Cliente[];
+    private data: Cliente[];
+
+    private totalItems: number = 0;
+    private currentPage: number = 1;
+    private maxSize: number = 6;
+    private itemsPerPage: number = 10;
+
+    private filterText: string = '';
+
+    private editId: number;
+
     private rows: Cliente[];
-
-    public totalItems: number = 0;
-    public currentPage: number = 1;
-    public maxSize: number = 6;
-    public itemsPerPage: number = 10;
-
-    public filterText: string = '';
-
-    public editId: number;
 
     constructor(private service: ClienteService, private toastr: ToastsManager) {
     }
@@ -34,12 +33,12 @@ export class ClienteMasterComponent implements OnInit {
         this.filter();
     }
 
-    public filter() {
+    filter() {
         this.service.getClientes(this.filterText)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
-                this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage })
+                this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage });
             },
             error => {
                 alert(error);
@@ -48,7 +47,7 @@ export class ClienteMasterComponent implements OnInit {
             });
     }
 
-    public onPageChange(page: any, data: Array<any> = this.data) {
+    onPageChange(page: any, data: Array<any> = this.data) {
         let start = (page.page - 1) * page.itemsPerPage;
         let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
         this.rows = data.slice(start, end);
@@ -62,7 +61,7 @@ export class ClienteMasterComponent implements OnInit {
             });
     }
 
-    public editClick(id: number) {
+    editClick(id: number) {
         this.editId = id;
     }
 }
