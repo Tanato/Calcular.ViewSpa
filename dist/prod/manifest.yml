@@ -1,8 +1,0 @@
-﻿applications:
-- path: .
-  memory: 64M
-  instances: 1
-  domain: mybluemix.net
-  name: Calcular.ViewSpa
-  host: Calcular
-  disk_quota: 1024M

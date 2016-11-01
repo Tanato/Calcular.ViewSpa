@@ -338,6 +338,8 @@ export class SeedConfig {
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
 
       'lodash': 'node_modules/lodash/lodash.js',
+      'angular2-text-mask': 'node_modules/angular2-text-mask/dist/angular2TextMask.js',
+      'ng2-toastr': 'node_modules/ng2-toastr/bundles/ng2-toastr.js',
 
       'rxjs/*': 'node_modules/rxjs/*',
       'app/*': '/app/*',

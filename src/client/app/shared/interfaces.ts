@@ -3,3 +3,8 @@ export interface ILogin {
     password: string;
     rememberme?: boolean;
 }
+
+export interface IKeyValuePair {
+    key: number;
+    value: string;
+}

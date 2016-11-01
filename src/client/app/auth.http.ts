@@ -31,9 +31,14 @@ export class AuthHttp extends Http {
     }
 
     private appendHeader(options?: RequestOptionsArgs): RequestOptionsArgs {
+
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        //headers.append('Accept', 'application/json');
+
         let mergedOptions: RequestOptionsArgs;
         if (!options) {
-            mergedOptions = { headers: new Headers(), withCredentials: true };
+            mergedOptions = { headers: headers, withCredentials: true }; //"Content-Type", 'application/json'
         } else {
             mergedOptions = options;
             mergedOptions.withCredentials = true;

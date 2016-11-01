@@ -16,19 +16,59 @@ export class ClienteService {
 
     constructor(private http: Http) { }
 
+    postCliente(cliente: Cliente) {
+        return this.http.post(this.url, cliente)
+            .catch(this.handleError);;
+    }
+
+    putCliente(cliente: Cliente) {
+        return this.http
+            .put(this.url, JSON.stringify(cliente))
+            .map(this.handleResult)
+            .catch(this.handleError);;
+    }
+
     getClientes(filterText: string): Observable<Cliente[]> {
         let params: URLSearchParams = new URLSearchParams();
-            params.set('filter', filterText);
+        params.set('filter', filterText);
 
-        return this.http.get(this.url, { search: params  })
+        return this.http.get(this.url, { search: params })
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
 
-    handleError(error: any) {
+    getClienteById(id: string): Observable<Cliente> {
+        return this.http.get(this.url + '/' + id)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getPerfilSelect() {
+        return this.http.get(this.url + '/perfil')
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    deleteCliente(id: number) {
+        return this.http.delete(this.url + '/' + id)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getComoChegouSelect() {
+        return this.http.get(this.url + '/comoChegou')
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    private handleResult(res: Response) {
+        let body = res.json();
+        return body || {};
+    }
+
+    private handleError(error: any) {
         console.error(error);
         return Observable.throw(error.json().Error || 'Server error');
     }
-
 }
 

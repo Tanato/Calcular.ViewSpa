@@ -41,7 +41,7 @@ export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
 		useFactory: httpFactory,
 		deps: [XHRBackend, RequestOptions, Router]
 	},
-		TopnavService
+		TopnavService,
 	],
 	bootstrap: [AppComponent]
 })
