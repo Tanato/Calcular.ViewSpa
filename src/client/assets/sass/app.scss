@@ -2,6 +2,18 @@
 @import "../bootstrap/variables.scss";
 @import "app-base.scss";
 
+.form-control:disabled {
+    background-color: #f6f6f6;
+}
+
+.login-page{
+    //background: #fafafa;
+    color: #c9c9c9;
+    // .input-underline{
+    //     //color: #0f0f0f;
+    // }
+}
+
 // Form validation
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */

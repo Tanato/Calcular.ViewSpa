@@ -23,6 +23,7 @@ gulp.task('build.dev', (done: any) =>
               'build.html_css',
               'build.js.dev',
               'build.index.dev',
+              'generate.staticfile',
               done));
 
 // --------------
@@ -57,6 +58,7 @@ gulp.task('build.prod', (done: any) =>
               'build.bundles.app',
               'minify.bundles',
               'build.index.prod',
+              'generate.staticfile',
               done));
 
 // --------------
@@ -74,6 +76,7 @@ gulp.task('build.prod.exp', (done: any) =>
               'build.bundles.app.exp',
               'minify.bundles',
               'build.index.prod',
+              'generate.staticfile',
               done));
 
 // --------------
@@ -87,6 +90,7 @@ gulp.task('build.test', (done: any) =>
               'build.js.dev',
               'build.js.test',
               'build.index.dev',
+              'generate.staticfile',
               done));
 
 // --------------
