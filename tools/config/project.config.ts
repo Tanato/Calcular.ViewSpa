@@ -24,10 +24,9 @@ export class ProjectConfig extends SeedConfig {
     this.NPM_DEPENDENCIES = [
       ...this.NPM_DEPENDENCIES,
       { src: 'font-awesome/css/font-awesome.css', inject: true },
-      { src: 'ng2-toastr/bundles/ng2-toastr.min.css', inject: true},
+      { src: 'ng2-toastr/bundles/ng2-toastr.min.css', inject: true },
       { src: 'jquery/dist/jquery.min.js', inject: 'libs' },
       { src: 'highcharts/highcharts.js', inject: 'libs' },
-      //{src: 'lodash/lodash.min.js', inject: 'libs'},
     ];
 
     // Add `local` third-party libraries to be injected/bundled.

@@ -14,89 +14,92 @@
 		</div>
 	</div>
 	<div class="row col-xl-12">
-		<form role="form" (ngSubmit)="onSubmit()" #form="ngForm">
+		<form role="form" #form="ngForm">
+			<fieldset [disabled]="blockEdit">
 
-			<div class="row">
-				<div class="form-group col-lg-6">
-					<label>Nome:</label>
-					<input class="form-control" id="nome" [(ngModel)]="model.nome" name="nome" required/>
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Nome:</label>
+						<input class="form-control" id="nome" [(ngModel)]="model.nome" name="nome" required/>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<label>Data Nascimento:</label>
+						<input type="date" class="form-control" id="nascimento" #date="ngModel" [ngModel]="model.nascimento" (ngModelChange)="model.nascimento = $event"
+							name="nascimento" required/>
+					</div>
 				</div>
 
-				<div class="form-group col-lg-3">
-					<label>Data Nascimento:</label>
-					<input type="date" class="form-control" id="nascimento" #date="ngModel" [ngModel]="model.nascimento" (ngModelChange)="model.nascimento = $event" name="nascimento" required/>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-lg-4">
-					<label>Perfil:</label>
-					<select class="form-control" id="perfilSelect" [(ngModel)]="model.perfil" name="perfilSelect" required>
+				<div class="row">
+					<div class="form-group col-lg-4">
+						<label>Perfil:</label>
+						<select class="form-control" id="perfilSelect" [(ngModel)]="model.perfil" name="perfilSelect" required>
 							<option *ngFor="let item of perfil" [ngValue]="item.key">{{item.value}}</option>
 						</select>
-				</div>
-				<div class="form-group col-lg-2">
-				</div>
-				<div class="form-group col-lg-6">
-					<label>Empresa:</label>
-					<input class="form-control" id="empresa" [(ngModel)]="model.empresa" name="empresa">
+					</div>
+					<div class="form-group col-lg-2">
+					</div>
+					<div class="form-group col-lg-6">
+						<label>Empresa:</label>
+						<input class="form-control" id="empresa" [(ngModel)]="model.empresa" name="empresa">
+					</div>
+
 				</div>
 
-			</div>
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Email:</label>
+						<input class="form-control" id="email" [(ngModel)]="model.email" name="email" required pattern="[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$"
+						/>
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Telefone:</label>
+						<input [textMask]="{mask: maskTelefone}" id="telefone" [(ngModel)]="model.telefone" name="telefone" class="form-control"
+							required />
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Celular:</label>
+						<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" required
+						/>
+					</div>
 
-			<div class="row">
-				<div class="form-group col-lg-6">
-					<label>Email:</label>
-					<input class="form-control" id="email" [(ngModel)]="model.email" name="email" required pattern="[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$"
-					/>
-				</div>
-				<div class="form-group col-lg-3">
-					<label>Telefone:</label>
-					<input [textMask]="{mask: maskTelefone}" id="telefone" disabled [(ngModel)]="model.telefone" name="telefone" class="form-control"
-						required />
-				</div>
-				<div class="form-group col-lg-3">
-					<label>Celular:</label>
-					<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" required
-					/>
-				</div>
-
-			</div>
-
-			<div class="row">
-				<div class="form-group col-lg-12">
-					<label>Endereço:</label>
-					<input class="form-control" id="endereco" [(ngModel)]="model.endereco" name="endereco" />
 				</div>
 
-			</div>
+				<div class="row">
+					<div class="form-group col-lg-12">
+						<label>Endereço:</label>
+						<input class="form-control" id="endereco" [(ngModel)]="model.endereco" name="endereco" />
+					</div>
 
-			<div class="row">
-				<div class="form-group col-lg-3">
-					<label>Como Chegou à Calcular:</label>
-					<select class="form-control" id="comoChegouSelect" [(ngModel)]="model.comoChegou" name="comoChegouSelect">
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-3">
+						<label>Como Chegou à Calcular:</label>
+						<select class="form-control" id="comoChegouSelect" [(ngModel)]="model.comoChegou" name="comoChegouSelect">
 							<option *ngFor="let item of comoChegou" [ngValue]="item.key">{{item.value}}</option>
 						</select>
-				</div>
+					</div>
 
-				<div class="form-group col-lg-3">
-					<label [hidden]="model.comoChegou < 2">Descrição:</label>
-					<input [hidden]="model.comoChegou < 2" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe" class="form-control" />
-				</div>
+					<div class="form-group col-lg-3">
+						<label [hidden]="model.comoChegou < 2">Descrição:</label>
+						<input [hidden]="model.comoChegou < 2" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe" class="form-control"
+						/>
+					</div>
 
-				<div class="form-group col-lg-2">
-					<label>Honorários:</label>
-					<input class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
-				</div>
+					<div class="form-group col-lg-2">
+						<label>Honorários:</label>
+						<input class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
+					</div>
 
-				<div class="form-group col-lg-2">
-					<label>Valor Total:</label>
-					<input class="form-control" [(ngModel)]="model.honorariostotal" name="honorariostotal" disabled/>
-				</div>
+					<div class="form-group col-lg-2">
+						<label>Valor Total:</label>
+						<input class="form-control" [(ngModel)]="model.honorariostotal" name="honorariostotal" disabled/>
+					</div>
 
-				<div class="col-lg-2"></div>
+					<div class="col-lg-2"></div>
 
-				<!--<div class="form-group col-lg-6">
+					<!--<div class="form-group col-lg-6">
 					<label>Como chegou à Calcular:</label>
 					<div class="form-check form-group">
 						<div class="row">
@@ -125,17 +128,21 @@
 						</div>
 					</div>
 				</div>-->
-			</div>
+				</div>
+			</fieldset>
 			<hr>
 
 			<div class="row">
-				<div class="form-group col-lg-8">
+				<div class="col-lg-2">
+					<button [hidden]="!blockEdit" (click)="enableEdit()" class="btn btn-warning btn-block">Editar</button>
+				</div>
+				<div class="form-group col-lg-6">
 				</div>
 				<div class="col-lg-2">
 					<button (click)="onCancel()" class="btn btn-default btn-block">Cancelar</button>
 				</div>
 				<div class="col-lg-2">
-					<button type="submit" [disabled]="!form.form.valid" class="btn btn-primary btn-block">Salvar</button>
+					<button (click)="onSubmit()" [disabled]="!form.form.valid || blockEdit" class="btn btn-primary btn-block">Salvar</button>
 				</div>
 			</div>
 		</form>

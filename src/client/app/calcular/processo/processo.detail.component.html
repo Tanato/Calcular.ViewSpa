@@ -1,0 +1,106 @@
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li><a href="Javascript:void(0);" routerLink="/calcular/processo">Processo</a>
+				</li>
+				<li class="active">
+					Cadastro de Processo
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row col-xl-12">
+		<form role="form" #form="ngForm">
+			<fieldset [disabled]="blockEdit">
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Numero:</label>
+						<input class="form-control" id="numero" [(ngModel)]="model.numero" name="numero" required/>
+					</div>
+
+					<div class="form-group col-lg-4">
+						<label>Local:</label>
+						<select class="form-control" id="localSelect" [(ngModel)]="model.local" name="localSelect" required>
+						<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
+					</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Autor:</label>
+						<input class="form-control" id="autor" [(ngModel)]="model.autor" name="autor" required/>
+					</div>
+					<div class="form-group col-lg-6">
+						<label>Réu:</label>
+						<input class="form-control" id="reu" [(ngModel)]="model.reu" name="reu" required/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-3">
+						<label>Parte:</label>
+						<select class="form-control" id="parteSelect" [(ngModel)]="model.parte" name="parteSelect" required>
+						<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+					</select>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<label>Vara:</label>
+						<input class="form-control" id="vara" [(ngModel)]="model.vara" name="vara" required/>
+					</div>
+
+					<div class="form-group col-lg-2">
+						<label>Nº Autores:</label>
+						<input class="form-control" id="numeroAutores" [(ngModel)]="model.numeroAutores" name="numeroAutores" required/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Advogado:</label>
+						<select class="form-control" id="advogadoSelect" [(ngModel)]="model.advogado" name="advogadoSelect" required>
+							<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+					</select>
+					</div>
+
+					<div class="form-group col-lg-6">
+						<label>Indicação:</label>
+						<select class="form-control" id="indicacaoSelect" [(ngModel)]="model.indicacao" name="indicacaoSelect">
+							<option *ngFor="let item of indicacao" [ngValue]="item.key">{{item.value}}</option>
+					</select>
+					</div>
+				</div>
+
+				<div class="row">
+
+					<div class="form-group col-lg-2">
+						<label>Honorários:</label>
+						<input class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario" required/>
+					</div>
+				</div>
+
+			</fieldset>
+			<hr>
+
+			<div class="row">
+				<div class="col-lg-2">
+					<button [hidden]="!blockEdit" (click)="enableEdit()" class="btn btn-warning btn-block">Editar</button>
+				</div>
+				<div class="form-group col-lg-6">
+				</div>
+				<div class="col-lg-2">
+					<button (click)="onCancel()" class="btn btn-default btn-block">Cancelar</button>
+				</div>
+				<div class="col-lg-2">
+					<button type="submit" [disabled]="!form.form.valid" class="btn btn-primary btn-block">Salvar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
