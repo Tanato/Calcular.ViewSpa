@@ -20,7 +20,7 @@
 				<div class="row">
 					<div class="form-group col-lg-6">
 						<label>Nome:</label>
-						<input class="form-control" id="nome" [(ngModel)]="model.nome" name="nome" required/>
+						<input class="form-control" id="nome" [(ngModel)]="model.nome" name="nome" ng-required/>
 					</div>
 
 					<div class="form-group col-lg-3">
@@ -59,8 +59,7 @@
 					</div>
 					<div class="form-group col-lg-3">
 						<label>Celular:</label>
-						<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" required
-						/>
+						<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" required />
 					</div>
 
 				</div>
@@ -82,8 +81,8 @@
 					</div>
 
 					<div class="form-group col-lg-3">
-						<label [hidden]="model.comoChegou < 2">Descrição:</label>
-						<input [hidden]="model.comoChegou < 2" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe" class="form-control"
+						<label [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3">Descrição:</label>
+						<input [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe" class="form-control"
 						/>
 					</div>
 
@@ -94,7 +93,7 @@
 
 					<div class="form-group col-lg-2">
 						<label>Valor Total:</label>
-						<input class="form-control" [(ngModel)]="model.honorariostotal" name="honorariostotal" disabled/>
+						<input class="form-control" [(ngModel)]="model.honorariostotal" name="honorariostotal"/>
 					</div>
 
 					<div class="col-lg-2"></div>

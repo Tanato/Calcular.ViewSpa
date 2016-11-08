@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Processo } from './processo.model';
 import { ProcessoService } from './processo.service';
 import { Observable } from 'rxjs/Observable';
@@ -12,7 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
     selector: 'processodetail-cmp',
     templateUrl: './processo.detail.component.html'
 })
-export class ProcessoDetailComponent implements OnInit {
+export class ProcessoDetailComponent implements OnInit, AfterViewInit {
 
     public modelName = 'Processo';
 
@@ -39,7 +39,14 @@ export class ProcessoDetailComponent implements OnInit {
         return null;
     }
 
+    ngAfterViewInit() {
+        // var a = $('.select2').select2({
+        //     multiple: false,
+        // });
+    }
+
     ngOnInit() {
+
         this.service.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);
 

@@ -64,16 +64,20 @@
 				<div class="row">
 					<div class="form-group col-lg-6">
 						<label>Advogado:</label>
-						<select class="form-control" id="advogadoSelect" [(ngModel)]="model.advogado" name="advogadoSelect" required>
-							<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
-					</select>
+						<div style="position:relative;">
+							<select class="form-control select2" [(ngModel)]="model.advogado" id="advogadoSelect" name="advogadoSelect" required>
+								<option value="AL">Alabama</option>
+								<option value="WS">Washington</option>
+							<!--<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>-->
+							</select>
+						</div>
 					</div>
 
 					<div class="form-group col-lg-6">
 						<label>Indicação:</label>
 						<select class="form-control" id="indicacaoSelect" [(ngModel)]="model.indicacao" name="indicacaoSelect">
 							<option *ngFor="let item of indicacao" [ngValue]="item.key">{{item.value}}</option>
-					</select>
+						</select>
 					</div>
 				</div>
 

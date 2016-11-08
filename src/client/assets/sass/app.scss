@@ -1,17 +1,12 @@
 @import "var-global.scss";
 @import "../bootstrap/variables.scss";
 @import "app-base.scss";
+@import "select2.scss";
 
-.form-control:disabled {
-    background-color: #f6f6f6;
-}
-
-.login-page{
-    //background: #fafafa;
-    color: #c9c9c9;
-    // .input-underline{
-    //     //color: #0f0f0f;
-    // }
+.select2-offscreen[required],
+.select2-offscreen[required]:focus {
+    width: auto !important;
+    height: auto !important;
 }
 
 // Form validation
@@ -133,3 +128,35 @@ table{
     }
 }
 
+.login-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    color: #000;
+    font-size: 1.5rem;
+    text-align: center; 
+    padding: 3em;
+    .col-lg-4{
+        padding :0;
+    }
+    .input-lg {
+        height: 46px;
+        padding: 10px 16px;
+        line-height: 1.3333333;
+    }
+    h1 {
+        font-weight: 300;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 36px;
+        small {
+            color: rgba(255,255,255,0.7);
+        }
+    }
+    .form-content {
+        padding: 40px 0;
+    }
+}

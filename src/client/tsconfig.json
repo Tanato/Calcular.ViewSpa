@@ -25,7 +25,9 @@
       "jasmine",
       "node",
       "protractor",
-      "systemjs"
+      "systemjs",
+      "jquery",
+      "select2"
     ]
   },
   "compileOnSave": false

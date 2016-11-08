@@ -18,7 +18,7 @@ export class ProcessoMasterComponent implements OnInit {
     private totalItems: number = 0;
     private currentPage: number = 1;
     private maxSize: number = 6;
-    private itemsPerPage: number = 10;
+    private itemsPerPage: number = 50;
 
     private filterText: string = '';
 
