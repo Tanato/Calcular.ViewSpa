@@ -12,13 +12,15 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import * as $ from 'jquery';
 
+import { SelectModule } from 'ng2-select/ng2-select';
+
 let options: any = {
     animate: 'flyRight',
     positionClass: 'toast-bottom-right',
 };
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options)],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options), SelectModule],
     providers: [ProcessoService],
     declarations: [ProcessoMasterComponent],
     exports: [ProcessoMasterComponent]
@@ -26,7 +28,7 @@ let options: any = {
 export class ProcessoMasterModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options)],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), SelectModule],
     providers: [ProcessoService],
     declarations: [ProcessoDetailComponent],
     exports: [ProcessoDetailComponent]

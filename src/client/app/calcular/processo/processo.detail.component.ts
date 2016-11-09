@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { Processo } from './processo.model';
 import { ProcessoService } from './processo.service';
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +20,7 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
 
     public model: Processo = new Processo;
     public parte: IKeyValuePair[];
-    public local: IKeyValuePair[];
+    public local: Observable<IKeyValuePair[]>;
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
@@ -30,7 +30,8 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
     constructor(private service: ProcessoService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager) { }
+        private toastr: ToastsManager,
+        private elementRef: ElementRef) { }
 
     dateMask(data: any) {
         if (data.value && data.pristine) {
@@ -50,8 +51,7 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
         this.service.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);
 
-        this.service.getLocalSelect()
-            .subscribe((data: IKeyValuePair[]) => this.local = data);
+        this.local = this.service.getLocalSelect();
 
         this.id = this.route.params.map(params => params['id']);
 
@@ -92,5 +92,32 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
 
     enableEdit() {
         this.blockEdit = false;
+    }
+
+
+    // local select
+    private value: any = {};
+
+    public selected(value: any): void {
+        if (value) {
+            //this.elementRef.nativeElement.querySelector('tanato').item(0).classList.add('ng-valid');
+            //let tmp = document. .getElementsByClassName('tanato').item(0).classList.add('ng-valid');
+            // tmp.style.color = 'orange';
+            // $('.btn').css('border-left', '5px solid red !important'); //.addClass('ng-valid');
+        }
+        else {
+            $('.ui-select-toggle').addClass('ng-invalid');
+        }
+    }
+
+    public removed(value: any): void {
+        console.log('Removed value is: ', value);
+    }
+
+    public typed(value: any): void {
+    }
+
+    public refreshValue(value: any): void {
+        this.value = value;
     }
 }

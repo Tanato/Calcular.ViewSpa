@@ -25,9 +25,14 @@
 
 					<div class="form-group col-lg-4">
 						<label>Local:</label>
-						<select class="form-control" id="localSelect" [(ngModel)]="model.local" name="localSelect" required>
-						<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
-					</select>
+						<!--<select class="form-control" id="localSelect" [(ngModel)]="model.local" name="localSelect" required>
+						<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>-->
+
+						<ng-select [allowClear]="true" [items]="local | async" (data)="refreshValue($event)" (selected)="selected($event)"
+							(removed)="removed($event)" (typed)="typed($event)" placeholder="Selecione" required>
+						</ng-select>
+
+						<!--</select>-->
 					</div>
 				</div>
 
@@ -46,7 +51,7 @@
 					<div class="form-group col-lg-3">
 						<label>Parte:</label>
 						<select class="form-control" id="parteSelect" [(ngModel)]="model.parte" name="parteSelect" required>
-						<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+						<option *ngFor="let item of parte" [ngValue]="item.id">{{item.text}}</option>
 					</select>
 					</div>
 
