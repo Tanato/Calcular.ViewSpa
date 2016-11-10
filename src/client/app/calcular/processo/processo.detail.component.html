@@ -18,21 +18,21 @@
 			<fieldset [disabled]="blockEdit">
 
 				<div class="row">
-					<div class="form-group col-lg-6">
+					<div class="form-group col-lg-3">
+						<label>Local:</label>
+						<select class="form-control" id="localSelect" [(ngModel)]="model.local" name="localSelect" required>
+							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-3">
 						<label>Numero:</label>
 						<input class="form-control" id="numero" [(ngModel)]="model.numero" name="numero" required/>
 					</div>
 
-					<div class="form-group col-lg-4">
-						<label>Local:</label>
-						<!--<select class="form-control" id="localSelect" [(ngModel)]="model.local" name="localSelect" required>
-						<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>-->
-
-						<ng-select [allowClear]="true" [items]="local | async" (data)="refreshValue($event)" (selected)="selected($event)"
-							(removed)="removed($event)" (typed)="typed($event)" placeholder="Selecione" required>
+					<div class="form-group col-lg-6">
+						<label>Advogado:</label>
+						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado | async" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar" required="true">
 						</ng-select>
-
-						<!--</select>-->
 					</div>
 				</div>
 
@@ -51,7 +51,7 @@
 					<div class="form-group col-lg-3">
 						<label>Parte:</label>
 						<select class="form-control" id="parteSelect" [(ngModel)]="model.parte" name="parteSelect" required>
-						<option *ngFor="let item of parte" [ngValue]="item.id">{{item.text}}</option>
+						<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
 					</select>
 					</div>
 
@@ -62,27 +62,21 @@
 
 					<div class="form-group col-lg-2">
 						<label>Nº Autores:</label>
-						<input class="form-control" id="numeroAutores" [(ngModel)]="model.numeroAutores" name="numeroAutores" required/>
+						<input type="number" class="form-control" id="numeroAutores" [(ngModel)]="model.numeroAutores" name="numeroAutores" required/>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="form-group col-lg-6">
-						<label>Advogado:</label>
-						<div style="position:relative;">
-							<select class="form-control select2" [(ngModel)]="model.advogado" id="advogadoSelect" name="advogadoSelect" required>
-								<option value="AL">Alabama</option>
-								<option value="WS">Washington</option>
-							<!--<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>-->
-							</select>
-						</div>
+						<label>Perito:</label>
+						<ng-select [active]="indicacaoInit" [allowClear]="true" [items]="indicacao | async" (data)="refreshValueIndicacao($event)" (typed)="typedIndicacao($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar">
+						</ng-select>
 					</div>
 
 					<div class="form-group col-lg-6">
 						<label>Indicação:</label>
-						<select class="form-control" id="indicacaoSelect" [(ngModel)]="model.indicacao" name="indicacaoSelect">
-							<option *ngFor="let item of indicacao" [ngValue]="item.key">{{item.value}}</option>
-						</select>
+						<ng-select [active]="indicacaoInit" [allowClear]="true" [items]="indicacao | async" (data)="refreshValueIndicacao($event)" (typed)="typedIndicacao($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar">
+						</ng-select>
 					</div>
 				</div>
 
@@ -90,7 +84,7 @@
 
 					<div class="form-group col-lg-2">
 						<label>Honorários:</label>
-						<input class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario" required/>
+						<input class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario"/>
 					</div>
 				</div>
 
@@ -107,7 +101,7 @@
 					<button (click)="onCancel()" class="btn btn-default btn-block">Cancelar</button>
 				</div>
 				<div class="col-lg-2">
-					<button type="submit" [disabled]="!form.form.valid" class="btn btn-primary btn-block">Salvar</button>
+					<button (click)="onSubmit()" [disabled]="!form.form.valid || blockEdit" class="btn btn-primary btn-block">Salvar</button>
 				</div>
 			</div>
 		</form>

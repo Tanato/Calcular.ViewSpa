@@ -28,6 +28,8 @@ export class ClienteDetailComponent implements OnInit {
 
     public id: Observable<string>;
 
+    public mySource: string = "https://maps.googleapis.com/maps/api/geocode/json?address=:keyword";
+    
     constructor(private service: ClienteService,
         private route: ActivatedRoute,
         private router: Router,

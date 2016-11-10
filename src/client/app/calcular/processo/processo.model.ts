@@ -5,8 +5,9 @@ export class Processo {
     reu: string;
     local: number;
     parte: number;
-    advogado: number;
     numerAutores: number;
-    perito: number;
+    advogadoId: number;
+    peritoid: number;
+    indicacaoId: number;
     honorario: number;
 }

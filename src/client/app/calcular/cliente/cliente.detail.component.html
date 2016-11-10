@@ -39,9 +39,9 @@
 					</div>
 					<div class="form-group col-lg-2">
 					</div>
-					<div class="form-group col-lg-6">
+					<div class="form-group col-lg-4">
 						<label>Empresa:</label>
-						<input class="form-control" id="empresa" [(ngModel)]="model.empresa" name="empresa">
+						<input  class="form-control" id="empresa" [(ngModel)]="model.empresa" name="empresa">
 					</div>
 
 				</div>
@@ -59,20 +59,51 @@
 					</div>
 					<div class="form-group col-lg-3">
 						<label>Celular:</label>
-						<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" required />
+						<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" required
+						/>
 					</div>
 
 				</div>
 
 				<div class="row">
-					<div class="form-group col-lg-12">
+					<div class="form-group col-lg-6">
 						<label>Endereço:</label>
-						<input class="form-control" id="endereco" [(ngModel)]="model.endereco" name="endereco" />
+						<textarea class="form-control" rows="4" id="endereco" [(ngModel)]="model.endereco" name="endereco"></textarea>
 					</div>
 
+					<div class="col-lg-6">
+						<div class="row">
+							<div class="form-group col-lg-6">
+								<label>Telefone 2:</label>
+								<input [textMask]="{mask: maskTelefone}" id="telefone2" [(ngModel)]="model.telefone2" name="telefone2" class="form-control"
+								/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Celular2:</label>
+								<input [textMask]="{mask: maskCelular}" id="celular2" [(ngModel)]="model.celular2" name="celular2" class="form-control" />
+							</div>
+						</div>
+
+						<div class="row">
+
+							<div class="form-group col-lg-6">
+								<label>Honorários:</label>
+								<input class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Valor Total:</label>
+								<input class="form-control" [(ngModel)]="model.honorariostotal" name="honorariostotal" />
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Observações:</label>
+						<textarea class="form-control" rows="2" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+					</div>
+
 					<div class="form-group col-lg-3">
 						<label>Como Chegou à Calcular:</label>
 						<select class="form-control" id="comoChegouSelect" [(ngModel)]="model.comoChegou" name="comoChegouSelect">
@@ -82,51 +113,9 @@
 
 					<div class="form-group col-lg-3">
 						<label [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3">Descrição:</label>
-						<input [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe" class="form-control"
-						/>
+						<input [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe"
+							class="form-control" />
 					</div>
-
-					<div class="form-group col-lg-2">
-						<label>Honorários:</label>
-						<input class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
-					</div>
-
-					<div class="form-group col-lg-2">
-						<label>Valor Total:</label>
-						<input class="form-control" [(ngModel)]="model.honorariostotal" name="honorariostotal"/>
-					</div>
-
-					<div class="col-lg-2"></div>
-
-					<!--<div class="form-group col-lg-6">
-					<label>Como chegou à Calcular:</label>
-					<div class="form-check form-group">
-						<div class="row">
-							<div class="col-lg-4">
-								<label class="form-check-label form-item">
-								<input [(ngModel)]="model.comochegou" class="form-check-input" type="radio" name="optradio"> Internet
-							</label>
-							</div>
-							<div class="col-lg-8">
-								<label class="form-check-label form-item form-inline">
-								<input [(ngModel)]="model.comochegou" class="form-check-input" type="radio" name="optradio"> Indicação:<input class="pull-right form-control">
-							</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-4">
-								<label class="form-check-label form-item">
-								<input [(ngModel)]="model.comochegou" class="form-check-input" type="radio" name="optradio"> Galeria
-							</label>
-							</div>
-							<div class="col-lg-8">
-								<label class="form-check-label form-item form-inline">
-								<input [(ngModel)]="model.comochegou" class="form-check-input" type="radio" name="optradio"> Outro:<input class="pull-right form-control">
-							</label>
-							</div>
-						</div>
-					</div>
-				</div>-->
 				</div>
 			</fieldset>
 			<hr>

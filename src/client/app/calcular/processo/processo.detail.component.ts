@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Processo } from './processo.model';
 import { ProcessoService } from './processo.service';
 import { Observable } from 'rxjs/Observable';
@@ -12,7 +12,9 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
     selector: 'processodetail-cmp',
     templateUrl: './processo.detail.component.html'
 })
-export class ProcessoDetailComponent implements OnInit, AfterViewInit {
+export class ProcessoDetailComponent implements OnInit {
+
+    public wtoInput: NodeJS.Timer;
 
     public modelName = 'Processo';
 
@@ -20,18 +22,23 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
 
     public model: Processo = new Processo;
     public parte: IKeyValuePair[];
-    public local: Observable<IKeyValuePair[]>;
+    public local: IKeyValuePair[];
+
+    public advogado: Observable<IKeyValuePair[]>;
+    public indicacao: Observable<IKeyValuePair[]>;
+
+    public advogadoInit: IKeyValuePair[];
+    public indicacaoInit: IKeyValuePair[];
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
 
     public id: Observable<string>;
 
-    constructor(private service: ProcessoService,
+    constructor(public service: ProcessoService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager,
-        private elementRef: ElementRef) { }
+        private toastr: ToastsManager) { }
 
     dateMask(data: any) {
         if (data.value && data.pristine) {
@@ -40,18 +47,12 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
         return null;
     }
 
-    ngAfterViewInit() {
-        // var a = $('.select2').select2({
-        //     multiple: false,
-        // });
-    }
-
     ngOnInit() {
-
         this.service.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);
 
-        this.local = this.service.getLocalSelect();
+        this.service.getLocalSelect()
+            .subscribe((data: IKeyValuePair[]) => this.local = data);
 
         this.id = this.route.params.map(params => params['id']);
 
@@ -62,6 +63,14 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
                 this.service.getProcessoById(id)
                     .subscribe((data: Processo) => {
                         this.model = data;
+                        if (this.model.advogadoId) {
+                            this.service.getAdvogadoSelectById(this.model.advogadoId)
+                                .subscribe((x: IKeyValuePair) => { this.advogadoInit = [x]; });
+                        }
+                        if (this.model.indicacaoId) {
+                            this.service.getIndicacaoSelectById(this.model.indicacaoId)
+                                .subscribe((x: IKeyValuePair) => { this.indicacaoInit = [x]; });
+                        }
                     });
             } else {
                 this.blockEdit = false;
@@ -94,30 +103,31 @@ export class ProcessoDetailComponent implements OnInit, AfterViewInit {
         this.blockEdit = false;
     }
 
-
-    // local select
-    private value: any = {};
-
-    public selected(value: any): void {
-        if (value) {
-            //this.elementRef.nativeElement.querySelector('tanato').item(0).classList.add('ng-valid');
-            //let tmp = document. .getElementsByClassName('tanato').item(0).classList.add('ng-valid');
-            // tmp.style.color = 'orange';
-            // $('.btn').css('border-left', '5px solid red !important'); //.addClass('ng-valid');
-        }
-        else {
-            $('.ui-select-toggle').addClass('ng-invalid');
+    // Advogado select    
+    public typedAdvogado(value: string): void {
+        if (value && value.length > 2) {
+            clearTimeout(this.wtoInput);
+            this.wtoInput = setTimeout(() => {
+                this.advogado = this.service.getAdvogadoSelect(value);
+            }, 500);
         }
     }
 
-    public removed(value: any): void {
-        console.log('Removed value is: ', value);
+    refreshValueAdvogado(value: IKeyValuePair): void {
+        this.model.advogadoId = value.key;
     }
 
-    public typed(value: any): void {
+    // Indicacao select    
+    public typedIndicacao(value: string): void {
+        if (value && value.length > 2) {
+            clearTimeout(this.wtoInput);
+            this.wtoInput = setTimeout(() => {
+                this.indicacao = this.service.getIndicacaoSelect(value);
+            }, 500);
+        }
     }
 
-    public refreshValue(value: any): void {
-        this.value = value;
+    refreshValueIndicacao(value: IKeyValuePair): void {
+        this.model.indicacaoId = value.key;
     }
 }
