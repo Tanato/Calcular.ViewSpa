@@ -13,6 +13,16 @@ textarea {
     resize: none;
 }
 
+.ng2-auto-complete{
+    width: 100%;
+}
+
+.ng2-auto-complete ng2-auto-complete input{
+    @extend .form-control;
+    @extend .form-item;
+    padding: 0.375rem 0.75rem !important;
+}
+
 // Form validation
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */

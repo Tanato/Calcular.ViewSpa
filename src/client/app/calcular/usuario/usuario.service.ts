@@ -7,30 +7,29 @@ import { Observable } from 'rxjs/Rx';
 
 import { Config } from '../../shared/config/env.config';
 
-import { Cliente } from './cliente.model';
+import { Usuario, AlterarSenha } from './usuario.model';
 
 @Injectable()
-export class ClienteService {
+export class UsuarioService {
 
-    private url: string = Config.API + 'cliente';
+    private url: string = Config.API + 'user';
+    private urlAccount: string = Config.API + 'account';
 
     constructor(public http: Http) {        
         console.info("AppSvc created" + this.http);
      }
 
-    postCliente(cliente: Cliente) {
-        return this.http.post(this.url, cliente)
+    postUsuario(usuario: Usuario) {
+        return this.http.post(this.urlAccount + '/register', usuario)
             .catch(this.handleError);
     }
 
-    putCliente(cliente: Cliente) {
-        return this.http
-            .put(this.url, JSON.stringify(cliente))
-            .map(this.handleResult)
+    putUsuario(usuario: Usuario) {
+        return this.http.put(this.urlAccount + '/register', usuario)
             .catch(this.handleError);
     }
 
-    getClientes(filterText: string): Observable<Cliente[]> {
+    getUsuarios(filterText: string): Observable<Usuario[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filterText);
 
@@ -39,7 +38,7 @@ export class ClienteService {
             .catch(this.handleError);
     }
 
-    getClienteById(id: string): Observable<Cliente> {
+    getUsuarioById(id: string): Observable<Usuario> {
         return this.http.get(this.url + '/' + id)
             .map(this.handleResult)
             .catch(this.handleError);
@@ -51,24 +50,14 @@ export class ClienteService {
             .catch(this.handleError);
     }
 
-    deleteCliente(id: number) {
+    deleteUsuario(id: number) {
         return this.http.delete(this.url + '/' + id)
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    getComoChegouSelect() {
-        return this.http.get(this.url + '/comoChegou')
-            .map(this.handleResult)
-            .catch(this.handleError);
-    }
-
-    getEmpresaSelect(filterText: string = ''): Observable<string[]> {
-        let params: URLSearchParams = new URLSearchParams();
-        params.set('filter', filterText);
-
-        return this.http.get(this.url + '/company', { search: params })
-            .map(this.handleResult)
+    postAlterarSenha(model: AlterarSenha){
+         return this.http.post(this.urlAccount + '/changepassword', model)
             .catch(this.handleError);
     }
 

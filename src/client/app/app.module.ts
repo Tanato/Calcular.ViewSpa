@@ -14,8 +14,6 @@ import { SignupModule } from './signup/signup.module';
 import { CalcularModule } from './calcular/calcular.module';
 import { SharedModule } from './shared/shared.module';
 
-//import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-
 export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions, router: Router) {
 	return new AuthHttp(backend, defaultOptions, router);
 }

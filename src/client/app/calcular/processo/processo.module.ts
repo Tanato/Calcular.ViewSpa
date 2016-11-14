@@ -13,6 +13,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import * as $ from 'jquery';
 
 import { SelectModule } from 'ng2-select/ng2-select';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 let options: any = {
     animate: 'flyRight',
@@ -28,7 +29,7 @@ let options: any = {
 export class ProcessoMasterModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), SelectModule],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), SelectModule, Ng2AutoCompleteModule],
     providers: [ProcessoService],
     declarations: [ProcessoDetailComponent],
     exports: [ProcessoDetailComponent]

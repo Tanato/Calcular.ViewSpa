@@ -418,6 +418,10 @@ export class SeedConfig {
       'lodash': {
         main: 'lodash.js',
         defaultExtension: 'js'
+      },
+      'ng2-auto-complete': {
+        main: 'dist/ng2-auto-complete.umd.js',
+        defaultExtension: 'js'
       }
     }
   };

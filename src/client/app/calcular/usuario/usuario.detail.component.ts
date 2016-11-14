@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from './cliente.model';
-import { ClienteService } from './cliente.service';
+import { Usuario } from './usuario.model';
+import { UsuarioService } from './usuario.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
@@ -9,35 +9,26 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     moduleId: module.id,
-    selector: 'clientedetail-cmp',
-    templateUrl: './cliente.detail.component.html'
+    selector: 'usuariodetail-cmp',
+    templateUrl: './usuario.detail.component.html'
 })
-export class ClienteDetailComponent implements OnInit {
+export class UsuarioDetailComponent implements OnInit {
 
-    public modelName = 'Cliente';
+    public modelName = 'Usuário';
 
-    public maskTelefone = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-    public maskCelular = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-
-    public model: Cliente = new Cliente;
+    public model: Usuario = new Usuario;
     public perfil: IKeyValuePair[];
-    public comoChegou: IKeyValuePair[];
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
 
     public id: Observable<string>;
 
-    constructor(public service: ClienteService,
+    constructor(public service: UsuarioService,
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastsManager) { 
         }
-
-    empresa = (startsWith: string): Observable<any[]> => {
-        var result = this.service.getEmpresaSelect(startsWith);
-        return result;
-    } 
 
     dateMask(data: any) {
         if (data.value && data.pristine) {
@@ -52,11 +43,8 @@ export class ClienteDetailComponent implements OnInit {
 
     ngOnInit() {
 
-        this.service.getPerfilSelect()
-            .subscribe((data: IKeyValuePair[]) => this.perfil = data);
-
-        this.service.getComoChegouSelect()
-            .subscribe((data: IKeyValuePair[]) => this.comoChegou = data);
+        // this.service.getPerfilSelect()
+        //     .subscribe((data: IKeyValuePair[]) => this.perfil = data);
 
         this.id = this.route.params.map(params => params['id']);
 
@@ -64,9 +52,9 @@ export class ClienteDetailComponent implements OnInit {
             if (id) {
                 this.blockEdit = true;
                 this.formType = 'edit';
-                this.service.getClienteById(id)
-                    .subscribe((data: Cliente) => {
-                        data.nascimento = data.nascimento.slice(0, 10);
+                this.service.getUsuarioById(id)
+                    .subscribe((data: Usuario) => {
+                        data.birthDate = data.birthDate.slice(0, 10);
                         this.model = data;
                     });
             } else {
@@ -77,13 +65,13 @@ export class ClienteDetailComponent implements OnInit {
 
     onSubmit() {
         if (this.formType === 'new') {
-            this.service.postCliente(this.model)
+            this.service.postUsuario(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
                     this.onCancel();
                 });
         } else {
-            this.service.putCliente(this.model)
+            this.service.putUsuario(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
                     this.onCancel();
@@ -92,7 +80,7 @@ export class ClienteDetailComponent implements OnInit {
     }
 
     onCancel() {
-        let link = ['/calcular/cliente'];
+        let link = ['/calcular/usuario'];
         this.router.navigate(link);
     }
 }

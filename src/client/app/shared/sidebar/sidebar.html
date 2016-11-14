@@ -52,6 +52,24 @@
 			</li>
 		</div>
 
+		<div class="nested-menu">
+			<a class="list-group-item" (click)="addExpandClass('usuario')">
+				<span><i class="fa fa-chevron-right"></i>&nbsp; Usuário</span>
+			</a>
+			<li class="nested" [ngClass]="{'expand' : showMenu === 'usuario' }">
+				<ul class="submenu">
+					<li>
+						<a routerLink="/calcular/usuario" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-table"></i> Cadastro
+						</a>
+						<a routerLink="/calcular/usuario/alterarSenha" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-table"></i> Alterar Senha
+						</a>
+					</li>
+				</ul>
+			</li>
+		</div>
+
 
 
 		<!--<a routerLink="/dashboard/home" [routerLinkActive]="['router-link-active']" class="list-group-item">

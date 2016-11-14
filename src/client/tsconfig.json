@@ -24,7 +24,6 @@
       "express",
       "jasmine",
       "node",
-      "protractor",
       "systemjs",
       "jquery",
       "select2"

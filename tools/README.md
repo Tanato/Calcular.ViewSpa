@@ -57,7 +57,6 @@ The seed provides the following tasks:
 | `clean.tools.ts`       | Cleans all JavaScript files (which got transpiled from the TypeScript files) within the `/tools` directory  |
 | `copy.js.prod.ts`      | Copies all TypeScript files (excluding specs and e2e specs) over to the `/tmp` dir |
 | `css-lint.ts`          | Lints all `css` files using `stylelint` |
-| `e2e.ts`               | Runs all e2e specs using `protractor` |
 | `generate.manifest.ts` | Generates a `manifest` file for the application |
 | `karma.start.ts`       | Starts the unit tests using `karma` |
 | `serve.coverage.ts`    | Serves the unit test coverage report using an `express` server |
@@ -68,7 +67,6 @@ The seed provides the following tasks:
 | `watch.dev.ts`         | Watches for code changes and rebuilds the files in `/dist/dev` |
 | `watch.e2e.ts`         | Watches for code changes and rebuilds the files in `/dist/e2e` |
 | `watch.test.ts`        | Watches for code changes and rebuilds the files in `/dist/test` |
-| `webdriver.ts`         | Installs the Selenium webdriver used for the Protractor e2e specs |
 
 ## Utilities
 
