@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 
+import * as _ from 'lodash';
+
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -17,7 +19,7 @@ export class UsuarioDetailComponent implements OnInit {
     public modelName = 'Usuário';
 
     public model: Usuario = new Usuario;
-    public perfil: IKeyValuePair[];
+    public roles: any[];
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
@@ -27,8 +29,8 @@ export class UsuarioDetailComponent implements OnInit {
     constructor(public service: UsuarioService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager) { 
-        }
+        private toastr: ToastsManager) {
+    }
 
     dateMask(data: any) {
         if (data.value && data.pristine) {
@@ -37,33 +39,49 @@ export class UsuarioDetailComponent implements OnInit {
         return null;
     }
 
+    selectedOptions(): string[] {
+        return this.roles
+            .filter(opt => opt.checked)
+            .map(opt => opt.id)
+    }
+
     enableEdit() {
         this.blockEdit = false;
     }
 
     ngOnInit() {
 
-        // this.service.getPerfilSelect()
-        //     .subscribe((data: IKeyValuePair[]) => this.perfil = data);
+        this.service.getRolesSelect()
+            .subscribe((data: any[]) => {
+                data.forEach(element => {
+                    element.checked = false;
+                });
+                this.roles = data;
 
-        this.id = this.route.params.map(params => params['id']);
+                this.id = this.route.params.map(params => params['id']);
 
-        this.id.subscribe(id => {
-            if (id) {
-                this.blockEdit = true;
-                this.formType = 'edit';
-                this.service.getUsuarioById(id)
-                    .subscribe((data: Usuario) => {
-                        data.birthDate = data.birthDate.slice(0, 10);
-                        this.model = data;
-                    });
-            } else {
-                this.blockEdit = false;
-            }
-        });
+                this.id.subscribe(id => {
+                    if (id) {
+                        this.blockEdit = true;
+                        this.formType = 'edit';
+                        this.service.getUsuarioById(id)
+                            .subscribe((user: Usuario) => {
+                                user.birthDate = user.birthDate.slice(0, 10);
+                                this.model = user;
+                                _(this.roles).keyBy('id').at(user.roles).value()
+                                    .map((x: any) => x.checked = true);
+                            });
+                    } else {
+                        this.blockEdit = false;
+                    }
+
+                });
+            });
     }
 
     onSubmit() {
+
+        this.model.roles = this.selectedOptions();
         if (this.formType === 'new') {
             this.service.postUsuario(this.model)
                 .subscribe(x => {

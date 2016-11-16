@@ -4,7 +4,7 @@ export class Usuario {
     nome: string;
     birthDate: any;
     email: string;
-    perfil: number[];
+    roles: string[];
 }
 
 export class AlterarSenha {

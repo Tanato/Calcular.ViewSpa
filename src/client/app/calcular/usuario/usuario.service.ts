@@ -14,6 +14,7 @@ export class UsuarioService {
 
     private url: string = Config.API + 'user';
     private urlAccount: string = Config.API + 'account';
+    private urlRole: string = Config.API + 'role';
 
     constructor(public http: Http) {        
         console.info("AppSvc created" + this.http);
@@ -44,8 +45,8 @@ export class UsuarioService {
             .catch(this.handleError);
     }
 
-    getPerfilSelect() {
-        return this.http.get(this.url + '/perfil')
+    getRolesSelect() {
+        return this.http.get(this.urlRole)
             .map(this.handleResult)
             .catch(this.handleError);
     }
