@@ -334,7 +334,8 @@ export class SeedConfig {
       '@angular/core/testing': 'node_modules/@angular/core/bundles/core-testing.umd.js',
       '@angular/http/testing': 'node_modules/@angular/http/bundles/http-testing.umd.js',
       '@angular/platform-browser/testing': 'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
-      '@angular/platform-browser-dynamic/testing': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+      '@angular/platform-browser-dynamic/testing': 
+      'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
 
       'lodash': 'node_modules/lodash/lodash.js',
@@ -421,6 +422,10 @@ export class SeedConfig {
       },
       'ng2-auto-complete': {
         main: 'dist/ng2-auto-complete.umd.js',
+        defaultExtension: 'js'
+      },
+      'angular2-text-mask': {
+        main: 'dist/angular2TextMask.js',
         defaultExtension: 'js'
       }
     }

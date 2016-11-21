@@ -22,7 +22,8 @@ let options: any = {
 };
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options), SelectModule],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, 
+    ModalModule, ToastModule.forRoot(options), SelectModule],
     providers: [ProcessoService],
     declarations: [ProcessoMasterComponent],
     exports: [ProcessoMasterComponent]
