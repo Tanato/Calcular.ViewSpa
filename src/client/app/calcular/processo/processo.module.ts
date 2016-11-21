@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProcessoMasterComponent } from './processo.master.component';
 import { ProcessoDetailComponent } from './processo.detail.component';
+import { ProcessoNotesComponent } from './processo.notes.component';
 
 import { ProcessoService } from './processo.service';
 
@@ -29,9 +30,19 @@ let options: any = {
 export class ProcessoMasterModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), SelectModule, Ng2AutoCompleteModule],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
+     ToastModule.forRoot(options), SelectModule, Ng2AutoCompleteModule],
     providers: [ProcessoService],
     declarations: [ProcessoDetailComponent],
     exports: [ProcessoDetailComponent]
 })
 export class ProcessoDetailModule { }
+
+@NgModule({
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
+     ToastModule.forRoot(options), Ng2AutoCompleteModule],
+    providers: [ProcessoService],
+    declarations: [ProcessoNotesComponent],
+    exports: [ProcessoNotesComponent]
+})
+export class ProcessoNotesModule { }

@@ -1,0 +1,102 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-xl-12">
+            <ol class="breadcrumb">
+                <li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+                </li>
+                <li><a href="Javascript:void(0);" routerLink="/calcular/processo">Processo</a>
+                </li>
+                <li class="active">
+                    Observação de Processo
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row col-xl-12">
+        <form role="form" #form="ngForm">
+            <fieldset [disabled]="false">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label>Processo:</label>
+                        <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" 
+                         value-property-name="none" display-property-name="numero" name="numero" min-chars="3" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Autor:</label>
+                        <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>Réu:</label>
+                        <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Advogado:</label>
+                        <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" disabled/>
+                    </div>
+
+                    <div class="form-group col-lg-3">
+                        <label>Parte:</label>
+                        <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
+                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="card card-block">
+                <div class="row">
+                    <div class="form-group col-lg-10">
+                        <label>Observações:</label>
+                        <textarea class="form-control" rows="2" id="observacao" [(ngModel)]="observacao" name="observacao"></textarea>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        <label>&nbsp;</label>
+                        <a class="btn btn-primary form-control" (click)="addNote(observacao)"><i class="fa fa-plus"></i> Adicionar</a>
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-sm">
+                        <thead class="thead-default">
+                            <tr>
+                                <th width="40"></th>
+                                <th width="150">Data</th>
+                                <th width="200">Usuário</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model?.processoDetalhes">
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>{{ item.data | date:"dd/MM/yy hh:mm" }}</td>
+                                <td>{{ item?.user?.name }}</td>
+                                <td>{{ item.descricao }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-10">
+                </div>
+                <div class="col-lg-2">
+                    <button (click)="onCancel()" class="btn btn-default btn-block">Fechar</button>
+                </div>
+                <!--<div class="col-lg-2">
+                    <button (click)="onSubmit()" [disabled]="!form.form.valid" class="btn btn-primary btn-block">Salvar</button>
+                </div>-->
+            </div>
+        </form>
+    </div>
+</div>

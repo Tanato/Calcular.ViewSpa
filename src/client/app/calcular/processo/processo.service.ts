@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Config } from '../../shared/config/env.config';
 
-import { Processo } from './processo.model';
+import { Processo, ProcessoDetalhe } from './processo.model';
 
 @Injectable()
 export class ProcessoService {
@@ -21,6 +21,11 @@ export class ProcessoService {
 
     postProcesso(processo: Processo) {
         return this.http.post(this.url, processo)
+            .catch(this.handleError);
+    }
+
+    postProcessoDetalhes(processoDetalhe: ProcessoDetalhe) {
+        return this.http.post(this.url + '/detalhe', processoDetalhe)
             .catch(this.handleError);
     }
 
@@ -36,6 +41,15 @@ export class ProcessoService {
         params.set('filter', filterText);
 
         return this.http.get(this.url, { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    getProcessosSelect(numero: string): Observable<Processo[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', numero);
+
+        return this.http.get(this.url + '/numero', { search: params })
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }

@@ -32,13 +32,6 @@ export class UsuarioDetailComponent implements OnInit {
         private toastr: ToastsManager) {
     }
 
-    dateMask(data: any) {
-        if (data.value && data.pristine) {
-            return 'yyyy-MM-dd';
-        }
-        return null;
-    }
-
     selectedOptions(): string[] {
         return this.roles
             .filter(opt => opt.checked)

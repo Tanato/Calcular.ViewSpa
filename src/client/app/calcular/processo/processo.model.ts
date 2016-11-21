@@ -10,4 +10,11 @@ export class Processo {
     peritoid: number;
     indicacaoId: number;
     honorario: number;
+    processoDetalhes: ProcessoDetalhe[];
+}
+
+export class ProcessoDetalhe {
+    id: number;
+    processoId: number;
+    descricao: string;
 }

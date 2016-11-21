@@ -40,13 +40,6 @@ export class ProcessoDetailComponent implements OnInit {
         private router: Router,
         private toastr: ToastsManager) { }
 
-    dateMask(data: any) {
-        if (data.value && data.pristine) {
-            return 'yyyy-MM-dd';
-        }
-        return null;
-    }
-
     ngOnInit() {
         this.service.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);

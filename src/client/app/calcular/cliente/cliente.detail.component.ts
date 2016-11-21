@@ -37,13 +37,6 @@ export class ClienteDetailComponent implements OnInit {
     empresa = (startsWith: string): Observable<any[]> => {
         var result = this.service.getEmpresaSelect(startsWith);
         return result;
-    } 
-
-    dateMask(data: any) {
-        if (data.value && data.pristine) {
-            return 'yyyy-MM-dd';
-        }
-        return null;
     }
 
     enableEdit() {
