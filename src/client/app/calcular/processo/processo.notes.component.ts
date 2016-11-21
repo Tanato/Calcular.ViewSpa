@@ -19,6 +19,7 @@ export class ProcessoNotesComponent implements OnInit {
 
     public model: Processo;
     public parte: IKeyValuePair[];
+    public observacao: string;
 
     public id: Observable<string>;
 
@@ -64,6 +65,7 @@ export class ProcessoNotesComponent implements OnInit {
                     .subscribe((data: Processo) => {
                         this.model = data;
                     });
+                this.observacao = '';
                 this.toastr.success(this.modelName + ' adicionado com sucesso!');
             });
     }
@@ -73,7 +75,7 @@ export class ProcessoNotesComponent implements OnInit {
             if (id) {
                 this.location.back();
             } else {
-                let link = 'calcular/processo';
+                let link = 'calcular/processo/cadastro';
                 this.router.navigateByUrl(link);
             }
         });

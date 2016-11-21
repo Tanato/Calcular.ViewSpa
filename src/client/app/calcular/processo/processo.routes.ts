@@ -6,7 +6,7 @@ import { ProcessoNotesComponent } from './index';
 
 export const ProcessoRoutes: Route[] = [
 	{
-		path: 'processo',
+		path: 'processo/cadastro',
 		component: ProcessoMasterComponent
 	},
     {

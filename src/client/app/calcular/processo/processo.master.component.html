@@ -40,7 +40,7 @@
 					<tr *ngFor="let item of rows">
 						<td>
 							&nbsp;
-							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-edit"></i></a> &nbsp;
+							<a [routerLink]="['/calcular/processo/detail', {id: item.id}]"><i class="fa fa-edit"></i></a> &nbsp;
 							<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
 							<div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 								aria-hidden="true">
