@@ -31,8 +31,7 @@ export class ClienteDetailComponent implements OnInit {
     constructor(public service: ClienteService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager) { 
-        }
+        private toastr: ToastsManager) { }
 
     empresa = (startsWith: string): Observable<any[]> => {
         var result = this.service.getEmpresaSelect(startsWith);

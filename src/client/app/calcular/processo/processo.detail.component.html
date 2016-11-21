@@ -20,13 +20,13 @@
 				<div class="row">
 					<div class="form-group col-lg-3">
 						<label>Local:</label>
-						<select class="form-control" id="localSelect" [(ngModel)]="model.local" name="localSelect" required>
+						<select class="form-control" id="localSelect" [disabled]="model.id" [(ngModel)]="model.local" (ngModelChange)="clearNumero()" name="localSelect" required>
 							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
 						</select>
 					</div>
 					<div class="form-group col-lg-3">
 						<label>Numero:</label>
-						<input class="form-control" id="numero" [(ngModel)]="model.numero" name="numero" required/>
+						<input class="form-control" [disabled]="!(model.local >= 0) || model.id" [textMask]="{mask: maskNumeroProcesso }" id="numero" [(ngModel)]="model.numero" name="numero" required/>
 					</div>
 
 					<div class="form-group col-lg-6">
@@ -91,7 +91,7 @@
 					
 					<div class="form-group col-lg-3">
 						<label>&nbsp;</label>
-						<a class="btn btn-primary form-control" routerLink="/calcular/processo/notes"><i class="fa fa-plus"></i> Adicionar Detalhes</a>
+						<button class="btn btn-primary btn-block" [hidden]="!model.id" [routerLink]="['/calcular/processo/notes', {id: model.id}]"><i class="fa fa-plus"></i> Adicionar Detalhes</button>
 					</div>
 				</div>
 

@@ -18,11 +18,9 @@ export class ProcessoDetailComponent implements OnInit {
 
     public modelName = 'Processo';
 
-    public maskNumero = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-
     public model: Processo = new Processo;
     public parte: IKeyValuePair[];
-    public local: IKeyValuePair[];
+    public local: any[];
 
     public advogado: Observable<IKeyValuePair[]>;
     public indicacao: Observable<IKeyValuePair[]>;
@@ -40,12 +38,22 @@ export class ProcessoDetailComponent implements OnInit {
         private router: Router,
         private toastr: ToastsManager) { }
 
+    public maskNumeroProcesso = () => {
+        if (this.local && this.model && this.model.local !== null)
+            return <string[]>this.local[this.model.local].mask;
+        else return [''];
+    }
+
+    clearNumero() {
+        this.model.numero = '';
+    }
+
     ngOnInit() {
         this.service.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);
 
         this.service.getLocalSelect()
-            .subscribe((data: IKeyValuePair[]) => this.local = data);
+            .subscribe((data: any[]) => this.local = data);
 
         this.id = this.route.params.map(params => params['id']);
 
@@ -74,15 +82,14 @@ export class ProcessoDetailComponent implements OnInit {
     onSubmit() {
         if (this.formType === 'new') {
             this.service.postProcesso(this.model)
-                .subscribe(x => {
+                .subscribe(data => {
+                    this.model = data;
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
-                    this.onCancel();
                 });
         } else {
             this.service.putProcesso(this.model)
-                .subscribe(x => {
+                .subscribe(data => {
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
-                    this.onCancel();
                 });
         }
     }

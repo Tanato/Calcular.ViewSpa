@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Processo, ProcessoDetalhe } from './processo.model';
 import { ProcessoService } from './processo.service';
 import { Observable } from 'rxjs/Observable';
@@ -29,7 +30,8 @@ export class ProcessoNotesComponent implements OnInit {
     constructor(public service: ProcessoService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager) { }
+        private toastr: ToastsManager,
+        private location: Location) { }
 
     ngOnInit() {
         this.service.getParteSelect()
@@ -66,16 +68,14 @@ export class ProcessoNotesComponent implements OnInit {
             });
     }
 
-    onSubmit() {
-        // this.service.postProcessoDetalhes(this.model.processoDetalhes)
-        //     .subscribe(x => {
-        //         this.toastr.success(this.modelName + ' adicionado com sucesso!');
-        //         this.onCancel();
-        //     });
-    }
-
     onCancel() {
-        let link = ['/calcular/processo'];
-        this.router.navigate(link);
+        this.id.subscribe(id => {
+            if (id) {
+                this.location.back();
+            } else {
+                let link = '/calcular/processo';
+                this.router.navigateByUrl(link);
+            }
+        });
     }
 }
