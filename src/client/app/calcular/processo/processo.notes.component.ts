@@ -73,7 +73,7 @@ export class ProcessoNotesComponent implements OnInit {
             if (id) {
                 this.location.back();
             } else {
-                let link = '/calcular/processo';
+                let link = 'calcular/processo';
                 this.router.navigateByUrl(link);
             }
         });

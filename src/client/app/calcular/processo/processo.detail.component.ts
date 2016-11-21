@@ -95,7 +95,7 @@ export class ProcessoDetailComponent implements OnInit {
     }
 
     onCancel() {
-        let link = ['/calcular/processo'];
+        let link = ['calcular/processo'];
         this.router.navigate(link);
     }
 
