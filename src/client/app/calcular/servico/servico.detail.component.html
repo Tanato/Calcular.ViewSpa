@@ -5,10 +5,10 @@
             <ol class="breadcrumb">
                 <li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
                 </li>
-                <li><a href="Javascript:void(0);" routerLink="/calcular/honorario/cadastro">Honorário</a>
+                <li><a href="Javascript:void(0);" routerLink="/calcular/servico/cadastro">Serviço</a>
                 </li>
                 <li class="active">
-                    Registro de Honorários
+                    Registro de Serviço
                 </li>
             </ol>
         </div>
@@ -25,74 +25,73 @@
 
                     <div class="form-group col-lg-3">
                         <label>Parte:</label>
-                        <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
+                        <select class="form-control" id="parteSelect" [ngModel]="model?.processo?.parte" name="parteSelect" disabled>
                             <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
                         </select>
                     </div>
 
                     <div class="form-group col-lg-6">
                         <label>Advogado:</label>
-                        <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" required disabled/>
+                        <input class="form-control" id="advogado" [ngModel]="model?.processo?.advogado?.nome" name="advogado" required disabled/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label>Autor:</label>
-                        <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
+                        <input class="form-control" id="autor" [ngModel]="model?.processo?.autor" name="autor" disabled/>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Réu:</label>
-                        <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
+                        <input class="form-control" id="reu" [ngModel]="model?.processo?.reu" name="reu" disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label>Data de Entrada:</label>
+                        <input type="date" class="form-control" id="entrada" #date="ngModel" [ngModel]="model.entrada" (ngModelChange)="model.entrada = $event"
+                            name="entrada" required/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Prazo:</label>
+                        <input type="date" class="form-control" id="prazo" #prazo="ngModel" [ngModel]="model.prazo" (ngModelChange)="model.prazo = $event"
+                            name="prazo" />
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Data de Saída:</label>
+                        <input type="date" class="form-control" id="saida" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event"
+                            name="saida" />
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()"><i class="fa fa-plus"></i> Salvar</button>
                     </div>
                 </div>
             </fieldset>
             <br>
-
+        </form>
+        <form role="formAtividade" #formAtividade="ngForm">
             <div class="card card-block">
                 <fieldset [disabled]="false">
                     <div class="row">
                         <div class="form-group col-lg-3">
-                            <label>Registro:</label>
-                            <select class="form-control" id="registroSelect" [(ngModel)]="honorario.registro" name="registroSelect" (ngModelChange)="changeRegistro($event)"
+                            <label>Atividade:</label>
+                            <select class="form-control" id="atividadeSelect" [(ngModel)]="atividade.tipoAtividade" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
                                 required>
-                                <option *ngFor="let item of registro" [ngValue]="item.key">{{item.value}}</option>
+                                <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label>Forma de Pagamento:</label>
-                            <select class="form-control" id="tipoPagamentoSelect" [disabled]="honorario.registro !== 0 && honorario.registro !== 1" [(ngModel)]="honorario.tipoPagamento"
-                                name="tipoPagamentoSelect" required>
-                                <option *ngFor="let item of tipoPagamento" [ngValue]="item.key">{{item.value}}</option>
+                            <label>Responsável:</label>
+                            <select class="form-control" id="responsavelSelect" [disabled]="isNaN(atividade.tipoAtividade)" [(ngModel)]="atividade.responsavelId"
+                                name="responsavelSelect" required>
+                                <option *ngFor="let item of responsavel" [ngValue]="item.key">{{item.value}}</option>
                             </select>
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label>Valor:</label>
-                            <input type="number" class="form-control" id="valor" [(ngModel)]="honorario.valor" name="valor" required/>
-                        </div>
-                        <div class="form-group col-lg-3" [hidden]="honorario.registro !== 0">
-                            <label>Nota Fiscal/Complemento:</label>
-                            <input class="form-control" id="notaFiscal" [(ngModel)]="honorario.notaFiscal" name="notaFiscal" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-2">
-                            <label>Data:</label>
-                            <input type="date" class="form-control" id="data" #date="ngModel" [ngModel]="honorario.data" (ngModelChange)="honorario.data = $event"
-                                name="data" required/>
-                        </div>
-                        <div class="form-group col-lg-2">
-                            <label>Prazo:</label>
-                            <input type="date" class="form-control" id="prazo" #date="ngModel" [ngModel]="honorario.prazo" (ngModelChange)="honorario.prazo = $event"
-                                name="prazo" [hidden]="honorario.registro !== 0" [required]="honorario.registro === 0"/>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Observação:</label>
-                            <input class="form-control" id="observacao" [(ngModel)]="honorario.observacao" name="observacao" />
                         </div>
                         <div class="col-lg-2 text-center">
                             <label>&nbsp;</label>
-                            <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="addHonorario()"><i class="fa fa-plus"></i> Adicionar</button>
+                            <button class="btn btn-primary btn-block" [disabled]="!formAtividade.form.valid" (click)="addAtividade()"><i class="fa fa-plus"></i> Atividade</button>
                         </div>
                     </div>
                 </fieldset>
@@ -103,16 +102,14 @@
                         <thead class="thead-default">
                             <tr>
                                 <th width="40"></th>
-                                <th width="110">Tipo</th>
-                                <th width="110">Data</th>
-                                <th width="110">Prazo</th>
-                                <th width="100">Valor</th>
-                                <th width="180">Forma de Pagamento</th>
-                                <th>Observação</th>
+                                <th>Atividade</th>
+                                <th>Responsável</th>
+                                <th>Entrega</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of model?.honorarios">
+                            <tr *ngFor="let item of model?.atividades">
                                 <td>
                                     &nbsp;
                                     <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
@@ -131,12 +128,10 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ item?.registroDescription }}</td>
-                                <td>{{ item.data | date:"dd/MM/yyyy" }}</td>
-                                <td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
-                                <td>{{ item?.valor }}</td>
-                                <td>{{ item?.tipoPagamentoDescription }}</td>
-                                <td>{{ item.observacao }}</td>
+                                <td>{{ item?.tipoAtividade?.nome }}</td>
+                                <td>{{ item?.responsavel?.nome }}</td>
+                                <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
+                                <td>{{ item.status }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -144,11 +139,7 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-lg-8">
-                </div>
-                <div class="form-group col-lg-2">
-                    <label>Valor Pendente:</label>
-                    <input type="number" class="form-control" id="total" [ngModel]="model?.total" name="total" disabled/>
+                <div class="form-group col-lg-10">
                 </div>
                 <div class="col-lg-2">
                     <label>&nbsp;</label>

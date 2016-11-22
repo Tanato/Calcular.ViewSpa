@@ -5,6 +5,7 @@ import { ClienteRoutes } from './cliente/index';
 import { ProcessoRoutes } from './processo/index';
 import { UsuarioRoutes } from './usuario/index';
 import { HonorarioRoutes } from './honorario/index';
+import { ServicoRoutes } from './servico/index';
 
 import { CalcularComponent } from './index';
 
@@ -18,6 +19,7 @@ export const CalcularRoutes: Route[] = [
 			...ProcessoRoutes,
 			...UsuarioRoutes,
 			...HonorarioRoutes,
+			...ServicoRoutes,
     	]
   	}
 ];

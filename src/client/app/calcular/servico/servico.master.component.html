@@ -7,7 +7,7 @@
 					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
 				</li>
 				<li class="active">
-					Registro de Honorários
+					Registro de Serviços
 				</li>
 			</ol>
 		</div>
@@ -20,7 +20,7 @@
 			<span class="input-group-btn"><button class="btn btn-secondary" (click)="filter()" type="button"><i class="fa fa-search"></i></button></span>
 		</div>
 		<div class="col-xl-2 text-center">
-			<a class="btn btn-primary" routerLink="/calcular/honorario/detail"><i class="fa fa-plus"></i> Adicionar</a>
+			<a class="btn btn-primary" routerLink="/calcular/servico/detail"><i class="fa fa-plus"></i> Adicionar</a>
 		</div>
 	</div>
 	<div class="row">
@@ -32,8 +32,9 @@
 						<th>Nº Processo</th>
 						<th>Autor</th>
 						<th>Réu</th>
-						<th>Honorário</th>
-						<th>Prazo Pagamento</th>
+						<th>Atividade</th>
+						<th>Impressão</th>
+						<th>Prazo</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -43,12 +44,13 @@
 							&nbsp;
 							&nbsp;
 							&nbsp;
-							<a [routerLink]="['/calcular/honorario/detail', {id: item.id}]"><i class="fa fa-calculator"></i></a> &nbsp;
+							<a [routerLink]="['/calcular/servico/detail', {id: item.id}]"><i class="fa fa-calculator"></i></a> &nbsp;
 						</td>
-						<td>{{ item.numero }}</td>
-						<td>{{ item.autor }}</td>
-						<td>{{ item.reu }}</td>
-						<td>{{ item.total }}</td>
+						<td>{{ item.processo?.numero }}</td>
+						<td>{{ item.processo?.autor }}</td>
+						<td>{{ item.processo?.reu }}</td>
+						<td>{{ item.atividades[0]?.nome }}</td>
+						<td>{{ item.impressaoDescricao }}</td>
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.status }}</td>
 					</tr>

@@ -4,8 +4,8 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
 	<ul class="list-group">
 		<a [routerLink]="['eventos']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-calendar"></i> Eventos
-        </a>
+			<i class="fa fa-fw fa-calendar"></i> Eventos
+		</a>
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('cliente')">
 				<span><i class="fa fa-chevron-right"></i>&nbsp; Cliente</span>
@@ -32,20 +32,6 @@
 							<i class="fa fa-fw fa-table"></i> Cadastro
 						</a>
 					</li>
-				</ul>				
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/servico/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-hourglass-half"></i> Registro de Serviço
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/processo/apontamento" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-hourglass-half"></i> Apontamento de Horas
-						</a>
-					</li>
 				</ul>
 				<ul class="submenu">
 					<li>
@@ -68,10 +54,32 @@
 						</a>
 					</li>
 				</ul>
-				
+
 				<ul class="submenu">
 					<li>
 						<div></div>
+					</li>
+				</ul>
+			</li>
+		</div>
+
+		<div class="nested-menu">
+			<a class="list-group-item" (click)="addExpandClass('servico')">
+				<span><i class="fa fa-chevron-right"></i>&nbsp; Serviço</span>
+			</a>
+			<li class="nested" [ngClass]="{'expand' : showMenu === 'servico' }">
+				<ul class="submenu">
+					<li>
+						<a routerLink="/calcular/servico/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-hourglass-half"></i> Registro de Serviço
+						</a>
+					</li>
+				</ul>
+				<ul class="submenu">
+					<li>
+						<a routerLink="/calcular/atividade/apontamento" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-hourglass-half"></i> Apontamento de Horas
+						</a>
 					</li>
 				</ul>
 			</li>

@@ -69,8 +69,7 @@ export class HonorarioDetailComponent implements OnInit {
     }
 
     changeRegistro(registro: number) {
-        if (registro !== null)
-        {
+        if (registro !== null) {
             this.honorario.tipoPagamento = null;
             this.service.getTipoPagamentoSelect(registro)
                 .subscribe((data: IKeyValuePair[]) => this.tipoPagamento = data);
@@ -82,12 +81,24 @@ export class HonorarioDetailComponent implements OnInit {
 
         this.service.postHonorario(this.honorario)
             .subscribe(x => {
-                this.processoService.getProcessoById(this.model.id.toString())
-                    .subscribe((data: Processo) => {
-                        this.model = data;
-                    });
+                this.onRefresh();
                 this.honorario = new Honorario();
                 this.toastr.success(this.modelName + ' adicionado com sucesso!');
+            });
+    }
+
+    onDelete(id: number) {
+        this.service.deleteHonorario(id)
+            .subscribe(x => {
+                this.toastr.success(this.modelName + ' excluído com sucesso!');
+                this.onRefresh();
+            });
+    }
+
+    onRefresh() {
+        this.processoService.getProcessoById(this.model.id.toString())
+            .subscribe((data: Processo) => {
+                this.model = data;
             });
     }
 

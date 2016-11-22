@@ -8,6 +8,7 @@ import { ClienteMasterModule, ClienteDetailModule } from './cliente/cliente.modu
 import { ProcessoMasterModule, ProcessoDetailModule, ProcessoNotesModule } from './processo/processo.module';
 import { UsuarioMasterModule, UsuarioDetailModule, UsuarioAlterarSenhaModule } from './usuario/usuario.module';
 import { HonorarioMasterModule, HonorarioDetailModule } from './honorario/honorario.module';
+import { ServicoMasterModule, ServicoDetailModule } from './servico/servico.module';
 
 import { CalcularComponent } from './calcular.component';
 
@@ -33,6 +34,8 @@ import { SidebarComponent } from '../shared/index';
         UsuarioAlterarSenhaModule,
         HonorarioMasterModule,
         HonorarioDetailModule,
+        ServicoMasterModule,
+        ServicoDetailModule,
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]

@@ -9,49 +9,57 @@ import { Observable } from 'rxjs/Rx';
 
 import { Config } from '../../shared/config/env.config';
 
-import { Processo } from '../processo/processo.model';
-import { Honorario } from './honorario.model';
+import { Atividade } from './atividade.model';
 
 @Injectable()
-export class HonorarioService {
+export class AtividadeService {
 
-    private url: string = Config.API + 'honorario';
+    private url: string = Config.API + 'atividade';
 
     constructor(private http: Http) { }
 
-    postHonorario(honorario: Honorario) {
-        return this.http.post(this.url, honorario)
+    getAtividades(filterText: string): Observable<Atividade[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+
+        return this.http.get(this.url, { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    getAtividadeById(id: string): Observable<Atividade> {
+        return this.http.get(this.url + '/' + id)
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    putProcesso(processo: Processo) {
+    postAtividade(servico: Atividade) {
+        return this.http.post(this.url, servico)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    putAtividade(servico: Atividade) {
         return this.http
-            .put(this.url, JSON.stringify(processo))
+            .put(this.url, JSON.stringify(servico))
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    getParteSelect() {
-        return this.http.get(this.url + '/parte')
-            .map(this.handleResult)
-            .catch(this.handleError);
-    }
-
-    deleteHonorario(id: number) {
+    deleteAtividade(id: number) {
         return this.http.delete(this.url + '/' + id)
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    getRegistroSelect() {
-        return this.http.get(this.url + '/registro')
+    getResponsavel(tipo: number) {
+        return this.http.get(this.url + '/responsavel/' + tipo)
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    getTipoPagamentoSelect(registro: number) {
-        return this.http.get(this.url + '/tipopagamento/' + registro)
+    getTipoAtividadeSelect() {
+        return this.http.get(this.url + '/tipoatividade')
             .map(this.handleResult)
             .catch(this.handleError);
     }

@@ -1,3 +1,6 @@
+import { Servico } from '../servico/servico.model';
+import { Honorario } from '../honorario/honorario.model';
+
 export class Processo {
     id: number;
     numero: string;
@@ -12,6 +15,7 @@ export class Processo {
     honorario: number;
     processoDetalhes: ProcessoDetalhe[];
     honorarios: Honorario[];
+    servicos: Servico[];
     total: number;
 }
 
@@ -20,17 +24,3 @@ export class ProcessoDetalhe {
     processoId: number;
     descricao: string;
 }
-
-export class Honorario {
-    id: number;
-    processoId: number;
-    registro: number;
-    registroDescription : string;
-    tipoPagamento: number;
-    tipoPagamentoDescription : string;
-    notaFiscal: string;
-    valor: number;
-    data: any;
-    prazo: any;
-}
-
