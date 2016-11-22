@@ -11,6 +11,8 @@ export class Processo {
     indicacaoId: number;
     honorario: number;
     processoDetalhes: ProcessoDetalhe[];
+    honorarios: Honorario[];
+    total: number;
 }
 
 export class ProcessoDetalhe {
@@ -18,3 +20,17 @@ export class ProcessoDetalhe {
     processoId: number;
     descricao: string;
 }
+
+export class Honorario {
+    id: number;
+    processoId: number;
+    registro: number;
+    registroDescription : string;
+    tipoPagamento: number;
+    tipoPagamentoDescription : string;
+    notaFiscal: string;
+    valor: number;
+    data: any;
+    prazo: any;
+}
+

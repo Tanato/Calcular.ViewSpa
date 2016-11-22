@@ -32,32 +32,11 @@
 							<i class="fa fa-fw fa-table"></i> Cadastro
 						</a>
 					</li>
-				</ul>
+				</ul>				
 				<ul class="submenu">
 					<li>
-						<a routerLink="/calcular/processo/cobranca-honorarios" [routerLinkActive]="['router-link-active']" class="list-group-item">
+						<a routerLink="/calcular/servico/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
 							<i class="fa fa-fw fa-hourglass-half"></i> Registro de Serviço
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/processo/registro-honorarios" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-dollar"></i> Registro de Honorários
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/processo/cobranca" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-dollar"></i> Cobrança de Honorários
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/processo/proposta" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-dollar"></i> Proposta de Honorários
 						</a>
 					</li>
 				</ul>
@@ -93,6 +72,35 @@
 				<ul class="submenu">
 					<li>
 						<div></div>
+					</li>
+				</ul>
+			</li>
+		</div>
+
+		<div class="nested-menu">
+			<a class="list-group-item" (click)="addExpandClass('honorario')">
+				<span><i class="fa fa-chevron-right"></i>&nbsp; Honorário</span>
+			</a>
+			<li class="nested" [ngClass]="{'expand' : showMenu === 'honorario' }">
+				<ul class="submenu">
+					<li>
+						<a routerLink="/calcular/honorario/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-dollar"></i> Registro de Honorários
+						</a>
+					</li>
+				</ul>
+				<ul class="submenu">
+					<li>
+						<a routerLink="/calcular/honorario/cobranca" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-dollar"></i> Cobrança de Honorários
+						</a>
+					</li>
+				</ul>
+				<ul class="submenu">
+					<li>
+						<a routerLink="/calcular/honorario/proposta" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-dollar"></i> Proposta de Honorários
+						</a>
 					</li>
 				</ul>
 			</li>

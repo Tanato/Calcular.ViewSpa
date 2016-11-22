@@ -7,6 +7,7 @@ import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { ClienteMasterModule, ClienteDetailModule } from './cliente/cliente.module';
 import { ProcessoMasterModule, ProcessoDetailModule, ProcessoNotesModule } from './processo/processo.module';
 import { UsuarioMasterModule, UsuarioDetailModule, UsuarioAlterarSenhaModule } from './usuario/usuario.module';
+import { HonorarioMasterModule, HonorarioDetailModule } from './honorario/honorario.module';
 
 import { CalcularComponent } from './calcular.component';
 
@@ -30,6 +31,8 @@ import { SidebarComponent } from '../shared/index';
         UsuarioMasterModule,
         UsuarioDetailModule,
         UsuarioAlterarSenhaModule,
+        HonorarioMasterModule,
+        HonorarioDetailModule,
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]

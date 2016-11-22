@@ -64,6 +64,8 @@ textarea {
 ::-webkit-inner-spin-button { display: none; }
 input[type="date"] {
      padding: inherit;
+     padding-left: 10px;
+     padding-right: 8px;
 }
 
 .form-item {
