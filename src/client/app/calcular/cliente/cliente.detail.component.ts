@@ -58,7 +58,7 @@ export class ClienteDetailComponent implements OnInit {
                 this.formType = 'edit';
                 this.service.getClienteById(id)
                     .subscribe((data: Cliente) => {
-                        data.nascimento = data.nascimento.slice(0, 10);
+                        data.nascimento = data.nascimento ? data.nascimento.slice(0, 10) : null;
                         this.model = data;
                     });
             } else {
@@ -84,7 +84,7 @@ export class ClienteDetailComponent implements OnInit {
     }
 
     onCancel() {
-        let link = ['/calcular/cliente'];
+        let link = ['calcular/cliente'];
         this.router.navigate(link);
     }
 }
