@@ -3,8 +3,8 @@
 </button>
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
 	<ul class="list-group">
-		<a [routerLink]="['eventos']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-			<i class="fa fa-fw fa-calendar"></i> Eventos
+		<a [routerLink]="['home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+			<i class="fa fa-fw fa-calendar-minus-o"></i> Eventos
 		</a>
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('cliente')">
@@ -80,14 +80,14 @@
 				<ul class="submenu">
 					<li>
 						<a routerLink="/calcular/honorario/cobranca" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-dollar"></i> Cobrança de Honorários
+							<i class="fa fa-fw fa-phone"></i> Cobrança de Honorários
 						</a>
 					</li>
 				</ul>
 				<ul class="submenu">
 					<li>
 						<a routerLink="/calcular/honorario/proposta" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-dollar"></i> Proposta de Honorários
+							<i class="fa fa-fw fa-handshake-o"></i> Proposta de Honorários
 						</a>
 					</li>
 				</ul>

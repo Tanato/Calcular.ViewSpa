@@ -9,6 +9,7 @@ import { ProcessoMasterModule, ProcessoDetailModule, ProcessoNotesModule } from 
 import { UsuarioMasterModule, UsuarioDetailModule, UsuarioAlterarSenhaModule } from './usuario/usuario.module';
 import { HonorarioMasterModule, HonorarioDetailModule } from './honorario/honorario.module';
 import { ServicoMasterModule, ServicoDetailModule } from './servico/servico.module';
+import { EventoMasterModule } from './evento/evento.module';
 
 import { CalcularComponent } from './calcular.component';
 
@@ -36,6 +37,7 @@ import { SidebarComponent } from '../shared/index';
         HonorarioDetailModule,
         ServicoMasterModule,
         ServicoDetailModule,
+        EventoMasterModule,
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]
