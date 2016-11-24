@@ -10,6 +10,7 @@ export class Processo {
     parte: number;
     numerAutores: number;
     advogadoId: number;
+    advogado: any;
     peritoid: number;
     indicacaoId: number;
     honorario: number;

@@ -19,35 +19,43 @@
                 <div class="row">
                     <div class="form-group col-lg-3">
                         <label>Processo:</label>
-                        <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" value-property-name="none" [disabled]="id | async"
-                            display-property-name="numero" name="numero" min-chars="3" required>
+                        <input class="form-control" ng2-auto-complete [source]="processos" [ngModel]="model.processo" (ngModelChange)="loadServico($event)"
+                            value-property-name="none" [disabled]="id | async" display-property-name="numero" name="numero" min-chars="3"
+                            required>
                     </div>
 
                     <div class="form-group col-lg-3">
                         <label>Parte:</label>
-                        <select class="form-control" id="parteSelect" [ngModel]="model?.processo?.parte" name="parteSelect" disabled>
+                        <select class="form-control" id="parteSelect" [ngModel]="model.processo?.parte" name="parteSelect" disabled>
                             <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
                         </select>
                     </div>
-
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
                         <label>Advogado:</label>
-                        <input class="form-control" id="advogado" [ngModel]="model?.processo?.advogado?.nome" name="advogado" required disabled/>
+                        <input class="form-control" id="advogado" [ngModel]="model.processo?.advogado?.nome" name="advogado" disabled/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Vara:</label>
+                        <input class="form-control" id="vara" [ngModel]="model.processo?.vara" name="vara" disabled/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label>Autor:</label>
-                        <input class="form-control" id="autor" [ngModel]="model?.processo?.autor" name="autor" disabled/>
+                        <input class="form-control" id="autor" [ngModel]="model.processo?.autor" name="autor" disabled/>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Réu:</label>
-                        <input class="form-control" id="reu" [ngModel]="model?.processo?.reu" name="reu" disabled/>
+                        <input class="form-control" id="reu" [ngModel]="model.processo?.reu" name="reu" disabled/>
                     </div>
                 </div>
 
                 <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label>Volumes:</label>
+                        <input type="number" class="form-control" id="volumes" [(ngModel)]="model.volumes" name="volumes" required/>
+                    </div>
                     <div class="form-group col-lg-2">
                         <label>Data de Entrada:</label>
                         <input type="date" class="form-control" id="entrada" #date="ngModel" [ngModel]="model.entrada" (ngModelChange)="model.entrada = $event"
@@ -63,6 +71,8 @@
                         <input type="date" class="form-control" id="saida" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event"
                             name="saida" />
                     </div>
+                    <div class="form-group col-lg-2">
+                    </div>
                     <div class="col-lg-2 text-center">
                         <label>&nbsp;</label>
                         <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()"><i class="fa fa-plus"></i> Salvar</button>
@@ -71,7 +81,7 @@
             </fieldset>
             <br>
         </form>
-        <form role="formAtividade" #formAtividade="ngForm">
+        <form role="formAtividade" [hidden]="!model.id" #formAtividade="ngForm">
             <div class="card card-block">
                 <fieldset [disabled]="false">
                     <div class="row">
@@ -88,6 +98,8 @@
                                 name="responsavelSelect" required>
                                 <option *ngFor="let item of responsavel" [ngValue]="item.key">{{item.value}}</option>
                             </select>
+                        </div>
+                        <div class="form-group col-lg-4">
                         </div>
                         <div class="col-lg-2 text-center">
                             <label>&nbsp;</label>

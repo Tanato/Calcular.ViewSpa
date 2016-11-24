@@ -16,7 +16,6 @@
 	<div class="row col-xl-12">
 		<form role="form" #form="ngForm">
 			<fieldset [disabled]="blockEdit">
-
 				<div class="row">
 					<div class="form-group col-lg-6">
 						<label>Nome:</label>
@@ -44,7 +43,6 @@
 						<input class="form-control" ng2-auto-complete [source]="empresa" id="empresa" 
 						[(ngModel)]="model.empresa" name="empresa" min-chars="2" [accept-user-input]="true" required>
 					</div>
-
 				</div>
 
 				<div class="row">
@@ -63,7 +61,6 @@
 						<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" [required]="!model.telefone"
 						/>
 					</div>
-
 				</div>
 
 				<div class="row">
@@ -86,14 +83,9 @@
 						</div>
 
 						<div class="row">
-
 							<div class="form-group col-lg-6">
 								<label>Honorários:</label>
 								<input class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
-							</div>
-							<div class="form-group col-lg-6">
-								<label>Valor Total:</label>
-								<input class="form-control" [(ngModel)]="model.honorariostotal" name="honorariostotal" />
 							</div>
 						</div>
 					</div>

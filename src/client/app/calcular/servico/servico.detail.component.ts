@@ -43,7 +43,7 @@ export class ServicoDetailComponent implements OnInit {
     }
 
     processos = (startsWith: string): Observable<any[]> => {
-        var result = this.service.getServicosSelect(startsWith);
+        var result = this.processoService.getProcessosSelect(startsWith);
         return result;
     }
 
@@ -65,9 +65,13 @@ export class ServicoDetailComponent implements OnInit {
 
         this.id.subscribe(id => {
             if (id) {
+                this.formType = 'edit';
                 this.service.getServicoById(id)
                     .subscribe((data: Servico) => {
                         this.model = data;
+                        this.model.entrada = data.entrada.slice(0, 10);
+                        this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
+                        this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     });
             }
         });
@@ -86,6 +90,11 @@ export class ServicoDetailComponent implements OnInit {
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
                 });
         }
+    }
+
+    loadServico(processo: Processo) {
+        this.model.processo = processo;
+        this.model.processoId = processo.id;
     }
 
     addAtividade() {

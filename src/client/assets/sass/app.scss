@@ -9,6 +9,13 @@
     height: auto !important;
 }
 
+.input-group-btn{
+    z-index: inherit;
+}
+.input-group{
+    z-index: 1;
+}
+
 .list-group-item-sm {
     @extend .list-group-item;
     padding: 3px 10px
