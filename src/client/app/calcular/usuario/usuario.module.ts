@@ -13,7 +13,7 @@ import { PaginationModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
-import { EqualValidator } from '../../shared/tools/equal.validator';
+import { EqualValidatorDirective } from '../../shared/tools/equal.validator';
 
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
@@ -41,7 +41,7 @@ export class UsuarioDetailModule { }
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options)],
     providers: [UsuarioService],
-    declarations: [UsuarioAlterarSenhaComponent, EqualValidator],
+    declarations: [UsuarioAlterarSenhaComponent, EqualValidatorDirective],
     exports: [UsuarioAlterarSenhaComponent]
 })
 export class UsuarioAlterarSenhaModule { }

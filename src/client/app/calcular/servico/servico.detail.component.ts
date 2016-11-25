@@ -82,11 +82,18 @@ export class ServicoDetailComponent implements OnInit {
             this.service.postServico(this.model)
                 .subscribe(data => {
                     this.model = data;
+                    this.model.entrada = data.entrada.slice(0, 10);
+                    this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
+                    this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
                 });
         } else {
             this.service.putServico(this.model)
                 .subscribe(data => {
+                    this.model = data;
+                    this.model.entrada = data.entrada.slice(0, 10);
+                    this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
+                    this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
                 });
         }

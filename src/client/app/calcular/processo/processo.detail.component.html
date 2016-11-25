@@ -19,19 +19,22 @@
 
 				<div class="row">
 					<div class="form-group col-lg-3">
-						<label>Local:</label>
-						<select class="form-control" id="localSelect" [disabled]="model.id" [(ngModel)]="model.local" (ngModelChange)="clearNumero()" name="localSelect" required>
+						<label>Tipo:</label>
+						<select class="form-control" id="localSelect" [disabled]="model.id" [(ngModel)]="model.local" (ngModelChange)="clearNumero()"
+							name="localSelect" required>
 							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
 						</select>
 					</div>
 					<div class="form-group col-lg-3">
 						<label>Numero:</label>
-						<input class="form-control" [disabled]="!(model.local >= 0) || model.id" [textMask]="{mask: maskNumeroProcesso }" id="numero" [(ngModel)]="model.numero" name="numero" required/>
+						<input class="form-control" [disabled]="!(model.local >= 0) || model.id" [textMask]="{mask: maskNumeroProcesso }" id="numero"
+							[(ngModel)]="model.numero" name="numero" required/>
 					</div>
 
 					<div class="form-group col-lg-6">
-						<label>Advogado:</label>
-						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado | async" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar" required="true">
+						<label>Advogado/Cliente:</label>
+						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado | async" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)"
+							idField="key" textField="value" placeholder="Digite 3 letras para pesquisar" required="true">
 						</ng-select>
 					</div>
 				</div>
@@ -68,14 +71,16 @@
 
 				<div class="row">
 					<div class="form-group col-lg-6">
-						<label>Perito:</label>
-						<ng-select [active]="indicacaoInit" [allowClear]="true" [items]="indicacao | async" (data)="refreshValueIndicacao($event)" (typed)="typedIndicacao($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar">
+						<label>Indicação:</label>
+						<ng-select [active]="indicacaoInit" [allowClear]="true" [items]="indicacao | async" (data)="refreshValueIndicacao($event)"
+							(typed)="typedIndicacao($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar">
 						</ng-select>
 					</div>
 
-					<div class="form-group col-lg-6">
-						<label>Indicação:</label>
-						<ng-select [active]="indicacaoInit" [allowClear]="true" [items]="indicacao | async" (data)="refreshValueIndicacao($event)" (typed)="typedIndicacao($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar">
+					<div class="form-group col-lg-6" [hidden]="this.advogado?.perfil === 0 | async">
+						<label>Perito:</label>
+						<ng-select [active]="peritoInit" [allowClear]="true" [items]="perito | async" (data)="refreshValuePerito($event)"
+							(typed)="typedPerito($event)" idField="key" textField="value" placeholder="Digite 3 letras para pesquisar">
 						</ng-select>
 					</div>
 				</div>
@@ -84,11 +89,11 @@
 
 					<div class="form-group col-lg-2">
 						<label>Honorários:</label>
-						<input class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario"/>
+						<input class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario" />
 					</div>
 					<div class="col-lg-7">
 					</div>
-					
+
 					<div class="form-group col-lg-3">
 						<label>&nbsp;</label>
 						<button class="btn btn-primary btn-block" [hidden]="!model.id" [routerLink]="['/calcular/processo/notes', {id: model.id}]"><i class="fa fa-plus"></i> Adicionar Detalhes</button>

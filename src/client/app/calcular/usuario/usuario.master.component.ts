@@ -14,16 +14,11 @@ export class UsuarioMasterComponent implements OnInit {
     private modelName = 'Usuário';
 
     private data: Usuario[];
-
     private totalItems: number = 0;
     private currentPage: number = 1;
-    private maxSize: number = 6;
     private itemsPerPage: number = 50;
-
     private filterText: string = '';
-
     private editId: number;
-
     private rows: Usuario[];
 
     constructor(private service: UsuarioService, private toastr: ToastsManager) {

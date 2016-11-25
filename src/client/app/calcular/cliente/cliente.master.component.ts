@@ -14,16 +14,11 @@ export class ClienteMasterComponent implements OnInit {
     private modelName = 'Cliente';
 
     private data: Cliente[];
-
     private totalItems: number = 0;
     private currentPage: number = 1;
-    private maxSize: number = 6;
     private itemsPerPage: number = 50;
-
     private filterText: string = '';
-
     private editId: number;
-
     private rows: Cliente[];
 
     constructor(private service: ClienteService, private toastr: ToastsManager) {

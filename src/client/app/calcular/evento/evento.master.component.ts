@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Evento } from './evento.model';
 import { EventoService } from './evento.service';
-
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -11,19 +10,13 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class EventoMasterComponent implements OnInit {
 
-    private modelName = 'Evento';
-
     private data: Evento[];
 
     private totalItems: number = 0;
     private currentPage: number = 1;
-    private maxSize: number = 6;
     private itemsPerPage: number = 50;
-
     private filterText: string = '';
-
     private editId: number;
-
     private rows: Evento[];
 
     constructor(private service: EventoService, private toastr: ToastsManager) {

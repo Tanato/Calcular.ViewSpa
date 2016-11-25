@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HonorarioService } from './honorario.service';
 import { Processo } from '../processo/processo.model';
 import { ProcessoService } from '../processo/processo.service';
-
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -17,7 +16,6 @@ export class HonorarioMasterComponent implements OnInit {
 
     private totalItems: number = 0;
     private currentPage: number = 1;
-    private maxSize: number = 6;
     private itemsPerPage: number = 50;
 
     private filterText: string = '';

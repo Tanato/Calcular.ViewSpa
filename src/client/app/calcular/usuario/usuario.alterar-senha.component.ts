@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlterarSenha } from './usuario.model';
 import { UsuarioService } from './usuario.service';
-import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IKeyValuePair } from '../../shared/interfaces';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -12,7 +10,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
     selector: 'usuarioalterarsenha-cmp',
     templateUrl: './usuario.alterar-senha.component.html'
 })
-export class UsuarioAlterarSenhaComponent implements OnInit {
+export class UsuarioAlterarSenhaComponent {
 
     public modelName = 'Usuário';
 
@@ -23,8 +21,6 @@ export class UsuarioAlterarSenhaComponent implements OnInit {
         private router: Router,
         private toastr: ToastsManager) {
     }
-
-    ngOnInit() { }
 
     onSubmit() {
         this.service.postAlterarSenha(this.model)

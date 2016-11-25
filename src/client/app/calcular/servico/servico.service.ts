@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Response, Http, URLSearchParams } from '@angular/http';
-import { IKeyValuePair } from '../../shared/interfaces';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';

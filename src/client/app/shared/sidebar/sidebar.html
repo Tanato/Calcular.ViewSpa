@@ -8,7 +8,7 @@
 		</a>
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('cliente')">
-				<span><i class="fa fa-chevron-right"></i>&nbsp; Cliente</span>
+				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'cliente'" [class.fa-chevron-right]="showMenu !== 'cliente'"></i>&nbsp; Cliente</span>
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'cliente' }">
 				<ul class="submenu">
@@ -23,7 +23,7 @@
 
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('processo')">
-				<span><i class="fa fa-chevron-right"></i>&nbsp; Processo</span>
+				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'processo'" [class.fa-chevron-right]="showMenu !== 'processo'"></i>&nbsp; Processo</span>
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'processo' }">
 				<ul class="submenu">
@@ -45,7 +45,7 @@
 
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('servico')">
-				<span><i class="fa fa-chevron-right"></i>&nbsp; Serviço</span>
+				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'servico'" [class.fa-chevron-right]="showMenu !== 'servico'"></i>&nbsp; Serviço</span>
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'servico' }">
 				<ul class="submenu">
@@ -67,7 +67,7 @@
 
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('honorario')">
-				<span><i class="fa fa-chevron-right"></i>&nbsp; Honorário</span>
+				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'honorario'" [class.fa-chevron-right]="showMenu !== 'honorario'"></i>&nbsp; Honorário</span>
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'honorario' }">
 				<ul class="submenu">
@@ -96,7 +96,7 @@
 
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('relatorio')">
-				<span><i class="fa fa-chevron-right"></i>&nbsp; Relatórios</span>
+				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'relatorio'" [class.fa-chevron-right]="showMenu !== 'relatorio'"></i>&nbsp; Relatórios</span>
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'relatorio' }">
 				<ul class="submenu">
@@ -118,7 +118,7 @@
 
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('parametrizacao')">
-				<span><i class="fa fa-chevron-right"></i>&nbsp; Parametrização</span>
+				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'parametrizacao'" [class.fa-chevron-right]="showMenu !== 'parametrizacao'"></i>&nbsp; Parametrização</span>
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'parametrizacao' }">
 				<ul class="submenu">
@@ -148,7 +148,7 @@
 
 		<div class="nested-menu">
 			<a class="list-group-item" (click)="addExpandClass('usuario')">
-				<span><i class="fa fa-chevron-right"></i>&nbsp; Usuário</span>
+				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'usuario'" [class.fa-chevron-right]="showMenu !== 'usuario'"></i>&nbsp; Usuário</span>
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'usuario' }">
 				<ul class="submenu">

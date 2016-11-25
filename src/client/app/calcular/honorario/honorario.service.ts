@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Response, Http, URLSearchParams } from '@angular/http';
-
-import { IKeyValuePair } from '../../shared/interfaces';
-
+import { Response, Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
-
 import { Config } from '../../shared/config/env.config';
-
 import { Processo } from '../processo/processo.model';
 import { Honorario } from './honorario.model';
 

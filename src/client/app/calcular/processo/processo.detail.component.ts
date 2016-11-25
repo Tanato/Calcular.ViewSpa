@@ -4,7 +4,6 @@ import { ProcessoService } from './processo.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
-
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -24,6 +23,7 @@ export class ProcessoDetailComponent implements OnInit {
 
     public advogado: Observable<IKeyValuePair[]>;
     public indicacao: Observable<IKeyValuePair[]>;
+    public perito: Observable<IKeyValuePair[]>;
 
     public advogadoInit: IKeyValuePair[];
     public indicacaoInit: IKeyValuePair[];
@@ -39,9 +39,11 @@ export class ProcessoDetailComponent implements OnInit {
         private toastr: ToastsManager) { }
 
     public maskNumeroProcesso = () => {
-        if (this.local && this.model && this.model.local !== null)
+        if (this.local && this.model && this.model.local !== null) {
             return <string[]>this.local[this.model.local].mask;
-        else return [''];
+        } else {
+            return [''];
+        }
     }
 
     clearNumero() {
@@ -129,5 +131,19 @@ export class ProcessoDetailComponent implements OnInit {
 
     refreshValueIndicacao(value: IKeyValuePair): void {
         this.model.indicacaoId = value.key;
+    }
+
+    // Indicacao select    
+    public typedPerito(value: string): void {
+        if (value && value.length > 2) {
+            clearTimeout(this.wtoInput);
+            this.wtoInput = setTimeout(() => {
+                this.perito = this.service.getIndicacaoSelect(value);
+            }, 500);
+        }
+    }
+
+    refreshValuePerito(value: IKeyValuePair): void {
+        this.model.peritoId = value.key;
     }
 }

@@ -14,16 +14,11 @@ export class ProcessoMasterComponent implements OnInit {
     private modelName = 'Processo';
 
     private data: Processo[];
-
     private totalItems: number = 0;
     private currentPage: number = 1;
-    private maxSize: number = 6;
     private itemsPerPage: number = 50;
-
     private filterText: string = '';
-
     private editId: number;
-
     private rows: Processo[];
 
     constructor(private service: ProcessoService, private toastr: ToastsManager) {

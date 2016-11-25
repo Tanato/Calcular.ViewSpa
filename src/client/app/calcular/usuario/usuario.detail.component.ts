@@ -3,7 +3,6 @@ import { Usuario } from './usuario.model';
 import { UsuarioService } from './usuario.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IKeyValuePair } from '../../shared/interfaces';
 
 import * as _ from 'lodash';
 
@@ -35,7 +34,7 @@ export class UsuarioDetailComponent implements OnInit {
     selectedOptions(): string[] {
         return this.roles
             .filter(opt => opt.checked)
-            .map(opt => opt.id)
+            .map(opt => opt.id);
     }
 
     enableEdit() {

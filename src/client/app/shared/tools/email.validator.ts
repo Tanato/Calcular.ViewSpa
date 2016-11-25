@@ -16,10 +16,10 @@ function validateEmailFactory() {
 @Directive({
   selector: '[validateEmail][ngModel],[validateEmail][formControl]',
   providers: [
-    { provide: NG_VALIDATORS, useExisting: forwardRef(() => EmailValidator), multi: true }
+    { provide: NG_VALIDATORS, useExisting: forwardRef(() => EmailValidatorDirective), multi: true }
   ]
 })
-export class EmailValidator {
+export class EmailValidatorDirective {
 
   validator: Function;
 

@@ -14,9 +14,9 @@ export class ClienteService {
 
     private url: string = Config.API + 'cliente';
 
-    constructor(public http: Http) {        
-        console.info("AppSvc created" + this.http);
-     }
+    constructor(public http: Http) {
+        console.info('AppSvc created' + this.http);
+    }
 
     postCliente(cliente: Cliente) {
         return this.http.post(this.url, cliente)

@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Response, Http, URLSearchParams } from '@angular/http';
-
-import { IKeyValuePair } from '../../shared/interfaces';
-
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
-
 import { Config } from '../../shared/config/env.config';
-
 import { Evento } from './evento.model';
 
 @Injectable()
@@ -44,4 +39,3 @@ export class EventoService {
         return Observable.throw(error.json().Error || 'Server error');
     }
 }
-

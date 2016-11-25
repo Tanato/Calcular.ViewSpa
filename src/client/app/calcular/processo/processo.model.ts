@@ -11,7 +11,7 @@ export class Processo {
     numerAutores: number;
     advogadoId: number;
     advogado: any;
-    peritoid: number;
+    peritoId: number;
     indicacaoId: number;
     honorario: number;
     processoDetalhes: ProcessoDetalhe[];

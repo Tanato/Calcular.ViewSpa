@@ -16,9 +16,9 @@ export class UsuarioService {
     private urlAccount: string = Config.API + 'account';
     private urlRole: string = Config.API + 'role';
 
-    constructor(public http: Http) {        
-        console.info("AppSvc created" + this.http);
-     }
+    constructor(public http: Http) {
+        console.info('AppSvc created' + this.http);
+    }
 
     postUsuario(usuario: Usuario) {
         return this.http.post(this.urlAccount + '/register', usuario)
@@ -57,8 +57,8 @@ export class UsuarioService {
             .catch(this.handleError);
     }
 
-    postAlterarSenha(model: AlterarSenha){
-         return this.http.post(this.urlAccount + '/changepassword', model)
+    postAlterarSenha(model: AlterarSenha) {
+        return this.http.post(this.urlAccount + '/changepassword', model)
             .catch(this.handleError);
     }
 
