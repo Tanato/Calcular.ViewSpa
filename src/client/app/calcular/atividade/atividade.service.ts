@@ -5,6 +5,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/config/env.config';
 import { Atividade, TipoAtividade } from './atividade.model';
+import { IKeyValuePair } from '../../shared/interfaces';
 
 @Injectable()
 export class AtividadeService {
@@ -29,15 +30,15 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
-    postAtividade(servico: Atividade) {
-        return this.http.post(this.url, servico)
+    postAtividade(atividade: Atividade) {
+        return this.http.post(this.url, atividade)
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    putAtividade(servico: Atividade) {
+    putAtividade(atividade: Atividade) {
         return this.http
-            .put(this.url, JSON.stringify(servico))
+            .put(this.url, JSON.stringify(atividade))
             .map(this.handleResult)
             .catch(this.handleError);
     }
@@ -59,7 +60,6 @@ export class AtividadeService {
         model.nome = tipoAtividade;
 
         return this.http.post(this.urlTipoAtividade,  model)
-            .map(this.handleResult)
             .catch(this.handleError);
     }
 
@@ -69,8 +69,14 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
-    getTipoAtividadeSelect() {
+    getTipoAtividade() {
         return this.http.get(this.urlTipoAtividade)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getTipoAtividadeSelect() : Observable<IKeyValuePair[]> {
+        return this.http.get(this.urlTipoAtividade + '/select')
             .map(this.handleResult)
             .catch(this.handleError);
     }

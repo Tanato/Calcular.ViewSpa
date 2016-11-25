@@ -133,7 +133,7 @@ export class ServicoDetailComponent implements OnInit {
     changeAtividade(tipo: number) {
         if (tipo !== null) {
             this.atividade.responsavel = null;
-            this.atividade.responsavelId = 0;
+            this.atividade.responsavelId = null;
             this.atividadeService.getResponsavel(tipo)
                 .subscribe((data: IKeyValuePair[]) => this.responsavel = data);
         }

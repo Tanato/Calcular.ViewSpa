@@ -20,8 +20,7 @@ export class TipoAtividadeComponent implements OnInit {
     private editId: number;
     private rows: Atividade[];
 
-    constructor(private service: AtividadeService, private toastr: ToastsManager) {
-    }
+    constructor(private service: AtividadeService, private toastr: ToastsManager) { }
 
     ngOnInit() {
         this.filter();
@@ -36,7 +35,7 @@ export class TipoAtividadeComponent implements OnInit {
     }
 
     filter() {
-        this.service.getTipoAtividadeSelect()
+        this.service.getTipoAtividade()
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
@@ -56,7 +55,7 @@ export class TipoAtividadeComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        this.service.deleteAtividade(id)
+        this.service.deleteTipoAtividade(id)
             .subscribe(x => {
                 this.toastr.success(this.modelName + ' excluído com sucesso!');
                 this.filter();

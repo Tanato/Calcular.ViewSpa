@@ -11,7 +11,7 @@ export class Atividade {
     observacao: string;
     tipoAtividadeId: number;
     tipoAtividade: TipoAtividade;
-    responsavelId: number;
+    responsavelId: string;
     responsavel: Usuario;
 }
 
