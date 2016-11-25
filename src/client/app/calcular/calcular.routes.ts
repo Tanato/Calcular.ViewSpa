@@ -7,14 +7,15 @@ import { UsuarioRoutes } from './usuario/index';
 import { HonorarioRoutes } from './honorario/index';
 import { ServicoRoutes } from './servico/index';
 import { EventoRoutes } from './evento/index';
+import { AtividadeRoutes } from './atividade/index';
 
 import { CalcularComponent } from './index';
 
 export const CalcularRoutes: Route[] = [
-  	{
-    	path: 'calcular',
-    	component: CalcularComponent,
-    	children: [
+	{
+		path: 'calcular',
+		component: CalcularComponent,
+		children: [
 			...HomeRoutes,
 			...ClienteRoutes,
 			...ProcessoRoutes,
@@ -22,6 +23,7 @@ export const CalcularRoutes: Route[] = [
 			...HonorarioRoutes,
 			...ServicoRoutes,
 			...EventoRoutes,
-    	]
-  	}
+			...AtividadeRoutes,
+		]
+	}
 ];

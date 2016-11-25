@@ -10,6 +10,7 @@ import { UsuarioMasterModule, UsuarioDetailModule, UsuarioAlterarSenhaModule } f
 import { HonorarioMasterModule, HonorarioDetailModule } from './honorario/honorario.module';
 import { ServicoMasterModule, ServicoDetailModule } from './servico/servico.module';
 import { EventoMasterModule } from './evento/evento.module';
+import { TipoAtividadeModule } from './atividade/atividade.module';
 
 import { CalcularComponent } from './calcular.component';
 
@@ -38,6 +39,7 @@ import { SidebarComponent } from '../shared/index';
         ServicoMasterModule,
         ServicoDetailModule,
         EventoMasterModule,
+        TipoAtividadeModule,
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]

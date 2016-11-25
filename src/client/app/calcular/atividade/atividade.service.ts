@@ -4,12 +4,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/config/env.config';
-import { Atividade } from './atividade.model';
+import { Atividade, TipoAtividade } from './atividade.model';
 
 @Injectable()
 export class AtividadeService {
 
     private url: string = Config.API + 'atividade';
+    private urlTipoAtividade: string = Config.API + 'tipoatividade';
 
     constructor(private http: Http) { }
 
@@ -53,8 +54,23 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
+    postTipoAtividade(tipoAtividade: string) {
+        var model = new TipoAtividade();
+        model.nome = tipoAtividade;
+
+        return this.http.post(this.urlTipoAtividade,  model)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    deleteTipoAtividade(id: number) {
+        return this.http.delete(this.urlTipoAtividade + '/' + id)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
     getTipoAtividadeSelect() {
-        return this.http.get(this.url + '/tipoatividade')
+        return this.http.get(this.urlTipoAtividade)
             .map(this.handleResult)
             .catch(this.handleError);
     }
