@@ -109,6 +109,15 @@ export class ProcessoService {
             .catch(this.handleError);
     }
 
+    getVaraSelect(filterText: string = ''): Observable<string[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+
+        return this.http.get(this.url + '/vara', { search: params })
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
     private handleResult(res: Response) {
         let body = res.json();
         return body || {};

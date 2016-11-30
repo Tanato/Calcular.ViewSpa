@@ -46,6 +46,11 @@ export class ProcessoDetailComponent implements OnInit {
         }
     }
 
+    vara = (startsWith: string): Observable<any[]> => {
+        var result = this.service.getVaraSelect(startsWith);
+        return result;
+    }
+
     clearNumero() {
         this.model.numero = '';
     }
