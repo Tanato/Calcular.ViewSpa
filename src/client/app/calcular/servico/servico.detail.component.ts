@@ -127,6 +127,9 @@ export class ServicoDetailComponent implements OnInit {
         this.service.getServicoById(this.model.id.toString())
             .subscribe((data: Servico) => {
                 this.model = data;
+                this.model.entrada = data.entrada.slice(0, 10);
+                this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
+                this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
             });
     }
 

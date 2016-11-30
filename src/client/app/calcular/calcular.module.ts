@@ -13,6 +13,8 @@ import { EventoMasterModule } from './evento/evento.module';
 import { TipoAtividadeModule } from './atividade/atividade.module';
 import { AtividadeExecucaoDetailModule } from './atividade/atividade.module';
 import { AtividadeExecucaoMasterModule } from './atividade/atividade.module';
+import { CobrancaMasterModule } from './cobranca/cobranca.module';
+import { CobrancaDetailModule } from './cobranca/cobranca.module';
 
 import { CalcularComponent } from './calcular.component';
 
@@ -44,6 +46,8 @@ import { SidebarComponent } from '../shared/index';
         TipoAtividadeModule,
         AtividadeExecucaoMasterModule,
         AtividadeExecucaoDetailModule,
+        CobrancaMasterModule,
+        CobrancaDetailModule,
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]
