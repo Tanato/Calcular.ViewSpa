@@ -1,4 +1,5 @@
 import { Usuario } from '../usuario/usuario.model';
+import { Servico } from '../servico/servico.model';
 
 export class Atividade {
     id: number;
@@ -13,6 +14,10 @@ export class Atividade {
     tipoAtividade: TipoAtividade;
     responsavelId: string;
     responsavel: Usuario;
+    servico: Servico;
+    tipoExecucao: number;
+    atividadeOrigemId: number;
+    atividadeOrigem: Atividade;
 }
 
 export class TipoAtividade {

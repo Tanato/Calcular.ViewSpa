@@ -11,6 +11,8 @@ import { HonorarioMasterModule, HonorarioDetailModule } from './honorario/honora
 import { ServicoMasterModule, ServicoDetailModule } from './servico/servico.module';
 import { EventoMasterModule } from './evento/evento.module';
 import { TipoAtividadeModule } from './atividade/atividade.module';
+import { AtividadeExecucaoDetailModule } from './atividade/atividade.module';
+import { AtividadeExecucaoMasterModule } from './atividade/atividade.module';
 
 import { CalcularComponent } from './calcular.component';
 
@@ -40,6 +42,8 @@ import { SidebarComponent } from '../shared/index';
         ServicoDetailModule,
         EventoMasterModule,
         TipoAtividadeModule,
+        AtividadeExecucaoMasterModule,
+        AtividadeExecucaoDetailModule,
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]

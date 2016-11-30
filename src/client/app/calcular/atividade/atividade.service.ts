@@ -12,6 +12,7 @@ export class AtividadeService {
 
     private url: string = Config.API + 'atividade';
     private urlTipoAtividade: string = Config.API + 'tipoatividade';
+    private urlExecucao: string = Config.API + 'execucao';
 
     constructor(private http: Http) { }
 
@@ -20,6 +21,15 @@ export class AtividadeService {
         params.set('filter', filterText);
 
         return this.http.get(this.url, { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    getAtividadesByUser(filterText: string): Observable<Atividade[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+
+        return this.http.get(this.url + '/currentuser', { search: params })
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
@@ -49,6 +59,12 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
+    executeAtividade(atividade: Atividade) {
+        return this.http.post(this.urlExecucao, atividade)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
     getResponsavel(tipo: number) {
         return this.http.get(this.url + '/responsavel/' + tipo)
             .map(this.handleResult)
@@ -59,7 +75,7 @@ export class AtividadeService {
         var model = new TipoAtividade();
         model.nome = tipoAtividade;
 
-        return this.http.post(this.urlTipoAtividade,  model)
+        return this.http.post(this.urlTipoAtividade, model)
             .catch(this.handleError);
     }
 
@@ -75,8 +91,14 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
-    getTipoAtividadeSelect() : Observable<IKeyValuePair[]> {
+    getTipoAtividadeSelect(): Observable<IKeyValuePair[]> {
         return this.http.get(this.urlTipoAtividade + '/select')
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getTipoImpressao() {
+        return this.http.get(this.url + '/tipoimpressao')
             .map(this.handleResult)
             .catch(this.handleError);
     }

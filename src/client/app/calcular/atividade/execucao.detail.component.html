@@ -1,0 +1,198 @@
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li><a href="Javascript:void(0);" routerLink="/calcular/atividade/execucao">Serviço</a>
+				</li>
+				<li class="active">
+					Execução de Atividade
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row col-xl-12">
+		<form role="form" #form="ngForm">
+			<fieldset [disabled]="false">
+				<div class="row">
+					<div class="form-group col-lg-3">
+						<label>Processo:</label>
+						<input class="form-control" [ngModel]="model.servico?.processo?.numero" name="numero" disabled required>
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Parte:</label>
+						<select class="form-control" id="parteSelect" [ngModel]="model.servico?.processo?.parte" name="parteSelect" disabled>
+                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+                        </select>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Prazo:</label>
+						<input type="date" class="form-control" id="prazo" #prazo="ngModel" [ngModel]="model.servico?.prazo" name="prazo" disabled/>
+					</div>
+					<div class="form-group col-lg-1">
+					</div>
+					<div class="form-group col-lg-3">
+						<label>&nbsp;</label>
+						<button class="btn btn-primary btn-block" [hidden]="!model.servico?.processo?.id" [routerLink]="['/calcular/processo/notes', {id: model.servico?.processo?.id}]"><i class="fa fa-plus"></i> Adicionar Detalhes</button>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-4">
+						<label>Advogado:</label>
+						<input class="form-control" id="advogado" [ngModel]="model.servico?.processo?.advogado?.nome" name="advogado" disabled/>
+					</div>
+					<div class="form-group col-lg-4">
+						<label>Autor:</label>
+						<input class="form-control" id="autor" [ngModel]="model.servico?.processo?.autor" name="autor" disabled/>
+					</div>
+					<div class="form-group col-lg-4">
+						<label>Réu:</label>
+						<input class="form-control" id="reu" [ngModel]="model.servico?.processo?.reu" name="reu" disabled/>
+					</div>
+				</div>
+
+
+				<!--Bloco de Exibição de atividade Origem-->
+				<div class="card card-block" *ngIf="model.atividadeOrigemId">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="row">
+								<div class="form-group col-lg-8">
+									<label>Atividade à Revisar:</label>
+									<select class="form-control" id="atividadeOrigemSelect" [ngModel]="model.atividadeOrigem?.tipoAtividadeId" name="atividadeOrigemSelect"
+										disabled>
+                                <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
+                            </select>
+								</div>
+								<div class="form-group col-lg-4">
+									<label>Data de Entrega:</label>
+									<input type="date" class="form-control" id="entregaOrigem" #entregaOrigem="ngModel" [ngModel]="model.atividadeOrigem?.entrega"
+										name="entregaOrigen" disabled/>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-lg-8">
+									<label>Responsável:</label>
+									<input class="form-control" id="responsavelOrigem" [ngModel]="model.atividadeOrigem?.responsavel?.name" name="responsavelOrigem"
+										disabled/>
+								</div>
+								<div class="form-group col-lg-4">
+									<label>Tipo de Impressao:</label>
+									<select class="form-control" id="tipoImpressaoOrigem" [ngModel]="model.atividadeOrigem?.tipoImpressao" name="tipoImpressaoOrigem"
+										disabled>
+										<option *ngFor="let item of tipoImpressao" [ngValue]="item.key">{{item.value}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group col-lg-6">
+							<label>Observações:</label>
+							<textarea class="form-control" rows="4" id="observacaoOrigem" [ngModel]="model.atividadeOrigem?.observacao" name="observacaoOrigem"
+								disabled></textarea>
+						</div>
+					</div>
+				</div>
+
+
+				<!--Bloco de Execução-->
+				<div class="card card-block" *ngIf="model.tipoAtividade?.nome !== 'Revisão'">
+					<div class="row">
+						<div class="form-group col-lg-4">
+							<label>Atividade:</label>
+							<select class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
+								required>
+                                <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
+                            </select>
+						</div>
+						<div class="form-group col-lg-2">
+							<label>Data de Entrega:</label>
+							<input type="date" class="form-control" id="entrega" #entrega="ngModel" [ngModel]="model.entrega" (ngModelChange)="model.entrega = $event"
+								name="entrega" required/>
+						</div>
+						<div class="form-group col-lg-2">
+							<label>Tempo:</label>
+							<input type="number" class="form-control" id="tempo" [(ngModel)]="model.tempo" name="tempo" required
+							/>
+						</div>
+
+						<div class="form-group col-lg-4">
+							<label>Tipo de Impressao:</label>
+							<select class="form-control" id="tipoImpressao" [(ngModel)]="model.tipoImpressao" name="tipoImpressao" required>
+								<option *ngFor="let item of tipoImpressao" [ngValue]="item.key">{{item.value}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-lg-6">
+							<label>Observações:</label>
+							<textarea class="form-control" rows="2" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+						</div>
+						<div class="form-group col-lg-2">
+						</div>
+						<div class="form-group col-lg-3">
+							<label>Status:</label>
+							<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucao" name="tipoExecucao" required>
+							<option value="0">Finalizar</option>
+							<option value="2">Refazer</option>
+						</select>
+						</div>
+					</div>
+				</div>
+
+				<!--Bloco de Revisão-->
+				<div class="card card-block" *ngIf="model.tipoAtividade?.nome === 'Revisão'">
+					<div class="row">
+						<div class="form-group col-lg-6">
+							<div class="row">
+								<div class="form-group col-lg-8">
+									<label>Atividade:</label>
+									<select class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
+										required disabled>
+										<option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
+									</select>
+								</div>
+								<div class="form-group col-lg-4">
+									<label>Data de Entrega:</label>
+									<input type="date" class="form-control" id="entrega" #entrega="ngModel" [ngModel]="model.entrega" (ngModelChange)="model.entrega = $event"
+										name="entrega" required/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-lg-8">
+								</div>
+								<div class="form-group col-lg-4">
+									<label>Status:</label>
+									<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucao" name="tipoExecucao" required>
+									<option value="0">Finalizar</option>
+									<option value="2">Refazer</option>
+								</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-lg-6">
+							<label>Observações:</label>
+							<textarea class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<div class="row">
+				<div class="form-group col-lg-8">
+				</div>
+				<div class="col-lg-2">
+					<label>&nbsp;</label>
+					<button routerLink="/calcular/atividade/execucao" class="btn btn-default btn-block">Fechar</button>
+				</div>
+				<div class="col-lg-2 text-center">
+					<label>&nbsp;</label>
+					<button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()"><i class="fa fa-plus"></i> Salvar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
