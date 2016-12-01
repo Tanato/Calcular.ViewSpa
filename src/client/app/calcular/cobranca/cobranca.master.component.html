@@ -6,33 +6,33 @@
 				<li>
 					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
 				</li>
-				<li class="active">Honorários</li>
+				<li class="active">Cobrança de Honorários</li>
 			</ol>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xl-6">
+		<div class="col-xl-8">
 		</div>
 		<div class="form-group input-group col-xl-4">
 			<input type="text" class="form-control" [(ngModel)]="filterText" (keydown.Enter)="filter()">
 			<span class="input-group-btn"><button class="btn btn-secondary" (click)="filter()" type="button"><i class="fa fa-search"></i></button></span>
 		</div>
-		<div class="col-xl-2 text-center">
+		<!--<div class="col-xl-2 text-center">
 			<a class="btn btn-primary" routerLink="/calcular/honorario/cobranca/detail"><i class="fa fa-plus"></i> Adicionar</a>
-		</div>
+		</div>-->
 	</div>
 	<div class="row">
 		<div class="table-responsive">
 			<table class="table table-hover table-striped table-sm">
 				<thead>
 					<tr>
-						<th width="70"></th>
-						<th>Nº Processo</th>
+						<th width="50"></th>
+						<th width="200">Nº Processo</th>
 						<th>Autor</th>
 						<th>Réu</th>
-						<th>Data Cobrança</th>
-						<th>Previsão Pagamento</th>
-						<th>Valor Pendente</th>
+						<th width="90">Data Cobrança</th>
+						<th width="100">Previsão Pagamento</th>
+						<th width="90">Valor Pendente</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -9,6 +9,7 @@ import { ServicoRoutes } from './servico/index';
 import { EventoRoutes } from './evento/index';
 import { AtividadeRoutes } from './atividade/index';
 import { CobrancaRoutes } from './cobranca/index';
+import { PropostaRoutes } from './proposta/index';
 
 import { CalcularComponent } from './index';
 
@@ -26,6 +27,7 @@ export const CalcularRoutes: Route[] = [
 			...EventoRoutes,
 			...AtividadeRoutes,
 			...CobrancaRoutes,
+			...PropostaRoutes,
 		]
 	}
 ];

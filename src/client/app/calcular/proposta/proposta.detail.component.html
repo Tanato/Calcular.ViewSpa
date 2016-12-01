@@ -5,10 +5,10 @@
             <ol class="breadcrumb">
                 <li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
                 </li>
-                <li><a href="Javascript:void(0);" routerLink="/calcular/honorario/cobranca">Honorário</a>
+                <li><a href="Javascript:void(0);" routerLink="/calcular/honorario/proposta">Honorário</a>
                 </li>
                 <li class="active">
-                    Cobrança de Honorários
+                    Proposta de Honorários
                 </li>
             </ol>
         </div>
@@ -68,29 +68,36 @@
                 <fieldset>
                     <div class="row">
                         <div class="form-group col-lg-2">
-                            <label>Data Cobrança:</label>
-                            <input type="date" class="form-control" id="dataCobranca" [ngModel]="cobranca.dataCobranca" (ngModelChange)="cobranca.dataCobranca = $event"
-                                name="dataCobranca" required/>
+                            <label>Data Proposta:</label>
+                            <input type="date" class="form-control" id="dataProposta" [ngModel]="proposta.dataProposta" (ngModelChange)="proposta.dataProposta = $event"
+                                name="dataProposta" required/>
                         </div>
                         <div class="form-group col-lg-2">
-                            <label>Previsao Pagamento:</label>
-                            <input type="date" class="form-control" id="previsaoPagamento" [ngModel]="cobranca.previsaoPagamento"
-                                (ngModelChange)="cobranca.previsaoPagamento = $event" name="previsaoPagamento" required/>
+                            <label>Honorários:</label>
+                            <input type="date" class="form-control" id="valorProposta" [ngModel]="proposta.valorProposta"
+                                (ngModelChange)="proposta.valorProposta = $event" name="valorProposta" required/>
                         </div>
                         <div class="form-group col-lg-6">
                             <label>Contato:</label>
-                            <input class="form-control" ng2-auto-complete [source]="contato" id="contato" [(ngModel)]="cobranca.contato" name="contato"
+                            <input class="form-control" ng2-auto-complete [source]="contato" id="contato" [(ngModel)]="proposta.contato" name="contato"
                                 min-chars="2" [accept-user-input]="true" required/>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>Fechou Proposta?</label>
+                            <select class="form-control" id="fechadoSelect" [ngModel]="model?.fechado" name="fechadoSelect" disabled>
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-10">
                             <label>Observação:</label>
-                            <input class="form-control" id="observacao" [(ngModel)]="cobranca.observacao" name="observacao" />
+                            <input class="form-control" id="observacao" [(ngModel)]="proposta.observacao" name="observacao" />
                         </div>
                         <div class="col-lg-2 text-center">
                             <label>&nbsp;</label>
-                            <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="addCobranca()"><i class="fa fa-plus"></i> Adicionar</button>
+                            <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="addProposta()"><i class="fa fa-plus"></i> Adicionar</button>
                         </div>
                     </div>
                 </fieldset>
@@ -101,15 +108,15 @@
                         <thead class="thead-default">
                             <tr>
                                 <th width="40"></th>
-                                <th width="125">Data Cobrança</th>
-                                <th width="160">Previsão Pagamento</th>
-                                <th width="125">Valor Pendente</th>
+                                <th width="125">Honorários</th>
+                                <th width="160">Data Proposta</th>
                                 <th width="180">Contato</th>
+                                <th>Status Fechamento</th>
                                 <th>Observação</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of model?.cobrancas">
+                            <tr *ngFor="let item of model?.propostas">
                                 <td>
                                     &nbsp;
                                     <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
@@ -128,10 +135,10 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ item?.dataCobranca | date:"dd/MM/yyyy"}}</td>
-                                <td>{{ item?.previsaoPagamento | date:"dd/MM/yyyy"}}</td>
-                                <td>{{ item?.valorPendente }}</td>
+                                <td>{{ item?.valorProposta }}</td>
+                                <td>{{ item?.dataProposta | date:"dd/MM/yyyy"}}</td>
                                 <td>{{ item?.contato }}</td>
+                                <td>{{ item?.status ? 'Sim' : 'Não' }}</td>
                                 <td>{{ item.observacao }}</td>
                             </tr>
                         </tbody>
@@ -144,7 +151,7 @@
                 </div>
                 <div class="col-lg-2">
                     <label>&nbsp;</label>
-                    <button routerLink="/calcular/honorario/cobranca" class="btn btn-default btn-block">Fechar</button>
+                    <button routerLink="/calcular/honorario/proposta" class="btn btn-default btn-block">Fechar</button>
                 </div>
             </div>
         </form>

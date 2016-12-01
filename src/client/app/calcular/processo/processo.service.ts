@@ -16,6 +16,7 @@ export class ProcessoService {
 
     private url: string = Config.API + 'processo';
     private urlCliente: string = Config.API + 'cliente';
+    private urlUser: string = Config.API + 'user';
 
     constructor(private http: Http) { }
 
@@ -94,17 +95,17 @@ export class ProcessoService {
             .catch(this.handleError);
     }
 
-    getIndicacaoSelect(filter: string = ''): Observable<IKeyValuePair[]> {
+    getUserSelect(filter: string = ''): Observable<IKeyValuePair[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filter);
 
-        return this.http.get(this.urlCliente + '/select', { search: params })
+        return this.http.get(this.urlUser + '/select', { search: params })
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    getIndicacaoSelectById(id: number): Observable<IKeyValuePair> {
-        return this.http.get(this.urlCliente + '/select/' + id)
+    getUserSelectById(id: string): Observable<IKeyValuePair> {
+        return this.http.get(this.urlUser + '/select/' + id)
             .map(this.handleResult)
             .catch(this.handleError);
     }

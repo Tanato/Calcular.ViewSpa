@@ -27,6 +27,7 @@ export class ProcessoDetailComponent implements OnInit {
 
     public advogadoInit: IKeyValuePair[];
     public indicacaoInit: IKeyValuePair[];
+    public peritoInit: IKeyValuePair[];
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
@@ -76,8 +77,12 @@ export class ProcessoDetailComponent implements OnInit {
                                 .subscribe((x: IKeyValuePair) => { this.advogadoInit = [x]; });
                         }
                         if (this.model.indicacaoId) {
-                            this.service.getIndicacaoSelectById(this.model.indicacaoId)
+                            this.service.getUserSelectById(this.model.indicacaoId)
                                 .subscribe((x: IKeyValuePair) => { this.indicacaoInit = [x]; });
+                        }
+                        if (this.model.peritoId) {
+                            this.service.getUserSelectById(this.model.peritoId)
+                                .subscribe((x: IKeyValuePair) => { this.peritoInit = [x]; });
                         }
                     });
             } else {
@@ -129,26 +134,26 @@ export class ProcessoDetailComponent implements OnInit {
         if (value && value.length > 2) {
             clearTimeout(this.wtoInput);
             this.wtoInput = setTimeout(() => {
-                this.indicacao = this.service.getIndicacaoSelect(value);
+                this.indicacao = this.service.getUserSelect(value);
             }, 500);
         }
     }
 
-    refreshValueIndicacao(value: IKeyValuePair): void {
+    refreshValueIndicacao(value: any): void {
         this.model.indicacaoId = value.key;
     }
 
-    // Indicacao select    
+    // Perito select    
     public typedPerito(value: string): void {
         if (value && value.length > 2) {
             clearTimeout(this.wtoInput);
             this.wtoInput = setTimeout(() => {
-                this.perito = this.service.getIndicacaoSelect(value);
+                this.perito = this.service.getUserSelect(value);
             }, 500);
         }
     }
 
-    refreshValuePerito(value: IKeyValuePair): void {
+    refreshValuePerito(value: any): void {
         this.model.peritoId = value.key;
     }
 }

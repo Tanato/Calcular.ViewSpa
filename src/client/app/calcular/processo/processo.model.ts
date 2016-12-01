@@ -1,5 +1,6 @@
 import { Servico } from '../servico/servico.model';
 import { Honorario } from '../honorario/honorario.model';
+import { Cliente } from '../cliente/cliente.model';
 
 export class Processo {
     id: number;
@@ -10,9 +11,9 @@ export class Processo {
     parte: number;
     numerAutores: number;
     advogadoId: number;
-    advogado: any;
-    peritoId: number;
-    indicacaoId: number;
+    advogado: Cliente;
+    peritoId: string;
+    indicacaoId: string;
     honorario: number;
     processoDetalhes: ProcessoDetalhe[];
     honorarios: Honorario[];
