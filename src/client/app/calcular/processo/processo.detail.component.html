@@ -34,7 +34,7 @@
 					<div class="form-group col-lg-6">
 						<label>Advogado/Cliente:</label>
 						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)"
-							idField="id" textField="nome" placeholder="Digite 3 letras para pesquisar" required="true">
+							idField="key" textField="value" placeholder="Digite 3 letras para pesquisar" required="true">
 						</ng-select>
 					</div>
 				</div>

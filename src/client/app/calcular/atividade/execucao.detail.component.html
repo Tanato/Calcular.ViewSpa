@@ -15,7 +15,7 @@
 	</div>
 	<div class="row col-xl-12">
 		<form role="form" #form="ngForm">
-			<fieldset [disabled]="false">
+			<fieldset [disabled]="model.tipoExecucao !== 0">
 				<div class="row">
 					<div class="form-group col-lg-3">
 						<label>Processo:</label>
@@ -37,7 +37,7 @@
 
 				<div class="row">
 					<div class="form-group col-lg-4">
-						<label>Advogado:</label>
+						<label>Advogado/Cliente:</label>
 						<input class="form-control" id="advogado" [ngModel]="model.servico?.processo?.advogado?.nome" name="advogado" disabled/>
 					</div>
 					<div class="form-group col-lg-4">
@@ -50,14 +50,14 @@
 					</div>
 				</div>
 
-
 				<!--Bloco de Exibição de atividade Origem-->
 				<div class="card card-block" *ngIf="model.atividadeOrigemId">
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="row">
 								<div class="form-group col-lg-8">
-									<label>Atividade à Revisar:</label>
+									<label *ngIf="model.etapaAtividade === 1">Atividade à Revisar:</label>
+									<label *ngIf="model.etapaAtividade === 2">Atividade à Refazer:</label>
 									<select class="form-control" id="atividadeOrigemSelect" [ngModel]="model.atividadeOrigem?.tipoAtividadeId" name="atividadeOrigemSelect"
 										disabled>
                                 <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
@@ -72,7 +72,8 @@
 
 							<div class="row">
 								<div class="form-group col-lg-8">
-									<label>Responsável:</label>
+									<label *ngIf="model.etapaAtividade === 1">Responsável:</label>
+									<label *ngIf="model.etapaAtividade === 2">Revisor:</label>
 									<input class="form-control" id="responsavelOrigem" [ngModel]="model.atividadeOrigem?.responsavel?.name" name="responsavelOrigem"
 										disabled/>
 								</div>
@@ -95,13 +96,14 @@
 				</div>
 
 
-				<!--Bloco de Execução-->
-				<div class="card card-block" *ngIf="model.tipoAtividade?.nome !== 'Revisão'">
+				<!--Bloco de Execução de atividade Original e Refazer. não é exibido quando Revisão-->
+				<div class="card card-block" *ngIf="model.etapaAtividade !== 1">
 					<div class="row">
 						<div class="form-group col-lg-4">
 							<label>Atividade:</label>
+							<input class="form-control" value="Refazer" disabled *ngIf="model.etapaAtividade === 2" />
 							<select class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
-								required>
+								*ngIf="model.etapaAtividade === 0" required>
                                 <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
                             </select>
 						</div>
@@ -112,67 +114,65 @@
 						</div>
 						<div class="form-group col-lg-2">
 							<label>Tempo: (minutos)</label>
-							<input type="number" class="form-control" id="tempo" [(ngModel)]="model.tempo" name="tempo" required
-							/>
+							<input type="number" class="form-control" id="tempo" [(ngModel)]="model.tempo" name="tempo" required />
 						</div>
 
-						<div class="form-group col-lg-4">
+						<div class="form-group col-lg-2">
+							<label>Status:</label>
+							<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucaoNew" name="tipoExecucao" required>
+								<option value="1">Finalizar</option>
+								<option value="2">Revisar</option>
+							</select>
+						</div>
+						<div class="form-group col-lg-2" *ngIf="model.etapaAtividade === 0">
 							<label>Tipo de Impressão:</label>
-							<select class="form-control" id="tipoImpressao" [(ngModel)]="model.tipoImpressao" name="tipoImpressao" required>
+							<select class="form-control" id="tipoImpressao" [(ngModel)]="model.tipoImpressao" name="tipoImpressao" [required]="model.etapaAtividade === 0">
 								<option *ngFor="let item of tipoImpressao" [ngValue]="item.key">{{item.value}}</option>
 							</select>
 						</div>
 					</div>
 					<div class="row">
-						<div class="form-group col-lg-6">
+						<div class="form-group col-lg-12">
 							<label>Observações:</label>
-							<textarea class="form-control" rows="2" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
-						</div>
-						<div class="form-group col-lg-2">
-						</div>
-						<div class="form-group col-lg-3">
-							<label>Status:</label>
-							<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucao" name="tipoExecucao" required>
-							<option value="1">Finalizar</option>
-							<option value="2">Revisar</option>
-						</select>
+							<textarea class="form-control" rows="1" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
 						</div>
 					</div>
 				</div>
 
-				<!--Bloco de Revisão-->
-				<div class="card card-block" *ngIf="model.tipoAtividade?.nome === 'Revisão'">
+				<!--Bloco de execução de Revisão. só é exibido quando atividade for de Revisão-->
+				<div class="card card-block" *ngIf="model.etapaAtividade === 1">
 					<div class="row">
-						<div class="form-group col-lg-6">
+						<div class="form-group col-lg-4">
 							<div class="row">
-								<div class="form-group col-lg-8">
+								<div class="form-group col-lg-12">
 									<label>Atividade:</label>
-									<select class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
-										required disabled>
-										<option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
-									</select>
+									<input class="form-control" value="Revisão" disabled/>
 								</div>
-								<div class="form-group col-lg-4">
+							</div>
+							<div class="row">
+								<div class="form-group col-lg-6">
 									<label>Data de Entrega:</label>
 									<input type="date" class="form-control" id="entrega" #entrega="ngModel" [ngModel]="model.entrega" (ngModelChange)="model.entrega = $event"
 										name="entrega" required/>
 								</div>
-							</div>
-							<div class="row">
-								<div class="form-group col-lg-8">
-								</div>
-								<div class="form-group col-lg-4">
+								<div class="form-group col-lg-6">
 									<label>Status:</label>
-									<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucao" name="tipoExecucao" required>
-									<option value="1">Finalizar</option>
-									<option value="3">Refazer</option>
-								</select>
+									<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucaoNew" name="tipoExecucao" required>
+										<option value="1">Finalizar</option>
+										<option value="3">Refazer</option>
+									</select>
 								</div>
 							</div>
 						</div>
-						<div class="form-group col-lg-6">
-							<label>Observações:</label>
-							<textarea class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+						<div class="form-group col-lg-8">
+							<div class="form-group col-lg-6">
+								<label>Observações para Refazer:</label>
+								<textarea class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Observações apenas para Revisor:</label>
+								<textarea class="form-control" rows="4" id="observacaoRevisor" [(ngModel)]="model.observacaoRevisor" name="observacaoRevisor"></textarea>
+							</div>
 						</div>
 					</div>
 				</div>

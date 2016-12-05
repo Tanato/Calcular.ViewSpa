@@ -17,10 +17,10 @@ export class Atividade {
     responsavel: Usuario;
     servico: Servico;
     tipoExecucao: number;
+    tipoExecucaoNew: number;
     etapaAtividade: number;
     atividadeOrigemId: number;
     atividadeOrigem: Atividade;
-    status: string;
 }
 
 export class TipoAtividade {

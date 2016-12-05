@@ -85,7 +85,9 @@ export class ProcessoDetailComponent implements OnInit {
                         this.model = data;
                         if (this.model.advogadoId) {
                             this.service.getAdvogadoSelectById(this.model.advogadoId)
-                                .subscribe((x: IKeyValuePair) => { this.advogadoInit = [x]; });
+                                .subscribe((x: any) => {
+                                    this.advogadoInit = [x];
+                                });
                         }
                     });
             } else {
@@ -124,14 +126,14 @@ export class ProcessoDetailComponent implements OnInit {
             clearTimeout(this.wtoInput);
             this.wtoInput = setTimeout(() => {
                 this.service.getAdvogadoSelect(value).subscribe(data => {
-                   this.advogado = data;
+                    this.advogado = data;
                 });
             }, 500);
         }
     }
 
-    refreshValueAdvogado(value: any): void {
-        this.model.advogado = _.find(this.advogado, (x) => x.id === value.id) ;
-        this.model.advogadoId = value.id;
+    refreshValueAdvogado(value: IKeyValuePair): void {
+        this.model.advogado = _.find(this.advogado, (x) => x.id === value.key);
+        this.model.advogadoId = value.key;
     }
 }

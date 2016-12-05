@@ -30,7 +30,7 @@
 						<th width="220">Numero do Processo</th>
 						<th>Autor</th>
 						<th>Réu</th>
-						<th>Atividade</th>
+						<th colspan="2">Atividade</th>
 						<th width="120">Prazo</th>
 						<th width="150">Status</th>
 					</tr>
@@ -46,8 +46,9 @@
 						<td>{{ item.servico?.processo?.autor }}</td>
 						<td>{{ item.servico?.processo?.reu }}</td>
 						<td>{{ item.tipoAtividade?.nome }}</td>
+						<td>{{ item.etapaAtividade === 2 ? "Refazer" : item.etapaAtividade === 1 ? "Revisão" : "" }}</td>
 						<td>{{ item.servico?.prazo | date:"dd/MM/yyyy" }}</td>
-						<td>{{ item.status }}</td>
+						<td>{{ item.tipoExecucao === 0 ? "Pendente" : "Finalizado" }}</td>
 					</tr>
 				</tbody>
 			</table>

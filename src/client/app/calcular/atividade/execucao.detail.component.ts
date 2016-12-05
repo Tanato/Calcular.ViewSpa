@@ -63,13 +63,24 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
                 this.service.getAtividadeById(id)
                     .subscribe((data: Atividade) => {
                         this.model = data;
+                        this.model.tipoExecucaoNew = data.tipoExecucao !== 0 ? data.tipoExecucao : null;
+
+                        this.model.entrega = data.entrega ? data.entrega.slice(0, 10) : null;
                         this.model.servico.prazo = data.servico.prazo ? data.servico.prazo.slice(0, 10) : null;
+
+                        if (data.atividadeOrigem) {
+                            this.model.atividadeOrigem.entrega = data.atividadeOrigem.entrega
+                                ? data.atividadeOrigem.entrega.slice(0, 10)
+                                : null;
+                        }
                     });
             }
         });
     }
 
     onSubmit() {
+        this.model.tipoExecucao = this.model.tipoExecucaoNew;
+
         this.service.executeAtividade(this.model)
             .subscribe(data => {
                 this.onCancel();

@@ -31,7 +31,7 @@
                         </select>
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Advogado:</label>
+                        <label>Advogado/Cliente:</label>
                         <input class="form-control" id="advogado" [ngModel]="model.processo?.advogado?.nome" name="advogado" disabled/>
                     </div>
                     <div class="form-group col-lg-2">
@@ -64,12 +64,12 @@
                     <div class="form-group col-lg-2">
                         <label>Prazo:</label>
                         <input type="date" class="form-control" id="prazo" #prazo="ngModel" [ngModel]="model.prazo" (ngModelChange)="model.prazo = $event"
-                            name="prazo" required/>
+                            name="prazo" min="model.entrada | date" required/>
                     </div>
                     <div class="form-group col-lg-2">
                         <label>Data de Saída:</label>
                         <input type="date" class="form-control" id="saida" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event"
-                            name="saida" />
+                            name="saida" min="model.entrada | date"/>
                     </div>
                     <div class="form-group col-lg-2">
                     </div>
