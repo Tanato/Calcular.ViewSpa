@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PropostaService } from './proposta.service';
 import { Processo } from '../processo/processo.model';
+import { Proposta } from '../proposta/proposta.model';
 import { ProcessoService } from '../processo/processo.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -11,8 +12,8 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class PropostaMasterComponent implements OnInit {
 
-    private data: Processo[];
-    private rows: Processo[];
+    private data: Proposta[];
+    private rows: Proposta[];
 
     private totalItems: number = 0;
     private currentPage: number = 1;
@@ -30,7 +31,7 @@ export class PropostaMasterComponent implements OnInit {
     }
 
     filter() {
-        this.service.getProcessos(this.filterText)
+        this.service.getPropostas(this.filterText)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

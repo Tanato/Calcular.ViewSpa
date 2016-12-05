@@ -32,6 +32,7 @@
 						<th>Nº Processo</th>
 						<th>Autor</th>
 						<th>Réu</th>
+						<th>Advogado/Cliente</th>
 						<th>Atividade</th>
 						<th>Impressão</th>
 						<th>Prazo</th>
@@ -49,6 +50,7 @@
 						<td>{{ item.processo?.numero }}</td>
 						<td>{{ item.processo?.autor }}</td>
 						<td>{{ item.processo?.reu }}</td>
+						<td>{{ item.processo?.advogado?.nome }}</td>
 						<td>{{ item.atividades[0]?.nome }}</td>
 						<td>{{ item.impressaoDescricao }}</td>
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>

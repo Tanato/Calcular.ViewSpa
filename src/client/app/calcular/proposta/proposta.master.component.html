@@ -11,28 +11,28 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xl-8">
+		<div class="col-xl-6">
 		</div>
 		<div class="form-group input-group col-xl-4">
 			<input type="text" class="form-control" [(ngModel)]="filterText" (keydown.Enter)="filter()">
 			<span class="input-group-btn"><button class="btn btn-secondary" (click)="filter()" type="button"><i class="fa fa-search"></i></button></span>
 		</div>
-		<!--<div class="col-xl-2 text-center">
+		<div class="col-xl-2 text-center">
 			<a class="btn btn-primary" routerLink="/calcular/honorario/proposta/detail"><i class="fa fa-plus"></i> Adicionar</a>
-		</div>-->
+		</div>
 	</div>
 	<div class="row">
 		<div class="table-responsive">
 			<table class="table table-hover table-striped table-sm">
 				<thead>
 					<tr>
-						<th width="70"></th>
-						<th width="200">Nº Processo</th>
+						<th width="50"></th>
+						<th width="210">Nº Processo</th>
 						<th>Advogado</th>
-						<th>Telefone</th>
+						<th width="140">Telefone</th>
 						<th width="100">Honorário</th>
-						<th width="100">Data Proposta</th>
-						<th>Status Fechamento</th>
+						<th width="120">Data Proposta</th>
+						<th width="100">Status Fechamento</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,9 +42,9 @@
 							<a [routerLink]="['/calcular/honorario/proposta/detail', {id: item.id}]"><i class="fa fa-handshake-o"></i></a> &nbsp;
 						</td>
 						<td>{{ item.numero }}</td>
-						<td>{{ item.advogado?.nome }}</td>
-						<td>{{ item.advotado?.celular ? item.advotado?.celular : item.advotado?.telefone }}</td>
-						<td>{{ item.valorProposta }}</td>
+						<td>{{ item.contato }}</td>
+						<td>{{ item.celular ? item.celular : item.telefone }}</td>
+						<td>{{ item.honorario }}</td>
 						<td>{{ item.dataProposta | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.fechado ? 'Sim' : 'Não' }}</td>
 					</tr>

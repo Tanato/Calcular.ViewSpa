@@ -18,133 +18,80 @@
             <fieldset [disabled]="false">
                 <div class="row">
                     <div class="form-group col-lg-3">
-                        <label>Processo:</label>
-                        <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" value-property-name="none" [disabled]="id | async"
-                            display-property-name="numero" name="numero" min-chars="3" required>
+                        <label>Tipo:</label>
+                        <select class="form-control" id="localSelect" [disabled]="model.id" [(ngModel)]="model.local" (ngModelChange)="clearNumero()"
+                            name="localSelect" required>
+							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
+						</select>
                     </div>
-
                     <div class="form-group col-lg-3">
-                        <label>Parte:</label>
-                        <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
-                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
-                        </select>
+                        <label>Numero:</label>
+                        <input class="form-control" [disabled]="!(model.local >= 0)" [textMask]="{mask: maskNumeroProcesso }" id="numero"
+                            [(ngModel)]="model.numero" name="numero" required/>
                     </div>
-
                     <div class="form-group col-lg-6">
-                        <label>Advogado/Cliente:</label>
-                        <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" disabled/>
+                        <label>Contato:</label>
+                        <input class="form-control" ng2-auto-complete [source]="contatos" [ngModel]="model.contato" (ngModelChange)="contatoChange($event)"
+                            value-property-name="none" display-property-name="nome" name="contato" min-chars="3" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-lg-6">
-                        <label>Autor:</label>
-                        <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
+                        <label>Email:</label>
+                        <input class="form-control" id="email" [(ngModel)]="model.email" name="email" required pattern="[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$"
+                        />
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label>Réu:</label>
-                        <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
+                    <div class="form-group col-lg-3">
+                        <label>Telefone:</label>
+                        <input [textMask]="{mask: maskTelefone}" id="telefone" [(ngModel)]="model.telefone" name="telefone" class="form-control"
+                            [required]="!model.celular" />
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Celular:</label>
+                        <input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" [required]="!model.telefone"
+                        />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-lg-3">
                         <label>Honorários:</label>
-                        <input class="form-control" id="honorario" [ngModel]="model?.honorario" name="honorario" required disabled/>
+                        <input class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario" required disabled/>
+                    </div>
+
+                    <div class="form-group col-lg-3">
+                        <label>Data da Proposta:</label>
+                        <input type="date" class="form-control" id="dataProposta" #dataProposta="ngModel" [ngModel]="model.dataProposta" (ngModelChange)="model.dataProposta = $event"
+                            name="dataProposta" />
                     </div>
                     <div class="form-group col-lg-3">
-                        <label>Valor Pendente:</label>
-                        <input class="form-control" id="total" [ngModel]="model?.total" name="total" required disabled/>
+                        <label>Como Chegou à Calcular:</label>
+                        <select class="form-control" id="comoChegouSelect" [(ngModel)]="model.comoChegou" name="comoChegouSelect">
+							<option *ngFor="let item of comoChegou" [ngValue]="item.key">{{item.value}}</option>
+						</select>
                     </div>
                     <div class="form-group col-lg-3">
-                        <label>Nº de Autores:</label>
-                        <input class="form-control" id="numeroAutores" [ngModel]="model?.numeroAutores" name="numeroAutores" disabled/>
+                        <label [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3">Descrição:</label>
+                        <input [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe"
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Observações:</label>
+                        <textarea class="form-control" rows="2" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Fechou Proposta?</label>
+                        <select class="form-control" id="fechadoSelect" [ngModel]="model?.fechado" name="fechadoSelect" disabled>
+                                <option value="0">Não</option>
+                                <option value="1">Sim</option>
+                            </select>
                     </div>
                 </div>
             </fieldset>
             <br>
-
-            <div class="card card-block">
-                <fieldset>
-                    <div class="row">
-                        <div class="form-group col-lg-2">
-                            <label>Data Proposta:</label>
-                            <input type="date" class="form-control" id="dataProposta" [ngModel]="proposta.dataProposta" (ngModelChange)="proposta.dataProposta = $event"
-                                name="dataProposta" required/>
-                        </div>
-                        <div class="form-group col-lg-2">
-                            <label>Honorários:</label>
-                            <input type="date" class="form-control" id="valorProposta" [ngModel]="proposta.valorProposta"
-                                (ngModelChange)="proposta.valorProposta = $event" name="valorProposta" required/>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label>Contato:</label>
-                            <input class="form-control" ng2-auto-complete [source]="contato" id="contato" [(ngModel)]="proposta.contato" name="contato"
-                                min-chars="2" [accept-user-input]="true" required/>
-                        </div>
-                        <div class="form-group col-lg-2">
-                            <label>Fechou Proposta?</label>
-                            <select class="form-control" id="fechadoSelect" [ngModel]="model?.fechado" name="fechadoSelect" disabled>
-                                <option value="0">Não</option>
-                                <option value="1">Sim</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-10">
-                            <label>Observação:</label>
-                            <input class="form-control" id="observacao" [(ngModel)]="proposta.observacao" name="observacao" />
-                        </div>
-                        <div class="col-lg-2 text-center">
-                            <label>&nbsp;</label>
-                            <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="addProposta()"><i class="fa fa-plus"></i> Adicionar</button>
-                        </div>
-                    </div>
-                </fieldset>
-                <br>
-
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped table-sm">
-                        <thead class="thead-default">
-                            <tr>
-                                <th width="40"></th>
-                                <th width="125">Honorários</th>
-                                <th width="160">Data Proposta</th>
-                                <th width="180">Contato</th>
-                                <th>Status Fechamento</th>
-                                <th>Observação</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of model?.propostas">
-                                <td>
-                                    &nbsp;
-                                    <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
-                                    <div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-                                        aria-hidden="true">
-                                        <div class="modal-dialog modal-sm">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Deseja excluir o registro?</h5>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Excluir</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{ item?.valorProposta }}</td>
-                                <td>{{ item?.dataProposta | date:"dd/MM/yyyy"}}</td>
-                                <td>{{ item?.contato }}</td>
-                                <td>{{ item?.status ? 'Sim' : 'Não' }}</td>
-                                <td>{{ item.observacao }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="form-group col-lg-10">

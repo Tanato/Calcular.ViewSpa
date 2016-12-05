@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/config/env.config';
-import { Processo } from '../processo/processo.model';
 import { Proposta } from './proposta.model';
 
 @Injectable()
@@ -14,17 +13,17 @@ export class PropostaService {
 
     constructor(private http: Http) { }
 
-    getProcessos(filterText: string): Observable<Processo[]> {
+    getPropostas(filterText: string): Observable<Proposta[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filterText);
 
-        return this.http.get(this.url + '/processo/', { search: params })
+        return this.http.get(this.url, { search: params })
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
 
-    getProcessoById(id: string): Observable<Processo> {
-        return this.http.get(this.url + '/processo/' + id)
+    getPropostaById(id: string): Observable<Proposta> {
+        return this.http.get(this.url + '/' + id)
             .map(this.handleResult)
             .catch(this.handleError);
     }
@@ -53,6 +52,18 @@ export class PropostaService {
         params.set('filter', filterText);
 
         return this.http.get(this.url + '/contato', { search: params })
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getComoChegouSelect() {
+        return this.http.get(this.url + '/comoChegou')
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getMotivoSelect() {
+        return this.http.get(this.url + '/motivo')
             .map(this.handleResult)
             .catch(this.handleError);
     }
