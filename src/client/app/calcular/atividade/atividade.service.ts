@@ -25,9 +25,10 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
-    getAtividadesByUser(filterText: string): Observable<Atividade[]> {
+    getAtividadesByUser(filterText: string, all: boolean): Observable<Atividade[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filterText);
+        params.set('all', all ? 'true' : 'false');
 
         return this.http.get(this.url + '/currentuser', { search: params })
             .map((res: Response) => res.json())

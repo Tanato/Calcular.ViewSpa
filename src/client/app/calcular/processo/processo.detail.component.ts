@@ -22,12 +22,7 @@ export class ProcessoDetailComponent implements OnInit {
     public local: any[];
 
     public advogado: Observable<IKeyValuePair[]>;
-    public indicacao: Observable<IKeyValuePair[]>;
-    public perito: Observable<IKeyValuePair[]>;
-
     public advogadoInit: IKeyValuePair[];
-    public indicacaoInit: IKeyValuePair[];
-    public peritoInit: IKeyValuePair[];
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
@@ -39,17 +34,32 @@ export class ProcessoDetailComponent implements OnInit {
         private router: Router,
         private toastr: ToastsManager) { }
 
-    public maskNumeroProcesso = () => {
+    public maskNumeroProcesso = (value: any[]) => {
         if (this.local && this.model && this.model.local !== null) {
-            return <string[]>this.local[this.model.local].mask;
+            if (this.local[this.model.local].mask) {
+                return this.local[this.model.local].mask;
+            } else {
+                let mask: any[] = [];
+                for (let i = 0; i < value.length; i++) {
+                    mask.push(/.*/);
+                }
+                return mask;
+            };
         } else {
             return [''];
         }
     }
 
     vara = (startsWith: string): Observable<any[]> => {
-        var result = this.service.getVaraSelect(startsWith);
-        return result;
+        return this.service.getVaraSelect(startsWith);
+    }
+
+    indicacao = (startsWith: string): Observable<any[]> => {
+        return this.service.getIndicacaoSelect(startsWith);
+    }
+
+    perito = (startsWith: string): Observable<any[]> => {
+        return this.service.getPeritoSelect(startsWith);
     }
 
     clearNumero() {
@@ -75,14 +85,6 @@ export class ProcessoDetailComponent implements OnInit {
                         if (this.model.advogadoId) {
                             this.service.getAdvogadoSelectById(this.model.advogadoId)
                                 .subscribe((x: IKeyValuePair) => { this.advogadoInit = [x]; });
-                        }
-                        if (this.model.indicacaoId) {
-                            this.service.getUserSelectById(this.model.indicacaoId)
-                                .subscribe((x: IKeyValuePair) => { this.indicacaoInit = [x]; });
-                        }
-                        if (this.model.peritoId) {
-                            this.service.getUserSelectById(this.model.peritoId)
-                                .subscribe((x: IKeyValuePair) => { this.peritoInit = [x]; });
                         }
                     });
             } else {
@@ -127,33 +129,5 @@ export class ProcessoDetailComponent implements OnInit {
 
     refreshValueAdvogado(value: IKeyValuePair): void {
         this.model.advogadoId = value.key;
-    }
-
-    // Indicacao select    
-    public typedIndicacao(value: string): void {
-        if (value && value.length > 2) {
-            clearTimeout(this.wtoInput);
-            this.wtoInput = setTimeout(() => {
-                this.indicacao = this.service.getUserSelect(value);
-            }, 500);
-        }
-    }
-
-    refreshValueIndicacao(value: any): void {
-        this.model.indicacaoId = value.key;
-    }
-
-    // Perito select    
-    public typedPerito(value: string): void {
-        if (value && value.length > 2) {
-            clearTimeout(this.wtoInput);
-            this.wtoInput = setTimeout(() => {
-                this.perito = this.service.getUserSelect(value);
-            }, 500);
-        }
-    }
-
-    refreshValuePerito(value: any): void {
-        this.model.peritoId = value.key;
     }
 }

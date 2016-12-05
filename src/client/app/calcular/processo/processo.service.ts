@@ -119,6 +119,24 @@ export class ProcessoService {
             .catch(this.handleError);
     }
 
+    getIndicacaoSelect(filterText: string = ''): Observable<string[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+
+        return this.http.get(this.url + '/indicacao', { search: params })
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getPeritoSelect(filterText: string = ''): Observable<string[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+
+        return this.http.get(this.url + '/perito', { search: params })
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
     private handleResult(res: Response) {
         let body = res.json();
         return body || {};
@@ -138,6 +156,9 @@ export class ProcessoService {
                         break;
                     case 2:
                         element.mask = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+                        break;
+                    case 3:
+                        element.mask = null;
                         break;
                 }
             });

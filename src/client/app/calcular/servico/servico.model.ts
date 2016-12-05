@@ -5,7 +5,7 @@ export class Servico {
     id: number;
     processoId: number;
     processo: Processo;
-    volumes: number;
+    volumes: string;
     entrada: any;
     saida: any;
     prazo: any;

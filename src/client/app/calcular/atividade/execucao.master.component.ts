@@ -22,6 +22,7 @@ export class AtividadeExecucaoMasterComponent implements OnInit {
 
     private filterText: string = '';
     private editId: number;
+    private all: boolean;
 
 
     constructor(private service: AtividadeService, private toastr: ToastsManager) {
@@ -32,7 +33,7 @@ export class AtividadeExecucaoMasterComponent implements OnInit {
     }
 
     filter() {
-        this.service.getAtividadesByUser(this.filterText)
+        this.service.getAtividadesByUser(this.filterText, this.all)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

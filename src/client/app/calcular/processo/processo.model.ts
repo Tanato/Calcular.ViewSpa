@@ -12,8 +12,8 @@ export class Processo {
     numerAutores: number;
     advogadoId: number;
     advogado: Cliente;
-    peritoId: string;
-    indicacaoId: string;
+    perito: string;
+    indicacao: string;
     honorario: number;
     processoDetalhes: ProcessoDetalhe[];
     honorarios: Honorario[];

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Processo } from '../processo/processo.model';
 import { ProcessoService } from '../processo/processo.service';
 import { Proposta } from './proposta.model';
 import { PropostaService } from './proposta.service';

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PropostaService } from './proposta.service';
-import { Processo } from '../processo/processo.model';
 import { Proposta } from '../proposta/proposta.model';
 import { ProcessoService } from '../processo/processo.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
