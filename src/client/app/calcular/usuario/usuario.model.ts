@@ -5,6 +5,8 @@ export class Usuario {
     birthDate: any;
     email: string;
     roles: string[];
+    perfis: string;
+    inativo: boolean;
 }
 
 export class AlterarSenha {

@@ -29,10 +29,12 @@
 				<thead>
 					<tr>
 						<th width="70"></th>
-						<th>Usuário</th>
+						<th width="180">Usuário (Login)</th>
+						<th>Nome</th>
 						<th>E-mail</th>
 						<th>Nascimento</th>
 						<th>Perfil</th>
+						<th width="70">Inativo</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,9 +44,11 @@
 							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-edit"></i></a> &nbsp;
 						</td>
 						<td>{{ item.userName }}</td>
+						<td>{{ item.name }}</td>
 						<td>{{ item.email }}</td>
 						<td>{{ item.birthDate | date:'dd/MM/yyyy' }}</td>
-						<td>{{ item.perfil }}</td>
+						<td>{{ item.perfis }}</td>
+						<td>{{ item.inativo ? 'Sim' : 'Não' }}</td>
 					</tr>
 				</tbody>
 			</table>

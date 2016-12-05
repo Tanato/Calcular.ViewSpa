@@ -80,7 +80,7 @@ export class ProcessoService {
             .catch(this.handleError);
     }
 
-    getAdvogadoSelect(filter: string = ''): Observable<IKeyValuePair[]> {
+    getAdvogadoSelect(filter: string = ''): Observable<any[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filter);
 

@@ -28,13 +28,13 @@
 					<div class="form-group col-lg-3">
 						<label>Numero:</label>
 						<input class="form-control" [disabled]="!(model.local >= 0) || model.id" [textMask]="{mask: maskNumeroProcesso }" id="numero"
-							[(ngModel)]="model.numero" name="numero" required/>
+							[(ngModel)]="model.numero" name="numero" [required]="model.local != 3"/>
 					</div>
 
 					<div class="form-group col-lg-6">
 						<label>Advogado/Cliente:</label>
-						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado | async" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)"
-							idField="key" textField="value" placeholder="Digite 3 letras para pesquisar" required="true">
+						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)"
+							idField="id" textField="nome" placeholder="Digite 3 letras para pesquisar" required="true">
 						</ng-select>
 					</div>
 				</div>
@@ -77,10 +77,10 @@
 						[(ngModel)]="model.indicacao" name="indicacao" min-chars="2" [accept-user-input]="true">
 					</div>
 
-					<div class="form-group col-lg-6" [hidden]="this.advogado?.perfil === 0 | async">
+					<div class="form-group col-lg-6" [hidden]="!model.advogado || !model.advogado.perfil || model.advogado?.perfil === 0">
 						<label>Perito:</label>
 						<input class="form-control" ng2-auto-complete [source]="perito" id="perito" 
-						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true">
+						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true" [required]="model.advogado && model.advogado.perfil && model.advogado.perfil !== 0">
 					</div>
 				</div>
 

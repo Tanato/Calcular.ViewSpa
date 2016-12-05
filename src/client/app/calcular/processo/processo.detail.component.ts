@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +22,7 @@ export class ProcessoDetailComponent implements OnInit {
     public parte: IKeyValuePair[];
     public local: any[];
 
-    public advogado: Observable<IKeyValuePair[]>;
+    public advogado: any[];
     public advogadoInit: IKeyValuePair[];
 
     public formType: string = 'new';
@@ -122,12 +123,15 @@ export class ProcessoDetailComponent implements OnInit {
         if (value && value.length > 2) {
             clearTimeout(this.wtoInput);
             this.wtoInput = setTimeout(() => {
-                this.advogado = this.service.getAdvogadoSelect(value);
+                this.service.getAdvogadoSelect(value).subscribe(data => {
+                   this.advogado = data;
+                });
             }, 500);
         }
     }
 
-    refreshValueAdvogado(value: IKeyValuePair): void {
-        this.model.advogadoId = value.key;
+    refreshValueAdvogado(value: any): void {
+        this.model.advogado = _.find(this.advogado, (x) => x.id === value.id) ;
+        this.model.advogadoId = value.id;
     }
 }

@@ -41,6 +41,9 @@ export class CobrancaDetailComponent implements OnInit {
         private toastr: ToastsManager) { }
 
     ngOnInit() {
+        this.processoService.getParteSelect()
+            .subscribe((data: IKeyValuePair[]) => this.parte = data);
+
         this.id = this.route.params.map(params => params['id']);
 
         this.id.subscribe(id => {
@@ -54,9 +57,6 @@ export class CobrancaDetailComponent implements OnInit {
     }
 
     addCobranca() {
-        this.processoService.getParteSelect()
-            .subscribe((data: IKeyValuePair[]) => this.parte = data);
-
         this.cobranca.processoId = this.model.id;
 
         this.service.postCobranca(this.cobranca)

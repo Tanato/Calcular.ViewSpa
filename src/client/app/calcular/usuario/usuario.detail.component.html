@@ -57,6 +57,12 @@
 										{{item.name}}
 									</label>
 								</li>
+								<li class="list-group-item-sm">
+									<input type="checkbox"
+											[ngModelOptions]="{standalone: true}"
+											[(ngModel)]="model.inativo"/>
+										Inativo
+								</li>
 							</ul>
 						</div>
 					</div>
