@@ -1,0 +1,163 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-xl-12">
+            <ol class="breadcrumb">
+                <li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+                </li>
+                <li><a href="Javascript:void(0);" routerLink="/calcular/servico/cadastro">Serviço</a>
+                </li>
+                <li class="active">
+                    Registro de Serviço
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row col-xl-12">
+        <form role="form" #form="ngForm">
+            <fieldset [disabled]="false">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label>Processo:</label>
+                        <input class="form-control" ng2-auto-complete [source]="processos" [ngModel]="model.processo" (ngModelChange)="loadServico($event)"
+                            value-property-name="none" [disabled]="id | async" display-property-name="numero" name="numero" min-chars="3"
+                            required>
+                    </div>
+
+                    <div class="form-group col-lg-3">
+                        <label>Parte:</label>
+                        <select class="form-control" id="parteSelect" [ngModel]="model.processo?.parte" name="parteSelect" disabled>
+                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Advogado/Cliente:</label>
+                        <input class="form-control" id="advogado" [ngModel]="model.processo?.advogado?.nome" name="advogado" disabled/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Vara:</label>
+                        <input class="form-control" id="vara" [ngModel]="model.processo?.vara" name="vara" disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Autor:</label>
+                        <input class="form-control" id="autor" [ngModel]="model.processo?.autor" name="autor" disabled/>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>Réu:</label>
+                        <input class="form-control" id="reu" [ngModel]="model.processo?.reu" name="reu" disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-2">
+                        <label>Volumes:</label>
+                        <input class="form-control" id="volumes" [(ngModel)]="model.volumes" name="volumes" required/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Data de Entrada:</label>
+                        <input type="date" class="form-control" id="entrada" #date="ngModel" [ngModel]="model.entrada" (ngModelChange)="model.entrada = $event"
+                            name="entrada" required/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Prazo:</label>
+                        <input type="date" class="form-control" id="prazo" #prazo="ngModel" [ngModel]="model.prazo" (ngModelChange)="model.prazo = $event"
+                            name="prazo" min="model.entrada | date" required/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Data de Saída:</label>
+                        <input type="date" class="form-control" id="saida" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event"
+                            name="saida" min="model.entrada | date"/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()"><i class="fa fa-plus"></i> Salvar</button>
+                    </div>
+                </div>
+            </fieldset>
+            <br>
+        </form>
+        <form role="formAtividade" [hidden]="!model.id" #formAtividade="ngForm">
+            <div class="card card-block">
+                <fieldset [disabled]="false">
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label>Atividade:</label>
+                            <select class="form-control" id="atividadeSelect" [(ngModel)]="atividade.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
+                                required>
+                                <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>Responsável:</label>
+                            <select class="form-control" id="responsavelSelect" [disabled]="isNaN(atividade.tipoAtividadeId)" [(ngModel)]="atividade.responsavelId"
+                                name="responsavelSelect" required>
+                                <option *ngFor="let item of responsavel" [ngValue]="item.key">{{item.value}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-4">
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary btn-block" [disabled]="!formAtividade.form.valid" (click)="addAtividade()"><i class="fa fa-plus"></i> Atividade</button>
+                        </div>
+                    </div>
+                </fieldset>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-sm">
+                        <thead class="thead-default">
+                            <tr>
+                                <th width="40"></th>
+                                <th>Atividade</th>
+                                <th>Responsável</th>
+                                <th>Entrega</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model?.atividades">
+                                <td>
+                                    &nbsp;
+                                    <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+                                    <div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Deseja excluir o registro?</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Excluir</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ item?.tipoAtividade?.nome }}</td>
+                                <td>{{ item?.responsavel?.name }}</td>
+                                <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
+                                <td>{{ item.status }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-10">
+                </div>
+                <div class="col-lg-2">
+                    <label>&nbsp;</label>
+                    <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

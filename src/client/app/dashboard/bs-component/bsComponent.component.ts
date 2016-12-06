@@ -18,7 +18,6 @@ import { ModalDirective } from 'ng2-bootstrap/components/modal/modal.component';
     	}
     `]
 })
-
 export class BSComponentComponent {
 
 	@ViewChild('childModal') public childModal:ModalDirective;

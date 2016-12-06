@@ -15,27 +15,26 @@ import { BSElementModule } from './bs-element/bsElement.module';
 
 import { DashboardComponent } from './dashboard.component';
 
-import {TopNavComponent} from '../shared/index';
-import {SidebarComponent} from '../shared/index';
+import { TopNavComponent } from '../shared/index';
+import { SidebarComponent } from '../shared/index';
 
 
 @NgModule({
     imports: [
         CommonModule,
-    	RouterModule,
-    	DropdownModule,
+        RouterModule,
+        DropdownModule,
         ModalModule,
-    	HomeModule,
+        HomeModule,
         ChartModule,
         TableModule,
         FormModule,
         GridModule,
-    	BSComponentModule,
+        BSComponentModule,
         BSElementModule,
         BlankPageModule
     ],
     declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
     exports: [DashboardComponent, TopNavComponent, SidebarComponent]
 })
-
 export class DashboardModule { }

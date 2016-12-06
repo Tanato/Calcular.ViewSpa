@@ -19,11 +19,11 @@ export const DashboardRoutes: Route[] = [
 	    	...HomeRoutes,
 	    	...ChartRoutes,
 	    	...BSComponentRoutes,
-        ...TableRoutes,
+        	...TableRoutes,
 	    	...BlankPageRoutes,
-        ...FormRoutes,
-        ...GridRoutes,
-        ...BSElementRoutes
+        	...FormRoutes,
+        	...GridRoutes,
+        	...BSElementRoutes
     	]
   	}
 ];

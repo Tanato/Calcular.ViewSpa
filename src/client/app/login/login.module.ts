@@ -11,5 +11,4 @@ import { LoginService } from './login.service';
     declarations: [LoginComponent],
     exports: [LoginComponent]
 })
-
 export class LoginModule { }

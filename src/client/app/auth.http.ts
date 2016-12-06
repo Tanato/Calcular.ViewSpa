@@ -6,7 +6,9 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class AuthHttp extends Http {
-    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private router: Router) {
+    constructor(backend: ConnectionBackend,
+        defaultOptions: RequestOptions,
+        private router: Router) {
         super(backend, defaultOptions);
     }
 
@@ -30,25 +32,28 @@ export class AuthHttp extends Http {
         return this.intercept(super.delete(url, this.appendHeader(options)));
     }
 
-    private appendHeader(options?: RequestOptionsArgs): RequestOptionsArgs {
-        let mergedOptions: RequestOptionsArgs;
-        if (!options) {
-            mergedOptions = { headers: new Headers(), withCredentials: true };
-        } else {
-            mergedOptions = options;
-            mergedOptions.withCredentials = true;
-        }
-        return mergedOptions;
-    }
-
     intercept(observable: Observable<Response>): Observable<Response> {
         return observable.catch((err, source) => {
-            if (err.status == 401 && !_.endsWith(err.url, 'api/account/login')) {
+            if (err.status === 401 && !_.endsWith(err.url, 'api/account/login')) {
                 this.router.navigate(['/']);
                 return Observable.empty();
             } else {
                 return Observable.throw(err);
             }
         });
+    }
+
+    private appendHeader(options?: RequestOptionsArgs): RequestOptionsArgs {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        let mergedOptions: RequestOptionsArgs;
+        if (!options) {
+            mergedOptions = { headers: headers, withCredentials: true };
+        } else {
+            mergedOptions = options;
+            mergedOptions.withCredentials = true;
+        }
+        return mergedOptions;
     }
 }

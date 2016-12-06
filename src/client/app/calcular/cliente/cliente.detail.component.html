@@ -1,0 +1,131 @@
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li><a href="Javascript:void(0);" routerLink="/calcular/cliente">Cliente</a>
+				</li>
+				<li class="active">
+					Cadastro de Cliente
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row col-xl-12">
+		<form role="form" #form="ngForm">
+			<fieldset [disabled]="blockEdit">
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Nome:</label>
+						<input class="form-control" id="nome" [(ngModel)]="model.nome" name="nome" required/>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<label>Data Nascimento:</label>
+						<input type="date" class="form-control" id="nascimento" #date="ngModel" [ngModel]="model.nascimento" (ngModelChange)="model.nascimento = $event"
+							name="nascimento"/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-4">
+						<label>Perfil:</label>
+						<select class="form-control" id="perfilSelect" [(ngModel)]="model.perfil" name="perfilSelect" required>
+							<option *ngFor="let item of perfil" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-2">
+					</div>
+					<div class="form-group col-lg-4">
+						<label>Empresa:</label>
+						<input class="form-control" ng2-auto-complete [source]="empresa" id="empresa" 
+						[(ngModel)]="model.empresa" name="empresa" min-chars="2" [accept-user-input]="true">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Email:</label>
+						<input class="form-control" id="email" [(ngModel)]="model.email" name="email" required pattern="[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$"
+						/>
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Telefone:</label>
+						<input [textMask]="{mask: maskTelefone}" id="telefone" [(ngModel)]="model.telefone" name="telefone" class="form-control"
+							[required]="!model.celular" />
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Celular:</label>
+						<input [textMask]="{mask: maskCelular}" id="celular" [(ngModel)]="model.celular" name="celular" class="form-control" [required]="!model.telefone"
+						/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Endereço:</label>
+						<textarea class="form-control" rows="4" id="endereco" [(ngModel)]="model.endereco" name="endereco"></textarea>
+					</div>
+
+					<div class="col-lg-6">
+						<div class="row">
+							<div class="form-group col-lg-6">
+								<label>Telefone 2:</label>
+								<input [textMask]="{mask: maskTelefone}" id="telefone2" [(ngModel)]="model.telefone2" name="telefone2" class="form-control"
+								/>
+							</div>
+							<div class="form-group col-lg-6">
+								<label>Celular2:</label>
+								<input [textMask]="{mask: maskCelular}" id="celular2" [(ngModel)]="model.celular2" name="celular2" class="form-control" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-lg-6">
+								<label>Honorários:</label>
+								<input class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Observações:</label>
+						<textarea class="form-control" rows="2" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<label>Como Chegou à Calcular:</label>
+						<select class="form-control" id="comoChegouSelect" [(ngModel)]="model.comoChegou" name="comoChegouSelect">
+							<option *ngFor="let item of comoChegou" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<label [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3">Descrição:</label>
+						<input [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe"
+							class="form-control" />
+					</div>
+				</div>
+			</fieldset>
+			<hr>
+
+			<div class="row">
+				<div class="col-lg-2">
+					<button [hidden]="!blockEdit" (click)="enableEdit()" class="btn btn-warning btn-block">Editar</button>
+				</div>
+				<div class="form-group col-lg-6">
+				</div>
+				<div class="col-lg-2">
+					<button routerLink="/calcular/cliente" class="btn btn-default btn-block">Cancelar</button>
+				</div>
+				<div class="col-lg-2">
+					<button (click)="onSubmit()" [disabled]="!form.form.valid || blockEdit" class="btn btn-primary btn-block">Salvar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

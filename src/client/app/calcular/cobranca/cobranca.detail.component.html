@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-xl-12">
+            <ol class="breadcrumb">
+                <li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+                </li>
+                <li><a href="Javascript:void(0);" routerLink="/calcular/honorario/cobranca">Honorário</a>
+                </li>
+                <li class="active">
+                    Cobrança de Honorários
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row col-xl-12">
+        <form role="form" #form="ngForm">
+            <fieldset [disabled]="false">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label>Processo:</label>
+                        <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" value-property-name="none" [disabled]="id | async"
+                            display-property-name="numero" name="numero" min-chars="3" required>
+                    </div>
+
+                    <div class="form-group col-lg-3">
+                        <label>Parte:</label>
+                        <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
+                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label>Advogado/Cliente:</label>
+                        <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Autor:</label>
+                        <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>Réu:</label>
+                        <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label>Honorários:</label>
+                        <input class="form-control" id="honorario" [ngModel]="model?.honorario" name="honorario" required disabled/>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Valor Pendente:</label>
+                        <input class="form-control" id="total" [ngModel]="model?.total" name="total" required disabled/>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Nº de Autores:</label>
+                        <input class="form-control" id="numeroAutores" [ngModel]="model?.numeroAutores" name="numeroAutores" disabled/>
+                    </div>
+                </div>
+            </fieldset>
+            <br>
+
+            <div class="card card-block">
+                <fieldset>
+                    <div class="row">
+                        <div class="form-group col-lg-2">
+                            <label>Data Cobrança:</label>
+                            <input type="date" class="form-control" id="dataCobranca" [ngModel]="cobranca.dataCobranca" (ngModelChange)="cobranca.dataCobranca = $event"
+                                name="dataCobranca" required/>
+                        </div>
+                        <div class="form-group col-lg-2">
+                            <label>Previsao Pagamento:</label>
+                            <input type="date" class="form-control" id="previsaoPagamento" [ngModel]="cobranca.previsaoPagamento"
+                                (ngModelChange)="cobranca.previsaoPagamento = $event" name="previsaoPagamento" required/>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>Contato:</label>
+                            <input class="form-control" ng2-auto-complete [source]="contato" id="contato" [(ngModel)]="cobranca.contato" name="contato"
+                                min-chars="2" [accept-user-input]="true" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-10">
+                            <label>Observação:</label>
+                            <input class="form-control" id="observacao" [(ngModel)]="cobranca.observacao" name="observacao" />
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="addCobranca()"><i class="fa fa-plus"></i> Adicionar</button>
+                        </div>
+                    </div>
+                </fieldset>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-sm">
+                        <thead class="thead-default">
+                            <tr>
+                                <th width="40"></th>
+                                <th width="125">Data Cobrança</th>
+                                <th width="160">Previsão Pagamento</th>
+                                <th width="125">Valor Pendente</th>
+                                <th width="180">Contato</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model?.cobrancas">
+                                <td>
+                                    &nbsp;
+                                    <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+                                    <div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Deseja excluir o registro?</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Excluir</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ item?.dataCobranca | date:"dd/MM/yyyy"}}</td>
+                                <td>{{ item?.previsaoPagamento | date:"dd/MM/yyyy"}}</td>
+                                <td>{{ item?.valorPendente }}</td>
+                                <td>{{ item?.contato }}</td>
+                                <td>{{ item.observacao }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-10">
+                </div>
+                <div class="col-lg-2">
+                    <label>&nbsp;</label>
+                    <button routerLink="/calcular/honorario/cobranca" class="btn btn-default btn-block">Fechar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { ILogin } from '../shared/interfaces';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 /**
 *	This class represents the lazy loaded LoginComponent.
@@ -13,7 +12,6 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 	selector: 'login-cmp',
 	templateUrl: 'login.component.html'
 })
-
 export class LoginComponent {
 
 	username: string;
@@ -27,7 +25,7 @@ export class LoginComponent {
 		this.login.username = this.username;
 		this.loginService.userLogin(this.login)
 			.subscribe(response => {
-				this.router.navigateByUrl('dashboard/home');
+				this.router.navigateByUrl('calcular/home');
 			},
 			error => {
 				alert(error);

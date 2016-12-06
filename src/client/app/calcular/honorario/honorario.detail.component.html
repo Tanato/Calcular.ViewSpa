@@ -1,0 +1,168 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-xl-12">
+            <ol class="breadcrumb">
+                <li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+                </li>
+                <li><a href="Javascript:void(0);" routerLink="/calcular/honorario/cadastro">Honorário</a>
+                </li>
+                <li class="active">
+                    Registro de Honorários
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row col-xl-12">
+        <form role="form" #form="ngForm">
+            <fieldset [disabled]="false">
+                <div class="row">
+                    <div class="form-group col-lg-3">
+                        <label>Processo:</label>
+                        <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" value-property-name="none" [disabled]="id | async"
+                            display-property-name="numero" name="numero" min-chars="3" required>
+                    </div>
+
+                    <div class="form-group col-lg-3">
+                        <label>Parte:</label>
+                        <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
+                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label>Advogado/Cliente:</label>
+                        <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" required disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Autor:</label>
+                        <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>Réu:</label>
+                        <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
+                    </div>
+                </div>
+            </fieldset>
+            <br>
+
+            <div class="card card-block">
+                <fieldset [disabled]="false">
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label>Registro:</label>
+                            <select class="form-control" id="registroSelect" [(ngModel)]="honorario.registro" name="registroSelect" (ngModelChange)="changeRegistro($event)"
+                                required>
+                                <option *ngFor="let item of registro" [ngValue]="item.key">{{item.value}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>Forma de Pagamento:</label>
+                            <select class="form-control" id="tipoPagamentoSelect" [disabled]="honorario.registro !== 0 && honorario.registro !== 1" [(ngModel)]="honorario.tipoPagamento"
+                                name="tipoPagamentoSelect" required>
+                                <option *ngFor="let item of tipoPagamento" [ngValue]="item.key">{{item.value}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>Valor:</label>
+                            <input type="number" class="form-control" id="valor" [(ngModel)]="honorario.valor" name="valor" required/>
+                        </div>
+                        <div class="form-group col-lg-3" [hidden]="honorario.registro !== 0">
+                            <label>Nota Fiscal/Complemento:</label>
+                            <input class="form-control" id="notaFiscal" [(ngModel)]="honorario.notaFiscal" name="notaFiscal" />
+                        </div>
+                        <div class="form-group col-lg-3" [hidden]="honorario.tipoPagamento !== 7">
+                            <label>Conta:</label>
+                            <select class="form-control" id="notaFiscal" [(ngModel)]="honorario.notaFiscal" name="notaFiscal" [required]="honorario.tipoPagamento === 7">
+                                <option value="Conta1">Conta 1</option>
+                                <option value="Conta2">Conta 2</option>
+                                <option value="Conta3">Conta 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-2">
+                            <label>Data:</label>
+                            <input type="date" class="form-control" id="data" #date="ngModel" [ngModel]="honorario.data" (ngModelChange)="honorario.data = $event"
+                                name="data" required/>
+                        </div>
+                        <div class="form-group col-lg-2" [hidden]="honorario.registro !== 0">
+                            <label>Prazo:</label>
+                            <input type="date" class="form-control" id="prazo" #date="ngModel" [ngModel]="honorario.prazo" (ngModelChange)="honorario.prazo = $event"
+                                name="prazo" [required]="honorario.registro === 0" />
+                        </div>
+                        <div class="form-group" [class.col-lg-8]="honorario.registro !== 0" [class.col-lg-6]="honorario.registro === 0">
+                            <label>Observação:</label>
+                            <input class="form-control" id="observacao" [(ngModel)]="honorario.observacao" name="observacao" />
+                        </div>
+                        <div class="col-lg-2 text-center">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="addHonorario()"><i class="fa fa-plus"></i> Adicionar</button>
+                        </div>
+                    </div>
+                </fieldset>
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-sm">
+                        <thead class="thead-default">
+                            <tr>
+                                <th width="40"></th>
+                                <th width="110">Tipo</th>
+                                <th width="110">Data</th>
+                                <th width="110">Prazo</th>
+                                <th width="100">Valor</th>
+                                <th width="180">Forma de Pagamento</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of model?.honorarios">
+                                <td>
+                                    &nbsp;
+                                    <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+                                    <div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Deseja excluir o registro?</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Excluir</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ item?.registroDescription }}</td>
+                                <td>{{ item.data | date:"dd/MM/yyyy" }}</td>
+                                <td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
+                                <td>{{ item?.valor }}</td>
+                                <td>{{ item?.tipoPagamentoDescription }}</td>
+                                <td>{{ item.observacao }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-8">
+                </div>
+                <div class="form-group col-lg-2">
+                    <label>Valor Pendente:</label>
+                    <input type="number" class="form-control" id="total" [ngModel]="model?.total" name="total" disabled/>
+                </div>
+                <div class="col-lg-2">
+                    <label>&nbsp;</label>
+                    <button routerLink="/calcular/honorario/cadastro" class="btn btn-default btn-block">Fechar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

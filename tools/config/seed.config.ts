@@ -144,7 +144,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'Welcome to angular2-seed!';
+  APP_TITLE = 'Calcular';
 
   /**
    * The base folder of the applications source files.
@@ -333,11 +333,14 @@ export class SeedConfig {
       '@angular/compiler/testing': 'node_modules/@angular/compiler/bundles/compiler-testing.umd.js',
       '@angular/core/testing': 'node_modules/@angular/core/bundles/core-testing.umd.js',
       '@angular/http/testing': 'node_modules/@angular/http/bundles/http-testing.umd.js',
-      '@angular/platform-browser/testing':
-        'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
+      '@angular/platform-browser/testing': 'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
       '@angular/platform-browser-dynamic/testing':
-        'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+      'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
+
+      'lodash': 'node_modules/lodash/lodash.js',
+      'angular2-text-mask': 'node_modules/angular2-text-mask/dist/angular2TextMask.js',
+      'ng2-toastr': 'node_modules/ng2-toastr/bundles/ng2-toastr.js',
 
       'rxjs/*': 'node_modules/rxjs/*',
       'app/*': '/app/*',
@@ -411,6 +414,18 @@ export class SeedConfig {
       },
       'rxjs': {
         main: 'Rx.js',
+        defaultExtension: 'js'
+      },
+      'lodash': {
+        main: 'lodash.js',
+        defaultExtension: 'js'
+      },
+      'ng2-auto-complete': {
+        main: 'dist/ng2-auto-complete.umd.js',
+        defaultExtension: 'js'
+      },
+      'angular2-text-mask': {
+        main: 'dist/angular2TextMask.js',
         defaultExtension: 'js'
       }
     }

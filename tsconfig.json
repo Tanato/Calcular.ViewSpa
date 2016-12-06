@@ -25,7 +25,6 @@
       "express",
       "jasmine",
       "node",
-      "protractor",
       "systemjs"
     ]
   },

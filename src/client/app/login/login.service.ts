@@ -5,12 +5,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 
+import { Config } from '../shared/config/env.config';
 import { ILogin } from '../shared/interfaces';
 
 @Injectable()
 export class LoginService {
 
-    private url: string = 'http://localhost:5000/api/account';
+    private url: string = Config.API + 'account';
 
     constructor(private http: Http) { }
 

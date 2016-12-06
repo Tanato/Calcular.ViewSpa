@@ -1,0 +1,65 @@
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li>
+					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li class="active">Cobrança de Honorários</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xl-8">
+		</div>
+		<div class="form-group input-group col-xl-4">
+			<input type="text" class="form-control" [(ngModel)]="filterText" (keydown.Enter)="filter()">
+			<span class="input-group-btn"><button class="btn btn-secondary" (click)="filter()" type="button"><i class="fa fa-search"></i></button></span>
+		</div>
+		<!--<div class="col-xl-2 text-center">
+			<a class="btn btn-primary" routerLink="/calcular/honorario/cobranca/detail"><i class="fa fa-plus"></i> Adicionar</a>
+		</div>-->
+	</div>
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-hover table-striped table-sm">
+				<thead>
+					<tr>
+						<th width="50"></th>
+						<th width="200">Nº Processo</th>
+						<th>Autor</th>
+						<th>Réu</th>
+						<th width="90">Data Cobrança</th>
+						<th width="100">Previsão Pagamento</th>
+						<th width="90">Valor Pendente</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of rows">
+						<td>
+							&nbsp;
+							&nbsp;
+							<a [routerLink]="['/calcular/honorario/cobranca/detail', {id: item.id}]"><i class="fa fa-fax"></i></a> &nbsp;
+						</td>
+						<td>{{ item.numero }}</td>
+						<td>{{ item.autor }}</td>
+						<td>{{ item.reu }}</td>
+						<td>{{ item.dataUltimaCobranca | date:"dd/MM/yyyy" }}</td>
+						<td>{{ item.previsaoPagamento | date:"dd/MM/yyyy" }}</td>
+						<td>{{ item.total }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-xl-12 centered">
+			<pagination previousText="Anterior" nextText="Próximo" firstText="Primeira" lastText="Última" [totalItems]="totalItems" [(ngModel)]="currentPage"
+				[itemsPerPage]="itemsPerPage" [maxSize]="maxSize" class="pagination-sm" [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event"
+				(pageChanged)="onPageChange($event)">
+			</pagination>
+		</div>
+	</div>
+</div>

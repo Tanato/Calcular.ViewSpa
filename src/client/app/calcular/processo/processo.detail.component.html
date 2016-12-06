@@ -1,0 +1,114 @@
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li><a href="Javascript:void(0);" routerLink="/calcular/processo/cadastro">Processo</a>
+				</li>
+				<li class="active">
+					Cadastro de Processo
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row col-xl-12">
+		<form role="form" #form="ngForm">
+			<fieldset [disabled]="blockEdit">
+
+				<div class="row">
+					<div class="form-group col-lg-3">
+						<label>Tipo:</label>
+						<select class="form-control" id="localSelect" [disabled]="model.id" [(ngModel)]="model.local" (ngModelChange)="clearNumero()"
+							name="localSelect" required>
+							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Numero:</label>
+						<input class="form-control" [disabled]="!(model.local >= 0) || model.id" [textMask]="{mask: maskNumeroProcesso }" id="numero"
+							[(ngModel)]="model.numero" name="numero" [required]="model.local != 3"/>
+					</div>
+
+					<div class="form-group col-lg-6">
+						<label>Advogado/Cliente:</label>
+						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)"
+							idField="key" textField="value" placeholder="Digite 3 letras para pesquisar" required="true">
+						</ng-select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Autor:</label>
+						<input class="form-control" id="autor" [(ngModel)]="model.autor" name="autor" required/>
+					</div>
+					<div class="form-group col-lg-6">
+						<label>Réu:</label>
+						<input class="form-control" id="reu" [(ngModel)]="model.reu" name="reu" required/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-3">
+						<label>Parte:</label>
+						<select class="form-control" id="parteSelect" [(ngModel)]="model.parte" name="parteSelect" required>
+						<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+					</select>
+					</div>
+
+					<div class="form-group col-lg-3">
+						<label>Vara:</label>
+						<input class="form-control" ng2-auto-complete [source]="vara" id="vara" [(ngModel)]="model.vara" name="vara"
+							min-chars="1" [accept-user-input]="true" required/>
+					</div>
+
+					<div class="form-group col-lg-2">
+						<label>Nº Autores:</label>
+						<input type="number" class="form-control" id="numeroAutores" [(ngModel)]="model.numeroAutores" name="numeroAutores" required/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Indicação:</label>
+						<input class="form-control" ng2-auto-complete [source]="indicacao" id="indicacao" 
+						[(ngModel)]="model.indicacao" name="indicacao" min-chars="2" [accept-user-input]="true">
+					</div>
+
+					<div class="form-group col-lg-6" [hidden]="!model.advogado || !model.advogado.perfil || model.advogado?.perfil === 0">
+						<label>Perito:</label>
+						<input class="form-control" ng2-auto-complete [source]="perito" id="perito" 
+						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true" [required]="model.advogado && model.advogado.perfil && model.advogado.perfil !== 0">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-9">
+					</div>
+					<div class="form-group col-lg-3">
+						<label>&nbsp;</label>
+						<button class="btn btn-primary btn-block" [hidden]="!model.id" [routerLink]="['/calcular/processo/notes', {id: model.id}]"><i class="fa fa-plus"></i> Adicionar Detalhes</button>
+					</div>
+				</div>
+
+			</fieldset>
+			<hr>
+
+			<div class="row">
+				<div class="col-lg-2">
+					<button [hidden]="!blockEdit" (click)="enableEdit()" class="btn btn-warning btn-block">Editar</button>
+				</div>
+				<div class="form-group col-lg-6">
+				</div>
+				<div class="col-lg-2">
+					<button routerLink="/calcular/processo/cadastro" class="btn btn-default btn-block">Cancelar</button>
+				</div>
+				<div class="col-lg-2">
+					<button (click)="onSubmit()" [disabled]="!form.form.valid || blockEdit" class="btn btn-primary btn-block">Salvar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
