@@ -35,15 +35,12 @@ export class PropostaService {
     }
 
     putProposta(proposta: Proposta) {
-        return this.http
-            .put(this.url, JSON.stringify(proposta))
-            .map(this.handleResult)
+        return this.http.put(this.url, proposta)
             .catch(this.handleError);
     }
 
     deleteProposta(id: number) {
         return this.http.delete(this.url + '/' + id)
-            .map(this.handleResult)
             .catch(this.handleError);
     }
 
@@ -74,7 +71,7 @@ export class PropostaService {
     }
 
     private handleError(error: any) {
-        console.error(error);
+        console.error(error.json());
         return Observable.throw(error.json().Error || 'Server error');
     }
 }

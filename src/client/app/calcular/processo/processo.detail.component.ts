@@ -36,19 +36,15 @@ export class ProcessoDetailComponent implements OnInit {
         private toastr: ToastsManager) { }
 
     public maskNumeroProcesso = (value: any[]) => {
-        if (this.local && this.model && this.model.local !== null) {
-            if (this.local[this.model.local].mask) {
-                return this.local[this.model.local].mask;
-            } else {
-                let mask: any[] = [];
-                for (let i = 0; i < value.length; i++) {
-                    mask.push(/.*/);
-                }
-                return mask;
-            };
+        if (this.local && this.model && this.model.local !== null && this.local[this.model.local].mask) {
+            return this.local[this.model.local].mask;
         } else {
-            return [''];
-        }
+            let mask: any[] = [];
+            for (let i = 0; i < value.length; i++) {
+                mask.push(/.*/);
+            }
+            return mask;
+        };
     }
 
     vara = (startsWith: string): Observable<any[]> => {

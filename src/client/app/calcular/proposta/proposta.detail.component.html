@@ -15,24 +15,25 @@
     </div>
     <div class="row col-xl-12">
         <form role="form" #form="ngForm">
-            <fieldset [disabled]="false">
+            <fieldset [disabled]="blockEdit">
                 <div class="row">
                     <div class="form-group col-lg-3">
                         <label>Tipo:</label>
-                        <select class="form-control" id="localSelect" [disabled]="model.id" [(ngModel)]="model.local" (ngModelChange)="clearNumero()"
-                            name="localSelect" required>
+                        <select class="form-control" id="localSelect" [(ngModel)]="model.local" (ngModelChange)="clearNumero()" name="localSelect"
+                            required>
 							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
 						</select>
                     </div>
                     <div class="form-group col-lg-3">
                         <label>Numero:</label>
-                        <input class="form-control" [disabled]="!(model.local >= 0)" [textMask]="{mask: maskNumeroProcesso }" id="numero"
-                            [(ngModel)]="model.numero" name="numero" required/>
+                        <input class="form-control" [disabled]="!(model.local >= 0)" [textMask]="{mask: maskNumeroProcesso }" id="numero" [(ngModel)]="model.numero"
+                            name="numero" required/>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Contato:</label>
-                        <input class="form-control" ng2-auto-complete [source]="contatos" [ngModel]="model.contato" (ngModelChange)="contatoChange($event)"
-                            value-property-name="none" display-property-name="nome" name="contato" min-chars="3" required>
+                        <input class="form-control" ng2-auto-complete [source]="contatos" [(ngModel)]="contato" (ngModelChange)="contatoChange($event)"
+                            value-property-name="none" display-property-name="nome" name="contato" min-chars="3" [accept-user-input]="true"
+                            required>
                     </div>
                 </div>
 
@@ -55,15 +56,38 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-2">
                         <label>Honorários:</label>
-                        <input class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario" required disabled/>
+                        <input type="number" class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario" required/>
                     </div>
 
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-2">
                         <label>Data da Proposta:</label>
                         <input type="date" class="form-control" id="dataProposta" #dataProposta="ngModel" [ngModel]="model.dataProposta" (ngModelChange)="model.dataProposta = $event"
-                            name="dataProposta" />
+                            name="dataProposta" required/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Fechou Proposta?</label>
+                        <select class="form-control" id="fechadoSelect" [(ngModel)]="model.fechado" name="fechadoSelect" required>
+                                <option value="false">Não</option>
+                                <option value="true">Sim</option>
+                            </select>
+                    </div>
+                    <div class="form-group col-lg-3">
+                        <label>Motivo:</label>
+                        <select class="form-control" id="movitoSelect" [(ngModel)]="model.motivo" name="movitoSelect">
+							<option *ngFor="let item of motivo" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+                    </div>
+                    <div class="form-group col-lg-3" [hidden]="model.motivo !== 2">
+                        <label>Descrição:</label>
+                        <input name="motivoDetalhe" [(ngModel)]="model.motivoDetalhe" [required]="model.motivo === 2" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Observações:</label>
+                        <textarea class="form-control" rows="2" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
                     </div>
                     <div class="form-group col-lg-3">
                         <label>Como Chegou à Calcular:</label>
@@ -76,29 +100,22 @@
                         <input [hidden]="model.comoChegou !== 2 && model.comoChegou !== 3" [(ngModel)]="model.comoChegouDetalhe" name="comoChegouDetalhe"
                             class="form-control" />
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label>Observações:</label>
-                        <textarea class="form-control" rows="2" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
-                    </div>
-                    <div class="form-group col-lg-2">
-                        <label>Fechou Proposta?</label>
-                        <select class="form-control" id="fechadoSelect" [ngModel]="model?.fechado" name="fechadoSelect" disabled>
-                                <option value="0">Não</option>
-                                <option value="1">Sim</option>
-                            </select>
-                    </div>
+
                 </div>
             </fieldset>
             <br>
 
             <div class="row">
-                <div class="form-group col-lg-10">
+                <div class="col-lg-2">
+                    <button [hidden]="!blockEdit" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
+                </div>
+                <div class="form-group col-lg-6">
                 </div>
                 <div class="col-lg-2">
-                    <label>&nbsp;</label>
                     <button routerLink="/calcular/honorario/proposta" class="btn btn-default btn-block">Fechar</button>
+                </div>
+                <div class="col-lg-2">
+                    <button (click)="onSubmit()" [disabled]="!form.form.valid || blockEdit" class="btn btn-primary btn-block">Salvar</button>
                 </div>
             </div>
         </form>

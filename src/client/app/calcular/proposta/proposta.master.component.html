@@ -28,7 +28,8 @@
 					<tr>
 						<th width="50"></th>
 						<th width="210">Nº Processo</th>
-						<th>Advogado</th>
+						<th>Contato</th>
+						<th width="140">Celular</th>
 						<th width="140">Telefone</th>
 						<th width="100">Honorário</th>
 						<th width="120">Data Proposta</th>
@@ -43,7 +44,8 @@
 						</td>
 						<td>{{ item.numero }}</td>
 						<td>{{ item.contato }}</td>
-						<td>{{ item.celular ? item.celular : item.telefone }}</td>
+						<td>{{ item.celular }}</td>
+						<td>{{ item.telefone }}</td>
 						<td>{{ item.honorario }}</td>
 						<td>{{ item.dataProposta | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.fechado ? 'Sim' : 'Não' }}</td>
