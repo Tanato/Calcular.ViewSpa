@@ -78,7 +78,7 @@ export class ServicoDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.formType === 'new') {
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postServico(this.model)
                 .subscribe(data => {
                     this.model = data;
@@ -145,10 +145,10 @@ export class ServicoDetailComponent implements OnInit {
     onCancel() {
         this.id.subscribe(id => {
             if (id) {
-                let link = 'calcular/honorario/cadastro';
+                let link = 'calcular/servico/cadastro';
                 this.router.navigateByUrl(link);
             } else {
-                let link = 'calcular/honorario/cadastro';
+                let link = 'calcular/servico/cadastro';
                 this.router.navigateByUrl(link);
             }
         });

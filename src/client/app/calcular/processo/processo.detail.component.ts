@@ -93,7 +93,7 @@ export class ProcessoDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.formType === 'new') {
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postProcesso(this.model)
                 .subscribe(data => {
                     this.model = data;

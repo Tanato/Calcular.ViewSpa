@@ -15,7 +15,7 @@
     </div>
     <div class="row col-xl-12">
         <form role="form" #form="ngForm">
-            <fieldset [disabled]="false">
+            <fieldset [disabled]="blockEdit">
                 <div class="row">
                     <div class="form-group col-lg-3">
                         <label>Processo:</label>
@@ -69,13 +69,13 @@
                     <div class="form-group col-lg-2">
                         <label>Data de Saída:</label>
                         <input type="date" class="form-control" id="saida" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event"
-                            name="saida" min="model.entrada | date"/>
+                            name="saida" min="model.entrada | date" />
                     </div>
                     <div class="form-group col-lg-2">
                     </div>
                     <div class="col-lg-2 text-center">
                         <label>&nbsp;</label>
-                        <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()"><i class="fa fa-plus"></i> Salvar</button>
+                        <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()">Salvar</button>
                     </div>
                 </div>
             </fieldset>
@@ -83,7 +83,7 @@
         </form>
         <form role="formAtividade" [hidden]="!model.id" #formAtividade="ngForm">
             <div class="card card-block">
-                <fieldset [disabled]="false">
+                <fieldset [disabled]="blockEdit">
                     <div class="row">
                         <div class="form-group col-lg-3">
                             <label>Atividade:</label>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-lg-2 text-center">
                             <label>&nbsp;</label>
-                            <button class="btn btn-primary btn-block" [disabled]="!formAtividade.form.valid" (click)="addAtividade()"><i class="fa fa-plus"></i> Atividade</button>
+                            <button class="btn btn-primary btn-block" [disabled]="!formAtividade.form.valid" (click)="addAtividade()">Adicionar</button>
                         </div>
                     </div>
                 </fieldset>
@@ -143,21 +143,23 @@
                                 <td>{{ item?.tipoAtividade?.nome }}</td>
                                 <td>{{ item?.responsavel?.name }}</td>
                                 <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
-                                <td>{{ item.status }}</td>
+                                <td>{{ item.tipoExecucao === 0 ? 'Pendente' : 'Finalizado' }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="form-group col-lg-10">
-                </div>
-                <div class="col-lg-2">
-                    <label>&nbsp;</label>
-                    <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
-                </div>
-            </div>
         </form>
+        <div class="row">
+            <div class="col-lg-2">
+                <button [hidden]="!blockEdit" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
+            </div>
+            <div class="form-group col-lg-8">
+            </div>
+            <div class="col-lg-2">
+                <label>&nbsp;</label>
+                <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
+            </div>
+        </div>
     </div>
 </div>

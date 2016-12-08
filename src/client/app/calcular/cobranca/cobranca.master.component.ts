@@ -20,6 +20,7 @@ export class CobrancaMasterComponent implements OnInit {
 
     private filterText: string = '';
     private editId: number;
+    private all: boolean;
 
     constructor(private service: CobrancaService,
                 private processoService: ProcessoService,
@@ -30,7 +31,7 @@ export class CobrancaMasterComponent implements OnInit {
     }
 
     filter() {
-        this.service.getProcessos(this.filterText)
+        this.service.getProcessos(this.filterText, this.all)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

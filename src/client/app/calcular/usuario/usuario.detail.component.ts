@@ -74,7 +74,7 @@ export class UsuarioDetailComponent implements OnInit {
     onSubmit() {
 
         this.model.roles = this.selectedOptions();
-        if (this.formType === 'new') {
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postUsuario(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');

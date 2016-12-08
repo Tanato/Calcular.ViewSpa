@@ -68,7 +68,7 @@ export class ClienteDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.formType === 'new') {
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postCliente(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');

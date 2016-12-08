@@ -111,7 +111,7 @@ export class PropostaDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.formType === 'new') {
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postProposta(this.model)
                 .subscribe(data => {
                     this.toastr.success(this.modelName + ' registrada com sucesso!');

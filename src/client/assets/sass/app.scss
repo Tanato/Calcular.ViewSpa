@@ -47,6 +47,8 @@ textarea {
 .sidebar{
     line-height: 1.2;
     width: 240px;
+    background-color: #6882a7;
+    background: #6882a7;
 }
 
 .main-container{
@@ -109,7 +111,7 @@ table{
 .sidebar{
     .list-group{
         a.list-group-item{
-                color : #BBB;
+                color : #fff;
         }
     }
 }
@@ -142,7 +144,7 @@ table{
                 background: $topnav-background-color;
                 border: 0;
                 border-radius: 0;
-                color: #BBB;
+                color: #fff;
                 text-decoration: none;
                 }
                 a:hover{

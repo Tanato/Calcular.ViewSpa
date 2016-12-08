@@ -50,10 +50,10 @@
 						<td>{{ item.processo?.autor }}</td>
 						<td>{{ item.processo?.reu }}</td>
 						<td>{{ item.processo?.advogado?.nome }}</td>
-						<td>{{ item.atividades[0]?.nome }}</td>
+						<td>{{ item.atividades[0]?.tipoAtividade.nome }}</td>
 						<td>{{ item.impressaoDescricao }}</td>
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
-						<td>{{ item.status }}</td>
+						<td>{{ item.status === 0 ? 'Pendente' : 'Entregue'  }}</td>
 					</tr>
 				</tbody>
 			</table>

@@ -30,6 +30,7 @@
 						<th>Nome</th>
 						<th>Empresa</th>
 						<th>Celular</th>
+						<th>Telefone</th>
 						<th>Honorários</th>
 						<th>Nº Processos</th>
 					</tr>
@@ -37,8 +38,7 @@
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
-							&nbsp;
-							&nbsp;
+							&nbsp; &nbsp;
 							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-edit"></i></a> &nbsp;
 							<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
 							<div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -59,6 +59,7 @@
 						<td>{{ item.nome }}</td>
 						<td>{{ item.empresa }}</td>
 						<td>{{ item.celular }}</td>
+						<td>{{ item.telefone }}</td>
 						<td>{{ item.honorarios }}</td>
 						<td>{{ item.processos }}</td>
 					</tr>
