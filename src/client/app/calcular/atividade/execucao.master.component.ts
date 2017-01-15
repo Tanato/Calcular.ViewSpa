@@ -3,6 +3,7 @@ import { Atividade } from './atividade.model';
 import { AtividadeService } from './atividade.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -24,12 +25,16 @@ export class AtividadeExecucaoMasterComponent implements OnInit {
     private editId: number;
     private all: boolean;
 
-
-    constructor(private service: AtividadeService, private toastr: ToastsManager) {
+    constructor(private service: AtividadeService,
+        private toastr: ToastsManager) {
     }
 
     ngOnInit() {
         this.filter();
+    }
+
+    isRevisor() {
+        return this.data && _.some(this.data, x => x.etapaAtividade === 1);
     }
 
     filter() {

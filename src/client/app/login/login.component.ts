@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { ILogin } from '../shared/interfaces';
 
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
 /**
 *	This class represents the lazy loaded LoginComponent.
 */
@@ -18,7 +20,9 @@ export class LoginComponent {
 	password: string;
 	login: ILogin = {} as ILogin;
 
-	constructor(public router: Router, private loginService: LoginService) { }
+	constructor(public router: Router,
+		private loginService: LoginService,
+		private toastr: ToastsManager) { }
 
 	onSubmit() {
 		this.login.password = this.password;
@@ -28,7 +32,7 @@ export class LoginComponent {
 				this.router.navigateByUrl('calcular/home');
 			},
 			error => {
-				alert(error);
+				this.toastr.error(error);
 				console.log(error);
 			});
 	}

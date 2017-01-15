@@ -74,6 +74,9 @@ export class ServicoDetailComponent implements OnInit {
                         this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     });
             }
+            else{
+                this.blockEdit = false;
+            }
         });
     }
 

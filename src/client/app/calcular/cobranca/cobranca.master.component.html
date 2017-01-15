@@ -33,6 +33,8 @@
 						<th width="200">Nº Processo</th>
 						<th>Autor</th>
 						<th>Réu</th>
+						<th width="140">Empresa</th>
+						<th width="110">Prazo</th>
 						<th width="110">Data Cobrança</th>
 						<th width="110">Previsão Pagamento</th>
 						<th width="100">Valor Pendente</th>
@@ -48,6 +50,8 @@
 						<td>{{ item.numero }}</td>
 						<td>{{ item.autor }}</td>
 						<td>{{ item.reu }}</td>
+						<td>{{ item.advogado?.empresa }}</td>
+						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.dataUltimaCobranca | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.previsaoPagamento | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.total }}</td>

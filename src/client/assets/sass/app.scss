@@ -105,9 +105,18 @@ a:hover {
  cursor:pointer;
 }
 
-table{
+table {
+    width: 100%;
     font-size: 0.9rem;
 }
+
+td {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .sidebar{
     .list-group{
         a.list-group-item{

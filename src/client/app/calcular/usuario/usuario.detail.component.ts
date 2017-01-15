@@ -79,12 +79,16 @@ export class UsuarioDetailComponent implements OnInit {
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
                     this.onCancel();
+                }, x => {
+                    this.toastr.error(x);
                 });
         } else {
             this.service.putUsuario(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
                     this.onCancel();
+                }, x => {
+                    this.toastr.error(x);
                 });
         }
     }
