@@ -3,6 +3,8 @@ import { Evento } from './evento.model';
 import { EventoService } from './evento.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+import * as _ from 'lodash';
+
 @Component({
     moduleId: module.id,
     selector: 'eventomaster-cmp',
@@ -24,6 +26,10 @@ export class EventoMasterComponent implements OnInit {
 
     ngOnInit() {
         this.filter();
+    }
+
+    exibeResponsavel(){
+        return this.data && _.some(this.data, x => x.responsavel);
     }
 
     filter() {
