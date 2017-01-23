@@ -47,6 +47,17 @@ export class ProcessoService {
             .catch(this.handleError);
     }
 
+    getProcessosPaged(filterText: string, page: number, itemsPerPage: number): Observable<any> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+        params.set('page', page.toString());
+        params.set('itemsPerPage', itemsPerPage.toString());
+
+        return this.http.get(this.url + '/paged', { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     getProcessosSelect(numero: string): Observable<Processo[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', numero);
@@ -168,8 +179,7 @@ export class ProcessoService {
 
 
     private handleError(error: any) {
-        console.error(error);
-        return Observable.throw(error.json().Error || 'Server error');
+        return Observable.throw(error._body || 'Server error');
     }
 }
 

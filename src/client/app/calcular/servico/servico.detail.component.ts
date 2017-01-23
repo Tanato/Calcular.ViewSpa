@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -74,7 +75,7 @@ export class ServicoDetailComponent implements OnInit {
                         this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     });
             }
-            else{
+            else {
                 this.blockEdit = false;
             }
         });
@@ -155,5 +156,34 @@ export class ServicoDetailComponent implements OnInit {
                 this.router.navigateByUrl(link);
             }
         });
+    }
+
+    print(): void {
+        let printContents: any, popupWin: any;
+        printContents = document.getElementById('print-section').innerHTML;
+        popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+        popupWin.document.open();
+        popupWin.document.write(`
+        <html>
+            <head>
+                <style>
+                    table {border: solid 2px #000}
+                    td,th { padding-top: 1px; padding-bottom:1px}
+                    body {
+                        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                        font-size: 0.9rem;
+                    }
+                </style>
+            </head>
+            <body onload="window.print();window.close()">${printContents}</body>
+        </html>`);
+        popupWin.document.close();
+    }
+
+    getParteDescription(): string {
+        if (this.parte && this.model.processo && this.model.processo.parte) {
+            return _.find(this.parte, x => x.key === this.model.processo.parte).value;
+        }
+        return null;
     }
 }

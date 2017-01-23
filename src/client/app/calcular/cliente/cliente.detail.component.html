@@ -87,7 +87,7 @@
 						<div class="row">
 							<div class="form-group col-lg-6">
 								<label>Honorários:</label>
-								<input type="number" step="0.01" class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
+								<input class="form-control" [(ngModel)]="honorariosAux" [textMask]="{mask: moneyMask}" name="honorarios">
 							</div>
 						</div>
 					</div>

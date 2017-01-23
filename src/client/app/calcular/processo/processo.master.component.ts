@@ -13,7 +13,7 @@ export class ProcessoMasterComponent implements OnInit {
 
     private modelName = 'Processo';
 
-    private data: Processo[];
+    private data: any;
     private totalItems: number = 0;
     private currentPage: number = 1;
     private itemsPerPage: number = 50;
@@ -28,24 +28,24 @@ export class ProcessoMasterComponent implements OnInit {
         this.filter();
     }
 
-    filter() {
-        this.service.getProcessos(this.filterText)
+    filter(page: number = null) {
+        this.service.getProcessosPaged(this.filterText, page ? page : this.currentPage, this.itemsPerPage)
             .subscribe(response => {
-                this.data = response;
-                this.totalItems = this.data.length;
-                this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage });
+                this.data = response.data;
+                this.totalItems = response.totalItems;
+                this.rows = this.data;
             },
             error => {
-                alert(error);
                 console.log(error);
                 this.toastr.warning('Erro ao efetuar operação. Tente novamente');
             });
     }
 
     onPageChange(page: any, data: Array<any> = this.data) {
-        let start = (page.page - 1) * page.itemsPerPage;
-        let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-        this.rows = data.slice(start, end);
+        this.filter(page.page);
+        //let start = (page.page - 1) * page.itemsPerPage;
+        //let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+        //.slice(start, end);
     }
 
     onDelete(id: number) {
@@ -53,6 +53,9 @@ export class ProcessoMasterComponent implements OnInit {
             .subscribe(x => {
                 this.toastr.success(this.modelName + ' excluído com sucesso!');
                 this.filter();
+            },
+            error => {
+                this.toastr.error(error);
             });
     }
 

@@ -43,8 +43,7 @@
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
-							&nbsp;
-							&nbsp;
+							&nbsp; &nbsp;
 							<a [routerLink]="['/calcular/honorario/cobranca/detail', {id: item.id}]"><i class="fa fa-fax"></i></a> &nbsp;
 						</td>
 						<td>{{ item.numero }}</td>
@@ -54,7 +53,7 @@
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.dataUltimaCobranca | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.previsaoPagamento | date:"dd/MM/yyyy" }}</td>
-						<td>{{ item.total }}</td>
+						<td align="right">R$ {{item?.total?.toFixed(2)}}</td>
 					</tr>
 				</tbody>
 			</table>

@@ -152,13 +152,119 @@
         </form>
         <div class="row">
             <div class="col-lg-2">
+                <label>&nbsp;</label>
                 <button [hidden]="!blockEdit" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
             </div>
-            <div class="form-group col-lg-8">
+            <div class="form-group col-lg-6">
+            </div>
+            <div class="col-lg-2">
+                <label>&nbsp;</label>
+                <button (click)="printModal.show()" class="btn btn-default btn-block">Imprimir</button>
             </div>
             <div class="col-lg-2">
                 <label>&nbsp;</label>
                 <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #printModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" align="right">
+                <button type="button" (click)="printModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" (click)="print()" class="btn btn-primary">Imprimir</button>
+            </div>
+            <div class="modal-content" id="print-section">
+                <div align="center" class="initial">
+                    <table frame="box" style="width:85%" padding="30px">
+                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+                        <tr>
+                            <td width="50px"></td>
+                            <td align="left"><font size="4"><b>PROCESSO:</b></font></td>
+                            <td align="left"><font size="4"><b font-size="30px" >{{model?.processo?.numero}}</b></font></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="20px" style="border-bottom: solid"><td></td><td></td><td></td><td></td></tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">VARA:</td>
+                            <td align="left">{{model?.processo?.vara}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">EMPRESA/ADVOGADO:</td>
+                            <td align="left">{{model?.processo?.advogado?.nome}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">AUTOR:</td>
+                            <td align="left">{{model?.processo?.autor}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">RÉU:</td>
+                            <td align="left">{{model?.processo?.reu}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">PARTE:</td>
+                            <td align="left">{{ getParteDescription() }}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">DATA ENTRADA:</td>
+                            <td align="left">{{model?.entrada | date:"dd/MM/yyyy" }}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left"> VOLUME: </td>
+                            <td align="left"> {{model?.volumes }} </td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left"> ELABORAR: </td>
+                            <td></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr *ngFor="let item of model?.atividades" >
+                            <td width="50px"></td>
+                            <td align="left"><label  style="padding-left: 30px"> {{ item?.tipoAtividade?.nome }}</label></td>
+                            <td align="left">{{ item?.responsavel?.name }}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+                        <tr>
+                            <td width="50px"></td>
+                            <td align="left"><b>PRAZO FINAL:</b></td>
+                            <td align="left"><b>{{model?.prazo | date:"dd/MM/yyyy" }}</b></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+                        <tr>
+                            <td width="50px"></td>
+                            <td align="left">OBSERVAÇÕES:</td>
+                            <td></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="250px">
+                            <td width="50px"></td>
+                            <td></td>
+                            <td></td>
+                            <td width="50px"></td>
+                        </tr>
+
+                    </table>
+                </div>
             </div>
         </div>
     </div>

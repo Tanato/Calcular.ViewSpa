@@ -51,7 +51,7 @@
 				<ul class="submenu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
 					<li>
 						<a routerLink="/calcular/servico/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-table"></i> Registro
+							<i class="fa fa-fw fa-table"></i> Cadastro
 						</a>
 					</li>
 				</ul>
@@ -101,7 +101,7 @@
 			</li>
 		</div>
 
-		<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
+		<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial') || isInRole('Calculista')">
 			<a class="list-group-item" (click)="addExpandClass('apuracao')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'apuracao'" [class.fa-chevron-right]="showMenu !== 'apuracao'"></i>&nbsp; Apuração</span>
 			</a>
@@ -113,7 +113,7 @@
 						</a>
 					</li>
 				</ul>
-				<ul class="submenu">
+				<ul class="submenu" [hidden]="isInRole('Calculista')">
 					<li>
 						<a routerLink="/calcular/processo/apuracao-associados" [routerLinkActive]="['router-link-active']" class="list-group-item">
 							<i class="fa fa-fw fa-calculator"></i> Associados
@@ -123,7 +123,7 @@
 			</li>
 		</div>
 
-		<div class="nested-menu" *ngIf="isInRole('Administrativo')">
+		<div class="nested-menu" *ngIf="isInRole('Gerencial')">
 			<a class="list-group-item" (click)="addExpandClass('relatorios')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'relatorios'" [class.fa-chevron-right]="showMenu !== 'relatorios'"></i>&nbsp; Relatórios</span>
 			</a>
@@ -152,7 +152,7 @@
 			</li>
 		</div>
 
-		<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
+		<div class="nested-menu" *ngIf="isInRole('Administrativo')">
 			<a class="list-group-item" (click)="addExpandClass('parametrizacao')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'parametrizacao'" [class.fa-chevron-right]="showMenu !== 'parametrizacao'"></i>&nbsp; Parametrização</span>
 			</a>

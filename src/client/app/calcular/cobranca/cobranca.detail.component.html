@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group col-lg-3">
                         <label>Valor Pendente:</label>
-                        <input class="form-control" id="total" [ngModel]="model?.total" name="total" required disabled/>
+                        <input class="form-control" id="total" [textMask]="{mask: moneyMask}" [ngModel]="model?.total.toFixed(2)" name="total" required disabled/>
                     </div>
                     <div class="form-group col-lg-3">
                         <label>Nº de Autores:</label>
@@ -130,7 +130,7 @@
                                 </td>
                                 <td>{{ item?.dataCobranca | date:"dd/MM/yyyy"}}</td>
                                 <td>{{ item?.previsaoPagamento | date:"dd/MM/yyyy"}}</td>
-                                <td>{{ item?.valorPendente }}</td>
+                                <td align="right">R$ {{item?.valorPendente?.toFixed(2)}}</td>
                                 <td>{{ item?.contato }}</td>
                                 <td>{{ item.observacao }}</td>
                             </tr>

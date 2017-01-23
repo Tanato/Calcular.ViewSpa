@@ -38,15 +38,13 @@
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
-							&nbsp;
-							&nbsp;
-							&nbsp;
+							&nbsp; &nbsp; &nbsp;
 							<a [routerLink]="['/calcular/honorario/detail', {id: item.id}]"><i class="fa fa-calculator"></i></a> &nbsp;
 						</td>
 						<td>{{ item.numero }}</td>
 						<td>{{ item.autor }}</td>
 						<td>{{ item.reu }}</td>
-						<td>{{ item.total }}</td>
+						<td align="right"><label *ngIf="item?.total !== null">R$ {{item?.total?.toFixed(2)}}</label></td>
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.status }}</td>
 					</tr>

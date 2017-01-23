@@ -60,7 +60,7 @@
 						<td>{{ item.empresa }}</td>
 						<td>{{ item.celular }}</td>
 						<td>{{ item.telefone }}</td>
-						<td>{{ item.honorarios }}</td>
+						<td align="right"><label *ngIf="item?.honorarios !== null">R$ {{item?.honorarios?.toFixed(2)}}</label></td>
 						<td>{{ item.processos }}</td>
 					</tr>
 				</tbody>
