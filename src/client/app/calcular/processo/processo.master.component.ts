@@ -3,6 +3,7 @@ import { Processo } from './processo.model';
 import { ProcessoService } from './processo.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -11,6 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class ProcessoMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private modelName = 'Processo';
 
     private data: any;
@@ -29,7 +31,7 @@ export class ProcessoMasterComponent implements OnInit {
     }
 
     filter(page: number = null) {
-        this.service.getProcessosPaged(this.filterText, page ? page : this.currentPage, this.itemsPerPage)
+        this.busy = this.service.getProcessosPaged(this.filterText, page ? page : this.currentPage, this.itemsPerPage)
             .subscribe(response => {
                 this.data = response.data;
                 this.totalItems = response.totalItems;
@@ -43,9 +45,6 @@ export class ProcessoMasterComponent implements OnInit {
 
     onPageChange(page: any, data: Array<any> = this.data) {
         this.filter(page.page);
-        //let start = (page.page - 1) * page.itemsPerPage;
-        //let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-        //.slice(start, end);
     }
 
     onDelete(id: number) {

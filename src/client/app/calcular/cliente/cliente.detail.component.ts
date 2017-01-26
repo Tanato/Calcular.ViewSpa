@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask.js';
+import { Subscription } from 'rxjs';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -30,6 +31,8 @@ export class ClienteDetailComponent implements OnInit {
     public honorariosAux: string;
 
     public id: Observable<string>;
+
+    private busy: Subscription;
 
     constructor(public service: ClienteService,
         private route: ActivatedRoute,
@@ -59,7 +62,7 @@ export class ClienteDetailComponent implements OnInit {
             if (id) {
                 this.blockEdit = true;
                 this.formType = 'edit';
-                this.service.getClienteById(id)
+                this.busy = this.service.getClienteById(id)
                     .subscribe((data: Cliente) => {
                         data.nascimento = data.nascimento ? data.nascimento.slice(0, 10) : null;
                         this.honorariosAux = data.honorarios !== null ? data.honorarios.toString() : null;

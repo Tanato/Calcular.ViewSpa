@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -29,6 +30,7 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     public advogadoInit: IKeyValuePair[];
     public blockEdit: boolean = true;
     public id: Observable<string>;
+    private busy: Subscription;
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -60,7 +62,7 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
 
         this.id.subscribe(id => {
             if (id) {
-                this.service.getAtividadeById(id)
+                this.busy = this.service.getAtividadeById(id)
                     .subscribe((data: Atividade) => {
                         this.model = data;
                         this.model.tipoExecucaoNew = data.tipoExecucao !== 0 ? data.tipoExecucao : null;

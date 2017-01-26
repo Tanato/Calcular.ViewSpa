@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask.js';
 
 @Component({
@@ -41,6 +42,7 @@ export class HonorarioDetailComponent implements OnInit {
     public moneyMask: any = createNumberMask({prefix: 'R$ ', includeThousandsSeparator: false, allowNegative: true, allowDecimal: true});
 
     private valorAux: string;
+    private busy: Subscription;
 
     processos = (startsWith: string): Observable<any[]> => {
         var result = this.processoService.getProcessosSelect(startsWith);
@@ -64,7 +66,7 @@ export class HonorarioDetailComponent implements OnInit {
 
         this.id.subscribe(id => {
             if (id) {
-                this.processoService.getProcessoById(id)
+                this.busy = this.processoService.getProcessoById(id)
                     .subscribe((data: Processo) => {
                         this.model = data;
                     });

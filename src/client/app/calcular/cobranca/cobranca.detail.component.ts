@@ -9,6 +9,7 @@ import { IKeyValuePair } from '../../shared/interfaces';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask.js';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -31,6 +32,7 @@ export class CobrancaDetailComponent implements OnInit {
     public id: Observable<string>;
     public moneyMask: any = createNumberMask({prefix: 'R$ ', includeThousandsSeparator: false, allowNegative: true, allowDecimal: true});
 
+    private busy: Subscription;
 
     contato = (startsWith: string): Observable<any[]> => {
         var result = this.service.getContatoSelect(startsWith);
@@ -51,7 +53,7 @@ export class CobrancaDetailComponent implements OnInit {
 
         this.id.subscribe(id => {
             if (id) {
-                this.service.getProcessoById(id)
+                this.busy = this.service.getProcessoById(id)
                     .subscribe((data: Processo) => {
                         this.model = data;
                     });

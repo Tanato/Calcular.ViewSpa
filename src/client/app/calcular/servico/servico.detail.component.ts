@@ -8,6 +8,7 @@ import { ServicoService } from './servico.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
+import { Subscription } from 'rxjs';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import * as _ from 'lodash';
@@ -38,6 +39,7 @@ export class ServicoDetailComponent implements OnInit {
     public blockEdit: boolean = true;
 
     public id: Observable<string>;
+    private busy: Subscription;
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -67,7 +69,7 @@ export class ServicoDetailComponent implements OnInit {
         this.id.subscribe(id => {
             if (id) {
                 this.formType = 'edit';
-                this.service.getServicoById(id)
+                this.busy = this.service.getServicoById(id)
                     .subscribe((data: Servico) => {
                         this.model = data;
                         this.model.entrada = data.entrada.slice(0, 10);

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngBusy]="busy">
 	<!-- Page Heading -->
 	<div class="row">
 		<div class="col-xl-12">
@@ -51,8 +51,8 @@
 						<td>{{ item.processo?.autor }}</td>
 						<td>{{ item.processo?.reu }}</td>
 						<td>{{ item.processo?.advogado?.nome }}</td>
-						<td>{{ item.atividades[0]?.tipoAtividade.nome }}</td>
-						<td>{{ item.atividades[0]?.responsavel.name }}</td>
+						<td>{{ item.atividades[0]?.tipoAtividade?.nome }}</td>
+						<td>{{ item.atividades[0]?.responsavel?.name }}</td>
 						<td>{{ item.impressaoDescricao }}</td>
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.status === 0 ? 'Pendente' : 'Entregue'  }}</td>

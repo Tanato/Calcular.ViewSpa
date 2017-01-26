@@ -3,6 +3,7 @@ import { Atividade } from './atividade.model';
 import { AtividadeService } from './atividade.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
@@ -12,6 +13,7 @@ import * as _ from 'lodash';
 })
 export class AtividadeExecucaoMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private modelName = 'Atividade';
 
     private data: Atividade[];
@@ -38,7 +40,7 @@ export class AtividadeExecucaoMasterComponent implements OnInit {
     }
 
     filter() {
-        this.service.getAtividadesByUser(this.filterText, this.all)
+        this.busy = this.service.getAtividadesByUser(this.filterText, this.all)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

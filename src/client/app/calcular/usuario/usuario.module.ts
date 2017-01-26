@@ -16,6 +16,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { EqualValidatorDirective } from '../../shared/tools/equal.validator';
 
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { BusyModule } from 'angular2-busy';
 
 let options: any = {
     animate: 'flyRight',
@@ -23,7 +24,7 @@ let options: any = {
 };
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options)],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options), BusyModule],
     providers: [UsuarioService],
     declarations: [UsuarioMasterComponent],
     exports: [UsuarioMasterComponent]
@@ -31,7 +32,9 @@ let options: any = {
 export class UsuarioMasterModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), Ng2AutoCompleteModule],
+    imports: [CommonModule, PaginationModule,
+        RouterModule, TextMaskModule, ToastModule.forRoot(options),
+        Ng2AutoCompleteModule, BusyModule],
     providers: [UsuarioService],
     declarations: [UsuarioDetailComponent],
     exports: [UsuarioDetailComponent]
@@ -39,7 +42,7 @@ export class UsuarioMasterModule { }
 export class UsuarioDetailModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options)],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), BusyModule],
     providers: [UsuarioService],
     declarations: [UsuarioAlterarSenhaComponent, EqualValidatorDirective],
     exports: [UsuarioAlterarSenhaComponent]

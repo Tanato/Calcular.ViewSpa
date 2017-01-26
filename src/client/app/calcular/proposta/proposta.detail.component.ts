@@ -8,6 +8,7 @@ import { IKeyValuePair } from '../../shared/interfaces';
 import { Cliente } from '../cliente/cliente.model';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask.js';
 
 @Component({
@@ -38,6 +39,7 @@ export class PropostaDetailComponent implements OnInit {
     public blockEdit: boolean = true;
 
     public id: Observable<string>;
+    private busy: Subscription;
 
     public maskNumeroProcesso = (value: any[]) => {
         if (this.local && this.model && this.model.local !== null && this.local[this.model.local].mask) {
@@ -77,7 +79,7 @@ export class PropostaDetailComponent implements OnInit {
             if (id) {
                 this.blockEdit = true;
                 this.formType = 'edit';
-                this.service.getPropostaById(id)
+                this.busy = this.service.getPropostaById(id)
                     .subscribe((data: Proposta) => {
                         this.model = data;
                         this.model.dataProposta = data.dataProposta ? data.dataProposta.slice(0, 10) : null;

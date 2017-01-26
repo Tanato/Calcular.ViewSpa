@@ -341,6 +341,9 @@ export class SeedConfig {
       'lodash': 'node_modules/lodash/lodash.js',
       'angular2-text-mask': 'node_modules/angular2-text-mask/dist/angular2TextMask.js',
       'ng2-toastr': 'node_modules/ng2-toastr/bundles/ng2-toastr.js',
+      'ts-metadata-helper': 'npm:ts-metadata-helper',
+      'angular2-dynamic-component': 'npm:angular2-dynamic-component',
+      'angular2-busy': 'node_modules/angular2-busy',
 
       'rxjs/*': 'node_modules/rxjs/*',
       'app/*': '/app/*',
@@ -426,6 +429,16 @@ export class SeedConfig {
       },
       'angular2-text-mask': {
         main: 'dist/angular2TextMask.js',
+        defaultExtension: 'js'
+      },
+      'ts-metadata-helper': {
+        defaultExtension: 'js'
+      },
+      'angular2-dynamic-component': {
+        defaultExtension: 'js'
+      },
+      'angular2-busy': {
+        main: './index.js',
         defaultExtension: 'js'
       }
     }

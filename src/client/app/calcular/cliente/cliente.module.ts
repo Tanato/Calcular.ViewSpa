@@ -12,6 +12,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { BusyModule } from 'angular2-busy';
 
 let options: any = {
     animate: 'flyRight',
@@ -19,7 +20,7 @@ let options: any = {
 };
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options)],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options), BusyModule],
     providers: [ClienteService],
     declarations: [ClienteMasterComponent],
     exports: [ClienteMasterComponent]
@@ -27,7 +28,7 @@ let options: any = {
 export class ClienteMasterModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), Ng2AutoCompleteModule],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), Ng2AutoCompleteModule, BusyModule],
     providers: [ClienteService],
     declarations: [ClienteDetailComponent],
     exports: [ClienteDetailComponent]

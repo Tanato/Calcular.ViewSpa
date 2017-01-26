@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from './usuario.model';
 import { UsuarioService } from './usuario.service';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import * as _ from 'lodash';
@@ -25,6 +26,8 @@ export class UsuarioDetailComponent implements OnInit {
 
     public id: Observable<string>;
 
+    private busy: Subscription;
+
     constructor(public service: UsuarioService,
         private route: ActivatedRoute,
         private router: Router,
@@ -43,7 +46,7 @@ export class UsuarioDetailComponent implements OnInit {
 
     ngOnInit() {
 
-        this.service.getRolesSelect()
+        this.busy = this.service.getRolesSelect()
             .subscribe((data: any[]) => {
                 data.forEach(element => {
                     element.checked = false;

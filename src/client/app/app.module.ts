@@ -13,10 +13,16 @@ import { LoginModule } from './login/login.module';
 import { SignupModule } from './signup/signup.module';
 import { CalcularModule } from './calcular/calcular.module';
 import { SharedModule } from './shared/shared.module';
+import { BusyModule, BusyConfig } from 'angular2-busy';
 
 export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions, router: Router) {
 	return new AuthHttp(backend, defaultOptions, router);
 }
+
+var busyConfig = new BusyConfig({
+                message: 'Carregando...',
+				delay: 100,
+            });
 
 @NgModule({
 	imports: [
@@ -27,7 +33,8 @@ export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
 		LoginModule,
 		SignupModule,
 		CalcularModule,
-		SharedModule.forRoot()
+		SharedModule.forRoot(),
+		BusyModule.forRoot(busyConfig)
 	],
 	declarations: [AppComponent],
 	providers: [{

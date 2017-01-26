@@ -3,6 +3,7 @@ import { CobrancaService } from './cobranca.service';
 import { Processo } from '../processo/processo.model';
 import { ProcessoService } from '../processo/processo.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -11,6 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class CobrancaMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private data: Processo[];
     private rows: Processo[];
 
@@ -31,7 +33,7 @@ export class CobrancaMasterComponent implements OnInit {
     }
 
     filter() {
-        this.service.getProcessos(this.filterText, this.all)
+        this.busy = this.service.getProcessos(this.filterText, this.all)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

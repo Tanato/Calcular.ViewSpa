@@ -4,6 +4,7 @@ import { ComissaoService } from './comissao.service';
 import { AtividadeService } from '../atividade/atividade.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { IKeyValuePair } from '../../shared/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -12,6 +13,7 @@ import { IKeyValuePair } from '../../shared/interfaces';
 })
 export class ComissaoComponent implements OnInit {
 
+    private busy: Subscription;
     private modelName = 'Atividade';
 
     private data: Comissao[];
@@ -42,7 +44,7 @@ export class ComissaoComponent implements OnInit {
     }
 
     filter() {
-        this.service.getComissao()
+        this.busy = this.service.getComissao()
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Atividade } from './atividade.model';
 import { AtividadeService } from './atividade.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -10,6 +11,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class TipoAtividadeComponent implements OnInit {
 
+    private busy: Subscription;
     private modelName = 'Atividade';
 
     private data: Atividade[];
@@ -35,7 +37,7 @@ export class TipoAtividadeComponent implements OnInit {
     }
 
     filter() {
-        this.service.getTipoAtividade()
+        this.busy = this.service.getTipoAtividade()
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

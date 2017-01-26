@@ -3,6 +3,7 @@ import { Cliente } from './cliente.model';
 import { ClienteService } from './cliente.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -11,6 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class ClienteMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private modelName = 'Cliente';
 
     private data: Cliente[];
@@ -29,7 +31,7 @@ export class ClienteMasterComponent implements OnInit {
     }
 
     filter() {
-        this.service.getClientes(this.filterText)
+        this.busy = this.service.getClientes(this.filterText)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
