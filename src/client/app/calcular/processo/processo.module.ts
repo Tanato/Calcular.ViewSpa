@@ -14,6 +14,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 import { SelectModule } from 'ng2-select/ng2-select';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { BusyModule } from 'angular2-busy';
 
 let options: any = {
     animate: 'flyRight',
@@ -22,7 +23,7 @@ let options: any = {
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
-        ModalModule, ToastModule.forRoot(options), SelectModule],
+        ModalModule, ToastModule.forRoot(options), SelectModule, BusyModule],
     providers: [ProcessoService],
     declarations: [ProcessoMasterComponent],
     exports: [ProcessoMasterComponent]
@@ -31,7 +32,7 @@ export class ProcessoMasterModule { }
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
-        ToastModule.forRoot(options), SelectModule, Ng2AutoCompleteModule],
+        ToastModule.forRoot(options), SelectModule, Ng2AutoCompleteModule, BusyModule],
     providers: [ProcessoService],
     declarations: [ProcessoDetailComponent],
     exports: [ProcessoDetailComponent]
@@ -40,7 +41,7 @@ export class ProcessoDetailModule { }
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
-        ToastModule.forRoot(options), Ng2AutoCompleteModule],
+        ToastModule.forRoot(options), Ng2AutoCompleteModule, BusyModule],
     providers: [ProcessoService],
     declarations: [ProcessoNotesComponent],
     exports: [ProcessoNotesComponent]

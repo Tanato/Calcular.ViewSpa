@@ -14,9 +14,10 @@ export class CobrancaService {
 
     constructor(private http: Http) { }
 
-    getProcessos(filterText: string): Observable<Processo[]> {
+    getProcessos(filterText: string, all: boolean): Observable<Processo[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filterText);
+        params.set('all', all ? 'true' : 'false');
 
         return this.http.get(this.url + '/processo/', { search: params })
             .map((res: Response) => res.json())

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngBusy]="busy">
     <!-- Page Heading -->
     <div class="row">
         <div class="col-xl-12">
@@ -58,7 +58,7 @@
                 <div class="row">
                     <div class="form-group col-lg-2">
                         <label>Honorários:</label>
-                        <input type="number" class="form-control" id="honorario" [(ngModel)]="model.honorario" name="honorario" required/>
+                        <input class="form-control" id="honorario" [(ngModel)]="honorarioAux" name="honorario" [textMask]="{mask: moneyMask}"/>
                     </div>
 
                     <div class="form-group col-lg-2">
@@ -68,12 +68,12 @@
                     </div>
                     <div class="form-group col-lg-2">
                         <label>Fechou Proposta?</label>
-                        <select class="form-control" id="fechadoSelect" [(ngModel)]="model.fechado" name="fechadoSelect" required>
+                        <select class="form-control" id="fechadoSelect" [(ngModel)]="model.fechado" name="fechadoSelect">
                                 <option value="false">Não</option>
                                 <option value="true">Sim</option>
                             </select>
                     </div>
-                    <div class="form-group col-lg-3">
+                    <div class="form-group col-lg-3" [hidden]="model.fechado !== 'false'">
                         <label>Motivo:</label>
                         <select class="form-control" id="movitoSelect" [(ngModel)]="model.motivo" name="movitoSelect">
 							<option *ngFor="let item of motivo" [ngValue]="item.key">{{item.value}}</option>

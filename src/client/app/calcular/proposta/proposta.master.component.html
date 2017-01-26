@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngBusy]="busy">
 	<!-- Page Heading -->
 	<div class="row">
 		<div class="col-xl-12">
@@ -40,13 +40,13 @@
 					<tr *ngFor="let item of rows">
 						<td>
 							&nbsp; &nbsp;
-							<a [routerLink]="['/calcular/honorario/proposta/detail', {id: item.id}]"><i class="fa fa-handshake-o"></i></a> &nbsp;
+							<a [routerLink]="['/calcular/honorario/proposta/detail', {id: item.id}]"><i class="fa fa-calculator"></i></a> &nbsp;
 						</td>
 						<td>{{ item.numero }}</td>
 						<td>{{ item.contato }}</td>
 						<td>{{ item.celular }}</td>
 						<td>{{ item.telefone }}</td>
-						<td>{{ item.honorario }}</td>
+						<td align="right"><label *ngIf="item?.honorario !== null">R$ {{item?.honorario?.toFixed(2)}}</label></td>
 						<td>{{ item.dataProposta | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.fechado ? 'Sim' : 'Não' }}</td>
 					</tr>

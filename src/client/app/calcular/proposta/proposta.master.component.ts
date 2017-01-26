@@ -3,6 +3,7 @@ import { PropostaService } from './proposta.service';
 import { Proposta } from '../proposta/proposta.model';
 import { ProcessoService } from '../processo/processo.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -11,6 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class PropostaMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private data: Proposta[];
     private rows: Proposta[];
 
@@ -22,15 +24,15 @@ export class PropostaMasterComponent implements OnInit {
     private editId: number;
 
     constructor(private service: PropostaService,
-                private processoService: ProcessoService,
-                private toastr: ToastsManager) { }
+        private processoService: ProcessoService,
+        private toastr: ToastsManager) { }
 
     ngOnInit() {
         this.filter();
     }
 
     filter() {
-        this.service.getPropostas(this.filterText)
+        this.busy = this.service.getPropostas(this.filterText)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

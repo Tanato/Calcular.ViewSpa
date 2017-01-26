@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
@@ -29,6 +30,7 @@ export class ProcessoDetailComponent implements OnInit {
     public blockEdit: boolean = true;
 
     public id: Observable<string>;
+    private busy: Subscription;
 
     constructor(public service: ProcessoService,
         private route: ActivatedRoute,
@@ -76,7 +78,7 @@ export class ProcessoDetailComponent implements OnInit {
             if (id) {
                 this.blockEdit = true;
                 this.formType = 'edit';
-                this.service.getProcessoById(id)
+                this.busy = this.service.getProcessoById(id)
                     .subscribe((data: Processo) => {
                         this.model = data;
                         if (this.model.advogadoId) {
@@ -93,7 +95,7 @@ export class ProcessoDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.formType === 'new') {
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postProcesso(this.model)
                 .subscribe(data => {
                     this.model = data;

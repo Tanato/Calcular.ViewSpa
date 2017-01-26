@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Evento } from './evento.model';
 import { EventoService } from './evento.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
+
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -10,6 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class EventoMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private data: Evento[];
 
     private totalItems: number = 0;
@@ -26,9 +30,13 @@ export class EventoMasterComponent implements OnInit {
         this.filter();
     }
 
+    exibeResponsavel(){
+        return this.data && _.some(this.data, x => x.responsavel);
+    }
+
     filter() {
-        this.service.getEventos(this.filterText)
-            .subscribe(response => {
+        this.busy = this.service.getEventos(this.filterText)
+                .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
                 this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage });

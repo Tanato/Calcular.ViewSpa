@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from './usuario.model';
 import { UsuarioService } from './usuario.service';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import * as _ from 'lodash';
@@ -25,6 +26,8 @@ export class UsuarioDetailComponent implements OnInit {
 
     public id: Observable<string>;
 
+    private busy: Subscription;
+
     constructor(public service: UsuarioService,
         private route: ActivatedRoute,
         private router: Router,
@@ -43,7 +46,7 @@ export class UsuarioDetailComponent implements OnInit {
 
     ngOnInit() {
 
-        this.service.getRolesSelect()
+        this.busy = this.service.getRolesSelect()
             .subscribe((data: any[]) => {
                 data.forEach(element => {
                     element.checked = false;
@@ -74,17 +77,21 @@ export class UsuarioDetailComponent implements OnInit {
     onSubmit() {
 
         this.model.roles = this.selectedOptions();
-        if (this.formType === 'new') {
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postUsuario(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
                     this.onCancel();
+                }, x => {
+                    this.toastr.error(x);
                 });
         } else {
             this.service.putUsuario(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
                     this.onCancel();
+                }, x => {
+                    this.toastr.error(x);
                 });
         }
     }

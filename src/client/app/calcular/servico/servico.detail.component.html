@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngBusy]="busy">
     <!-- Page Heading -->
     <div class="row">
         <div class="col-xl-12">
@@ -15,7 +15,7 @@
     </div>
     <div class="row col-xl-12">
         <form role="form" #form="ngForm">
-            <fieldset [disabled]="false">
+            <fieldset [disabled]="blockEdit">
                 <div class="row">
                     <div class="form-group col-lg-3">
                         <label>Processo:</label>
@@ -69,13 +69,13 @@
                     <div class="form-group col-lg-2">
                         <label>Data de Saída:</label>
                         <input type="date" class="form-control" id="saida" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event"
-                            name="saida" min="model.entrada | date"/>
+                            name="saida" min="model.entrada | date" />
                     </div>
                     <div class="form-group col-lg-2">
                     </div>
                     <div class="col-lg-2 text-center">
                         <label>&nbsp;</label>
-                        <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()"><i class="fa fa-plus"></i> Salvar</button>
+                        <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()">Salvar</button>
                     </div>
                 </div>
             </fieldset>
@@ -83,7 +83,7 @@
         </form>
         <form role="formAtividade" [hidden]="!model.id" #formAtividade="ngForm">
             <div class="card card-block">
-                <fieldset [disabled]="false">
+                <fieldset [disabled]="blockEdit">
                     <div class="row">
                         <div class="form-group col-lg-3">
                             <label>Atividade:</label>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-lg-2 text-center">
                             <label>&nbsp;</label>
-                            <button class="btn btn-primary btn-block" [disabled]="!formAtividade.form.valid" (click)="addAtividade()"><i class="fa fa-plus"></i> Atividade</button>
+                            <button class="btn btn-primary btn-block" [disabled]="!formAtividade.form.valid" (click)="addAtividade()">Adicionar</button>
                         </div>
                     </div>
                 </fieldset>
@@ -143,21 +143,129 @@
                                 <td>{{ item?.tipoAtividade?.nome }}</td>
                                 <td>{{ item?.responsavel?.name }}</td>
                                 <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
-                                <td>{{ item.status }}</td>
+                                <td>{{ item.tipoExecucao === 0 ? 'Pendente' : 'Finalizado' }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </form>
+        <div class="row">
+            <div class="col-lg-2">
+                <label>&nbsp;</label>
+                <button [hidden]="!blockEdit" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
+            </div>
+            <div class="form-group col-lg-6">
+            </div>
+            <div class="col-lg-2">
+                <label>&nbsp;</label>
+                <button (click)="printModal.show()" class="btn btn-default btn-block">Imprimir</button>
+            </div>
+            <div class="col-lg-2">
+                <label>&nbsp;</label>
+                <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <div class="row">
-                <div class="form-group col-lg-10">
-                </div>
-                <div class="col-lg-2">
-                    <label>&nbsp;</label>
-                    <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
+<div bsModal #printModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" align="right">
+                <button type="button" (click)="printModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" (click)="print()" class="btn btn-primary">Imprimir</button>
+            </div>
+            <div class="modal-content" id="print-section">
+                <div align="center" class="initial">
+                    <table frame="box" style="width:85%" padding="30px">
+                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+                        <tr>
+                            <td width="50px"></td>
+                            <td align="left"><font size="4"><b>PROCESSO:</b></font></td>
+                            <td align="left"><font size="4"><b font-size="30px" >{{model?.processo?.numero}}</b></font></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="20px" style="border-bottom: solid"><td></td><td></td><td></td><td></td></tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">VARA:</td>
+                            <td align="left">{{model?.processo?.vara}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">EMPRESA/ADVOGADO:</td>
+                            <td align="left">{{model?.processo?.advogado?.nome}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">AUTOR:</td>
+                            <td align="left">{{model?.processo?.autor}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">RÉU:</td>
+                            <td align="left">{{model?.processo?.reu}}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">PARTE:</td>
+                            <td align="left">{{ getParteDescription() }}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left">DATA ENTRADA:</td>
+                            <td align="left">{{model?.entrada | date:"dd/MM/yyyy" }}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left"> VOLUME: </td>
+                            <td align="left"> {{model?.volumes }} </td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr  >
+                            <td width="50px"></td>
+                            <td align="left"> ELABORAR: </td>
+                            <td></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr *ngFor="let item of model?.atividades" >
+                            <td width="50px"></td>
+                            <td align="left"><label  style="padding-left: 30px"> {{ item?.tipoAtividade?.nome }}</label></td>
+                            <td align="left">{{ item?.responsavel?.name }}</td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+                        <tr>
+                            <td width="50px"></td>
+                            <td align="left"><b>PRAZO FINAL:</b></td>
+                            <td align="left"><b>{{model?.prazo | date:"dd/MM/yyyy" }}</b></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+                        <tr>
+                            <td width="50px"></td>
+                            <td align="left">OBSERVAÇÕES:</td>
+                            <td></td>
+                            <td width="50px"></td>
+                        </tr>
+                        <tr height="250px">
+                            <td width="50px"></td>
+                            <td></td>
+                            <td></td>
+                            <td width="50px"></td>
+                        </tr>
+
+                    </table>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>

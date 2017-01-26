@@ -1,35 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { Atividade } from './atividade.model';
-import { AtividadeService } from './atividade.service';
+import { Comissao } from './comissao.model';
+import { ComissaoService } from './comissao.service';
+import { AtividadeService } from '../atividade/atividade.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { IKeyValuePair } from '../../shared/interfaces';
 import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
-    selector: 'tipoatividade-cmp',
-    templateUrl: './atividade.tipo.component.html',
+    selector: 'comissao-cmp',
+    templateUrl: './comissao.component.html',
 })
-export class TipoAtividadeComponent implements OnInit {
+export class ComissaoComponent implements OnInit {
 
     private busy: Subscription;
     private modelName = 'Atividade';
 
-    private data: Atividade[];
+    private data: Comissao[];
     private totalItems: number = 0;
     private currentPage: number = 1;
     private itemsPerPage: number = 50;
-    private model: string;
+    private model: Comissao;
     private editId: number;
-    private rows: Atividade[];
+    private rows: Comissao[];
+    private tipoAtividade: IKeyValuePair[];
 
-    constructor(private service: AtividadeService, private toastr: ToastsManager) { }
+    constructor(private service: ComissaoService, private atividadeService: AtividadeService, private toastr: ToastsManager) { }
 
     ngOnInit() {
         this.filter();
+        this.model = new Comissao;
+
+        this.atividadeService.getTipoAtividadeSelect()
+            .subscribe(data => this.tipoAtividade = data);
     }
 
     submit() {
-        this.service.postTipoAtividade(this.model)
+        this.service.postComissao(this.model)
             .subscribe(x => {
                 this.toastr.success('Atividade adicionada com sucesso!');
                 this.filter();
@@ -37,7 +44,7 @@ export class TipoAtividadeComponent implements OnInit {
     }
 
     filter() {
-        this.busy = this.service.getTipoAtividade()
+        this.busy = this.service.getComissao()
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
@@ -50,6 +57,13 @@ export class TipoAtividadeComponent implements OnInit {
             });
     }
 
+    changeAtividade(tipo: number) {
+        if (tipo !== null) {
+            this.service.getComissao(tipo)
+                .subscribe((data: Comissao[]) => this.data = data);
+        }
+    }
+
     onPageChange(page: any, data: Array<any> = this.data) {
         let start = (page.page - 1) * page.itemsPerPage;
         let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
@@ -57,9 +71,9 @@ export class TipoAtividadeComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        this.service.deleteTipoAtividade(id)
+        this.service.deleteComissao(id)
             .subscribe(x => {
-                this.toastr.success(this.modelName + ' excluído com sucesso!');
+                this.toastr.success(this.modelName + ' inativado com sucesso!');
                 this.filter();
             });
     }

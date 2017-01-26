@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngBusy]="busy">
 	<!-- Page Heading -->
 	<div class="row">
 		<div class="col-xl-12">
@@ -103,7 +103,7 @@
 							<label>Atividade:</label>
 							<input class="form-control" value="Refazer" disabled *ngIf="model.etapaAtividade === 2" />
 							<select class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
-								*ngIf="model.etapaAtividade === 0" required>
+								*ngIf="model.etapaAtividade === 0" disabled>
                                 <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
                             </select>
 						</div>
@@ -120,7 +120,7 @@
 						<div class="form-group col-lg-2">
 							<label>Status:</label>
 							<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucaoNew" name="tipoExecucao" required>
-								<option value="1">Finalizar</option>
+								<option value="1">Finalizado</option>
 								<option value="2">Revisar</option>
 							</select>
 						</div>
@@ -158,7 +158,7 @@
 								<div class="form-group col-lg-6">
 									<label>Status:</label>
 									<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucaoNew" name="tipoExecucao" required>
-										<option value="1">Finalizar</option>
+										<option value="1">Finalizado</option>
 										<option value="3">Refazer</option>
 									</select>
 								</div>
@@ -166,8 +166,8 @@
 						</div>
 						<div class="form-group col-lg-8">
 							<div class="form-group col-lg-6">
-								<label>Observações para Refazer:</label>
-								<textarea class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+								<label [hidden]="model.tipoExecucaoNew == 1">Observações para Refazer:</label>
+								<textarea [hidden]="model.tipoExecucaoNew == 1" class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
 							</div>
 							<div class="form-group col-lg-6">
 								<label>Observações apenas para Revisor:</label>

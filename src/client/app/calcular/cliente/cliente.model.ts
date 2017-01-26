@@ -15,4 +15,5 @@ export class Cliente {
     comoChegou: number;
     comoChegoudetalhe: number;
     observacao: string;
+    vara: string;
 }

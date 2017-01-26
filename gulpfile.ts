@@ -98,7 +98,6 @@ gulp.task('build.test', (done: any) =>
 gulp.task('test.watch', (done: any) =>
   runSequence('build.test',
               'watch.test',
-              'karma.watch',
               done));
 
 // --------------
@@ -139,13 +138,6 @@ gulp.task('serve.prod', (done: any) =>
               'server.prod',
               done));
 
-
-// --------------
-// Test.
-gulp.task('test', (done: any) =>
-  runSequence('build.test',
-              'karma.run',
-              done));
 
 // --------------
 // Clean dev/coverage that will only run once

@@ -8,6 +8,8 @@ import { IKeyValuePair } from '../../shared/interfaces';
 import { Cliente } from '../cliente/cliente.model';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask.js';
 
 @Component({
     moduleId: module.id,
@@ -22,6 +24,7 @@ export class PropostaDetailComponent implements OnInit {
 
     public maskTelefone = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     public maskCelular = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    public moneyMask: any = createNumberMask({ prefix: 'R$ ', includeThousandsSeparator: false, allowNegative: true, allowDecimal: true });
 
     public model: Proposta = new Proposta;
     public parte: IKeyValuePair[];
@@ -30,11 +33,13 @@ export class PropostaDetailComponent implements OnInit {
     public local: any[];
 
     public contato: Cliente = null;
+    public honorarioAux: any;
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
 
     public id: Observable<string>;
+    private busy: Subscription;
 
     public maskNumeroProcesso = (value: any[]) => {
         if (this.local && this.model && this.model.local !== null && this.local[this.model.local].mask) {
@@ -74,7 +79,7 @@ export class PropostaDetailComponent implements OnInit {
             if (id) {
                 this.blockEdit = true;
                 this.formType = 'edit';
-                this.service.getPropostaById(id)
+                this.busy = this.service.getPropostaById(id)
                     .subscribe((data: Proposta) => {
                         this.model = data;
                         this.model.dataProposta = data.dataProposta ? data.dataProposta.slice(0, 10) : null;
@@ -111,7 +116,9 @@ export class PropostaDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.formType === 'new') {
+        this.model.honorario = parseFloat(this.honorarioAux.replace(/[^0-9\.]/g, ''));
+
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postProposta(this.model)
                 .subscribe(data => {
                     this.toastr.success(this.modelName + ' registrada com sucesso!');

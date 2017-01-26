@@ -4,6 +4,7 @@ import { Servico } from './servico.model';
 import { ProcessoService } from '../processo/processo.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -12,6 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class ServicoMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private data: Servico[];
     private rows: Servico[];
 
@@ -31,7 +33,7 @@ export class ServicoMasterComponent implements OnInit {
     }
 
     filter() {
-        this.service.getServicos(this.filterText)
+        this.busy = this.service.getServicos(this.filterText)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

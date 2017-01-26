@@ -1,11 +1,9 @@
-import { TipoAtividade } from '../atividade/atividade.model';
-
 export class Evento {
     id: number;
-    nome: string;
-    entrega: any;
-    observacao: string;
-    tipoAtividadeId: number;
-    tipoAtividade: TipoAtividade;
-    responsavelId: number;
+    tipoDescicao: string;
+    data: any;
+    detalhe: string;
+    descicao: string;
+    responsavel: string;
+    status: string;
 }

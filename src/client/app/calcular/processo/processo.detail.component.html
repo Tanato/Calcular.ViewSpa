@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngBusy]="busy">
 	<!-- Page Heading -->
 	<div class="row">
 		<div class="col-xl-12">
@@ -80,7 +80,7 @@
 					<div class="form-group col-lg-6" [hidden]="!model.advogado || !model.advogado.perfil || model.advogado?.perfil === 0">
 						<label>Perito:</label>
 						<input class="form-control" ng2-auto-complete [source]="perito" id="perito" 
-						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true" [required]="model.advogado && model.advogado.perfil && model.advogado.perfil !== 0">
+						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true" [required]="!(!model.advogado || !model.advogado.perfil || model.advogado?.perfil === 0)">
 					</div>
 				</div>
 

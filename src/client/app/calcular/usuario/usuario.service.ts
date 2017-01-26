@@ -68,8 +68,8 @@ export class UsuarioService {
     }
 
     private handleError(error: any) {
-        console.error(error);
-        return Observable.throw(error.json().Error || 'Server error');
+        console.error(error._body);
+        return Observable.throw(error._body || error.json().Error || 'Server error');
     }
 }
 

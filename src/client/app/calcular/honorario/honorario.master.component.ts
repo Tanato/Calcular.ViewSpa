@@ -3,6 +3,7 @@ import { HonorarioService } from './honorario.service';
 import { Processo } from '../processo/processo.model';
 import { ProcessoService } from '../processo/processo.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
@@ -11,6 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class HonorarioMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private data: Processo[];
     private rows: Processo[];
 
@@ -29,12 +31,12 @@ export class HonorarioMasterComponent implements OnInit {
         this.filter();
     }
 
-    filter() {
-        this.processoService.getProcessos(this.filterText)
+    filter(page: number = null) {
+        this.busy = this.processoService.getProcessosPaged(this.filterText, page ? page : this.currentPage, this.itemsPerPage)
             .subscribe(response => {
-                this.data = response;
-                this.totalItems = this.data.length;
-                this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage });
+                this.data = response.data;
+                this.totalItems = response.totalItems;
+                this.rows = this.data;
             },
             error => {
                 alert(error);
@@ -44,9 +46,7 @@ export class HonorarioMasterComponent implements OnInit {
     }
 
     onPageChange(page: any, data: Array<any> = this.data) {
-        let start = (page.page - 1) * page.itemsPerPage;
-        let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-        this.rows = data.slice(start, end);
+        this.filter(page.page);
     }
 
     editClick(id: number) {

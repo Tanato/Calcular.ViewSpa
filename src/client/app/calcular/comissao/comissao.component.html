@@ -1,0 +1,101 @@
+<div class="container-fluid" [ngBusy]="busy">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li>
+					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li class="active"> Atividades </li>
+			</ol>
+		</div>
+	</div>
+	<form role="form" #form="ngForm">
+		<div class="row">
+			<div class="col-xl-4">
+				<label>Atividade:</label>
+				<select required class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)">
+					<option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
+				</select>
+			</div>
+			<div class="col-xl-2">
+				<label>Hora Mín.:</label>
+				<input type="number" step="0.1" class="form-control" [(ngModel)]="model.horaMinima" name="horasMin">
+			</div>
+			<div class="col-xl-2">
+				<label>Hora Máx:</label>
+				<input type="number" step="0.1" class="form-control" [(ngModel)]="model.horaMaxima" name="horasMax">
+			</div>
+			<div class="col-xl-2">
+				<label>Valor:</label>
+				<input required type="number" step="0.1" class="form-control" [(ngModel)]="model.valor" name="valor">
+			</div>
+			<div class="col-xl-2">
+				<label>Vigência:</label>
+				<input required type="date" class="form-control" [ngModel]="model.vigencia" (ngModelChange)="model.vigencia = $event" name="vigencia">
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-xl-10">
+			</div>
+			<div class="col-xl-2">
+				<label>&nbsp;</label>
+				<button class="btn btn-primary  btn-block" (click)="submit()"><i class="fa fa-plus"></i> Adicionar</button>
+			</div>
+		</div>
+	</form>
+	<hr>
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-hover table-striped table-sm">
+				<thead>
+					<tr>
+						<th width="70"></th>
+						<th>Atividade</th>
+						<th width="90">Hora Mín.</th>
+						<th width="90">Hora Máx.</th>
+						<th width="90">Valor</th>
+						<th width="90">Vigência</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of rows">
+						<td>
+							&nbsp; &nbsp; &nbsp;
+							<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+							<div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">Deseja inativar o registro?</h5>
+										</div>
+										<div class="modal-footer">
+											<button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+											<button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Inativar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td>{{ item.tipoAtividade?.nome }}</td>
+						<td>{{ item.horaMinima }}</td>
+						<td>{{ item.horaMaxima }}</td>
+						<td>{{ item.valor }}</td>
+						<td>{{ item.vigencia | date:"dd/MM/yyyy" }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-xl-12 centered">
+			<pagination previousText="Anterior" nextText="Próximo" firstText="Primeira" lastText="Última" [totalItems]="totalItems" [(ngModel)]="currentPage"
+				[itemsPerPage]="itemsPerPage" [maxSize]="maxSize" class="pagination-sm" [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event"
+				(pageChanged)="onPageChange($event)">
+			</pagination>
+		</div>
+	</div>
+</div>

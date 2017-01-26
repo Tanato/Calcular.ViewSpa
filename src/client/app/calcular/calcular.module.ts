@@ -14,6 +14,7 @@ import { TipoAtividadeModule } from './atividade/atividade.module';
 import { AtividadeExecucaoDetailModule, AtividadeExecucaoMasterModule } from './atividade/atividade.module';
 import { CobrancaMasterModule, CobrancaDetailModule } from './cobranca/cobranca.module';
 import { PropostaMasterModule, PropostaDetailModule } from './proposta/proposta.module';
+import { ComissaoModule } from './comissao/comissao.module';
 
 import { CalcularComponent } from './calcular.component';
 
@@ -49,6 +50,7 @@ import { SidebarComponent } from '../shared/index';
         CobrancaDetailModule,
         PropostaMasterModule,
         PropostaDetailModule,
+        ComissaoModule,
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]

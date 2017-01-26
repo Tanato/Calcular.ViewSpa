@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TopnavService } from './topnav.service';
-
-export interface IUser {
-	name: string;
-}
+import { TopnavService, IUser } from './topnav.service';
 
 @Component({
 	moduleId: module.id,

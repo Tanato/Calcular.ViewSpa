@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" [ngBusy]="busy">
 	<!-- Page Heading -->
 	<div class="row">
 		<div class="col-xl-12">
@@ -31,6 +31,7 @@
 						<th>Autor</th>
 						<th>Réu</th>
 						<th colspan="2">Atividade</th>
+						<th *ngIf="isRevisor()">Responsável</th>
 						<th width="120">Prazo</th>
 						<th width="150">Status</th>
 					</tr>
@@ -38,15 +39,15 @@
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
-							&nbsp;
-							&nbsp;
-							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-check"></i></a> &nbsp;
+							&nbsp; &nbsp;
+							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-calculator"></i></a> &nbsp;
 						</td>
 						<td>{{ item.servico?.processo?.numero }}</td>
 						<td>{{ item.servico?.processo?.autor }}</td>
 						<td>{{ item.servico?.processo?.reu }}</td>
 						<td>{{ item.tipoAtividade?.nome }}</td>
 						<td>{{ item.etapaAtividade === 2 ? "Refazer" : item.etapaAtividade === 1 ? "Revisão" : "" }}</td>
+						<td *ngIf="isRevisor()">{{ item.atividadeOrigem?.responsavel?.name }}</td>
 						<td>{{ item.servico?.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.tipoExecucao === 0 ? "Pendente" : "Finalizado" }}</td>
 					</tr>

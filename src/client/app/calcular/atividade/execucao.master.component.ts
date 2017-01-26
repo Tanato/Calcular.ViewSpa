@@ -3,6 +3,8 @@ import { Atividade } from './atividade.model';
 import { AtividadeService } from './atividade.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -11,6 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class AtividadeExecucaoMasterComponent implements OnInit {
 
+    private busy: Subscription;
     private modelName = 'Atividade';
 
     private data: Atividade[];
@@ -24,16 +27,20 @@ export class AtividadeExecucaoMasterComponent implements OnInit {
     private editId: number;
     private all: boolean;
 
-
-    constructor(private service: AtividadeService, private toastr: ToastsManager) {
+    constructor(private service: AtividadeService,
+        private toastr: ToastsManager) {
     }
 
     ngOnInit() {
         this.filter();
     }
 
+    isRevisor() {
+        return this.data && _.some(this.data, x => x.etapaAtividade === 1);
+    }
+
     filter() {
-        this.service.getAtividadesByUser(this.filterText, this.all)
+        this.busy = this.service.getAtividadesByUser(this.filterText, this.all)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

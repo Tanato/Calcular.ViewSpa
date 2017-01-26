@@ -4,6 +4,8 @@ import { ClienteService } from './cliente.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask.js';
+import { Subscription } from 'rxjs';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -18,6 +20,7 @@ export class ClienteDetailComponent implements OnInit {
 
     public maskTelefone = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     public maskCelular = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    public moneyMask: any = createNumberMask({ prefix: 'R$ ', includeThousandsSeparator: false, allowNegative: true, allowDecimal: true });
 
     public model: Cliente = new Cliente;
     public perfil: IKeyValuePair[];
@@ -25,8 +28,11 @@ export class ClienteDetailComponent implements OnInit {
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
+    public honorariosAux: string;
 
     public id: Observable<string>;
+
+    private busy: Subscription;
 
     constructor(public service: ClienteService,
         private route: ActivatedRoute,
@@ -56,9 +62,10 @@ export class ClienteDetailComponent implements OnInit {
             if (id) {
                 this.blockEdit = true;
                 this.formType = 'edit';
-                this.service.getClienteById(id)
+                this.busy = this.service.getClienteById(id)
                     .subscribe((data: Cliente) => {
                         data.nascimento = data.nascimento ? data.nascimento.slice(0, 10) : null;
+                        this.honorariosAux = data.honorarios !== null ? data.honorarios.toString() : null;
                         this.model = data;
                     });
             } else {
@@ -68,7 +75,10 @@ export class ClienteDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        if (this.formType === 'new') {
+
+        this.model.honorarios = parseFloat(this.honorariosAux.replace(/[^0-9\.]/g, ''));
+
+        if (this.formType === 'new' && !this.model.id) {
             this.service.postCliente(this.model)
                 .subscribe(x => {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
