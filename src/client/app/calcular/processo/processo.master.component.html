@@ -26,11 +26,11 @@
 					<tr>
 						<th width="65"></th>
 						<th width="200">Nº Processo</th>
-						<th width="160">Autor</th>
-						<th width="160">Réu</th>
+						<th>Autor</th>
+						<th>Réu</th>
 						<th width="90">Vara</th>
 						<th width="170">Advogado/Cliente</th>
-						<th>Empresa</th>
+						<th width="170">Empresa</th>
 						<th width="95">Honorário</th>
 					</tr>
 				</thead>
@@ -61,7 +61,7 @@
 						<td>{{ item.vara }}</td>
 						<td>{{ item.advogado?.nome }}</td>
 						<td>{{ item.advogado?.empresa }}</td>
-						<td align="right"><label *ngIf="item?.honorario !== null">R$ {{item?.honorario?.toFixed(2)}}</label></td>
+						<td><label *ngIf="item?.honorario !== null">R$ {{item?.honorario?.toFixed(2)}}</label></td>
 					</tr>
 				</tbody>
 			</table>

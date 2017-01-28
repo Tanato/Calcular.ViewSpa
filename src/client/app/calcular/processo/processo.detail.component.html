@@ -77,10 +77,10 @@
 						[(ngModel)]="model.indicacao" name="indicacao" min-chars="2" [accept-user-input]="true">
 					</div>
 
-					<div class="form-group col-lg-6" [hidden]="!model.advogado || !model.advogado.perfil || model.advogado?.perfil === 0">
-						<label>Perito:</label>
+					<div class="form-group col-lg-6" [hidden]="model.parte !== 2">
+						<label>Perito Nomeado:</label>
 						<input class="form-control" ng2-auto-complete [source]="perito" id="perito" 
-						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true" [required]="!(!model.advogado || !model.advogado.perfil || model.advogado?.perfil === 0)">
+						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true" [required]="model.parte !== 2">
 					</div>
 				</div>
 
