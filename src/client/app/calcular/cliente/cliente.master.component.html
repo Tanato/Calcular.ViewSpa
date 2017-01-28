@@ -27,7 +27,7 @@
 				<thead>
 					<tr>
 						<th width="70"></th>
-						<th >Nome</th>
+						<th>Nome</th>
 						<th width="200">Empresa</th>
 						<th width="125">Celular</th>
 						<th width="125">Telefone</th>
@@ -60,8 +60,8 @@
 						<td>{{ item.empresa }}</td>
 						<td>{{ item.celular }}</td>
 						<td>{{ item.telefone }}</td>
-						<td align="right"><label *ngIf="item?.honorarios !== null">R$ {{item?.honorarios?.toFixed(2)}}</label></td>
-						<td>{{ item.processos }}</td>
+						<td>{{ item?.honorarios }}</td>
+						<td align="center">{{ item.processos }}</td>
 					</tr>
 				</tbody>
 			</table>

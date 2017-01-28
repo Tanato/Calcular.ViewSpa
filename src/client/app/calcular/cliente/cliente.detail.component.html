@@ -38,7 +38,7 @@
 					</div>
 					<div class="form-group col-lg-2">
 						<label *ngIf="model.perfil === 1">Vara:</label>
-						<input *ngIf="model.perfil === 1" class="form-control" [(ngModel)]="model.vara" name="vara">
+						<input *ngIf="model.perfil === 1" class="form-control" [required]="model.perfil === 1" [(ngModel)]="model.vara" name="vara">
 					</div>
 					<div class="form-group col-lg-4">
 						<label>Empresa:</label>
@@ -87,7 +87,7 @@
 						<div class="row">
 							<div class="form-group col-lg-6">
 								<label>Honorários:</label>
-								<input class="form-control" [(ngModel)]="honorariosAux" [textMask]="{mask: moneyMask}" name="honorarios">
+								<input class="form-control" [(ngModel)]="model.honorarios" name="honorarios">
 							</div>
 						</div>
 					</div>
@@ -102,6 +102,7 @@
 					<div class="form-group col-lg-3">
 						<label>Como Chegou à Calcular:</label>
 						<select class="form-control" id="comoChegouSelect" [(ngModel)]="model.comoChegou" name="comoChegouSelect">
+							<option value=""></option>
 							<option *ngFor="let item of comoChegou" [ngValue]="item.key">{{item.value}}</option>
 						</select>
 					</div>
