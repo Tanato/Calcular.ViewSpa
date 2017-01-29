@@ -37,7 +37,7 @@ export class TopnavService {
     }
 
     handleError(error: any) {
-        console.error(error);
+        console.error(error._body ? error._body : error);
         return Observable.throw(error.json().Error || 'Server error');
     }
 

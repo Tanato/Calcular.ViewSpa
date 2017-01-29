@@ -159,6 +159,11 @@
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'parametrizacao' }">
 				<ul class="submenu">
 					<li>
+						<a routerLink="/calcular/servico/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-table"></i> Serviço
+						</a>
+					</li>
+					<li>
 						<a routerLink="/calcular/atividade/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
 							<i class="fa fa-fw fa-table"></i> Atividade
 						</a>

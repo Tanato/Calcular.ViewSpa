@@ -18,6 +18,8 @@ import { Subscription } from 'rxjs';
 })
 export class AtividadeExecucaoDetailComponent implements OnInit {
 
+    public maskTimespan = [/\d/, /\d/, ':', /\d/, /\d/];
+
     public wtoInput: NodeJS.Timer;
     public modelName = 'Serviço';
     public model: Atividade = new Atividade;
@@ -99,7 +101,7 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
         if (tipo !== null) {
             this.model.responsavel = null;
             this.model.responsavelId = null;
-            this.service.getResponsavel(tipo)
+            this.service.getResponsavel()
                 .subscribe((data: IKeyValuePair[]) => this.responsavel = data);
         }
     }

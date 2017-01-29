@@ -34,7 +34,7 @@ var busyConfig = new BusyConfig({
 		SignupModule,
 		CalcularModule,
 		SharedModule.forRoot(),
-		BusyModule.forRoot(busyConfig)
+		BusyModule.forRoot(busyConfig),
 	],
 	declarations: [AppComponent],
 	providers: [{

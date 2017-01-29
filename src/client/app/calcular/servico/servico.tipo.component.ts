@@ -1,43 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { TipoAtividade } from './atividade.model';
-import { AtividadeService } from './atividade.service';
+import { TipoServico } from './servico.model';
+import { ServicoService } from './servico.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
 
 @Component({
     moduleId: module.id,
-    selector: 'tipoatividade-cmp',
-    templateUrl: './atividade.tipo.component.html',
+    selector: 'tiposervico-cmp',
+    templateUrl: './servico.tipo.component.html',
 })
-export class TipoAtividadeComponent implements OnInit {
+export class TipoServicoComponent implements OnInit {
 
     private busy: Subscription;
-    private modelName = 'Atividade';
+    private modelName = 'Serviço';
 
-    private data: TipoAtividade[];
+    private data: TipoServico[];
     private totalItems: number = 0;
     private currentPage: number = 1;
     private itemsPerPage: number = 50;
     private model: string;
     private editId: number;
-    private rows: TipoAtividade[];
+    private rows: TipoServico[];
 
-    constructor(private service: AtividadeService, private toastr: ToastsManager) { }
+    constructor(private service: ServicoService, private toastr: ToastsManager) { }
 
     ngOnInit() {
         this.filter();
     }
 
     submit() {
-        this.service.postTipoAtividade(this.model)
+        this.service.postTipoServico(this.model)
             .subscribe(x => {
-                this.toastr.success('Atividade adicionada com sucesso!');
+                this.toastr.success('Servico adicionada com sucesso!');
                 this.filter();
             });
     }
 
     filter() {
-        this.busy = this.service.getTipoAtividade()
+        this.busy = this.service.getTipoServico()
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
@@ -57,7 +57,7 @@ export class TipoAtividadeComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        this.service.deleteTipoAtividade(id)
+        this.service.deleteTipoServico(id)
             .subscribe(x => {
                 this.toastr.success(this.modelName + ' excluído com sucesso!');
                 this.filter();

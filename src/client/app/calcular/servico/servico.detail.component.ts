@@ -22,23 +22,26 @@ export class ServicoDetailComponent implements OnInit {
 
     public wtoInput: NodeJS.Timer;
 
-    public modelName = 'Serviço';
-
-    public model: Servico = new Servico;
-    public atividade: Atividade = new Atividade;
-
-    public parte: IKeyValuePair[];
-    public tipoAtividade: IKeyValuePair[];
-
     public advogado: Observable<IKeyValuePair[]>;
-    public responsavel: IKeyValuePair[];
-
     public advogadoInit: IKeyValuePair[];
 
-    public formType: string = 'new';
-    public blockEdit: boolean = true;
+    private modelName = 'Serviço';
 
-    public id: Observable<string>;
+    private model: Servico = new Servico;
+    private atividade: Atividade = new Atividade;
+
+    private parte: IKeyValuePair[];
+    private tipoAtividade: IKeyValuePair[];
+    private responsavel: IKeyValuePair[];
+    private tipoServico: IKeyValuePair[];
+    private tiposExecucao: IKeyValuePair[];
+    private status: IKeyValuePair[];
+    private tipoImpressao: IKeyValuePair[];
+
+    private formType: string = 'new';
+    private blockEdit: boolean = true;
+
+    private id: Observable<string>;
     private busy: Subscription;
 
     isNaN = (value: number) => {
@@ -58,11 +61,26 @@ export class ServicoDetailComponent implements OnInit {
         private toastr: ToastsManager) { }
 
     ngOnInit() {
+        this.atividadeService.getTipoImpressao()
+            .subscribe((data: IKeyValuePair[]) => this.tipoImpressao = data, error => this.toastr.error('Erro ao efetuar requisição!'));
+
         this.processoService.getParteSelect()
-            .subscribe((data: IKeyValuePair[]) => this.parte = data);
+            .subscribe((data: IKeyValuePair[]) => this.parte = data, error => this.toastr.error('Erro ao efetuar requisição!'));
 
         this.atividadeService.getTipoAtividadeSelect()
-            .subscribe((data: IKeyValuePair[]) => this.tipoAtividade = data);
+            .subscribe((data: IKeyValuePair[]) => this.tipoAtividade = data, error => this.toastr.error('Erro ao efetuar requisição!'));
+
+        this.service.getTipoServicoSelect()
+            .subscribe((data: IKeyValuePair[]) => this.tipoServico = data, error => this.toastr.error('Erro ao efetuar requisição!'));
+
+        this.atividadeService.getResponsavel()
+            .subscribe((data: IKeyValuePair[]) => this.responsavel = data, error => this.toastr.error('Erro ao efetuar requisição!'));
+
+        this.atividadeService.getTipoExecucao()
+            .subscribe((data: IKeyValuePair[]) => this.tiposExecucao = data, error => this.toastr.error('Erro ao efetuar requisição!'));
+
+        this.service.getStatus()
+            .subscribe((data: IKeyValuePair[]) => this.status = data, error => this.toastr.error('Erro ao efetuar requisição!'));
 
         this.id = this.route.params.map(params => params['id']);
 
@@ -76,8 +94,7 @@ export class ServicoDetailComponent implements OnInit {
                         this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
                         this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     });
-            }
-            else {
+            } else {
                 this.blockEdit = false;
             }
         });
@@ -91,8 +108,9 @@ export class ServicoDetailComponent implements OnInit {
                     this.model.entrada = data.entrada.slice(0, 10);
                     this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
                     this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
+                    this.blockEdit = data.status !== 0 ? true : false;
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
-                });
+                }, error => this.toastr.error('Erro ao efetuar requisição!'));
         } else {
             this.service.putServico(this.model)
                 .subscribe(data => {
@@ -100,12 +118,21 @@ export class ServicoDetailComponent implements OnInit {
                     this.model.entrada = data.entrada.slice(0, 10);
                     this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
                     this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
+                    this.blockEdit = data.status !== 0 ? true : false;
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
-                });
+                }, error => this.toastr.error('Erro ao efetuar requisição!'));
         }
     }
 
-    loadServico(processo: Processo) {
+    tipoImpressaoDescription(id: number): string {
+        if (this.tipoImpressao) {
+            var a = _.find(this.tipoImpressao, ['key', id]);
+            return a ? a.value : null;
+        }
+        return null;
+    }
+
+    onChangeProcesso(processo: Processo) {
         this.model.processo = processo;
         this.model.processoId = processo.id;
     }
@@ -118,7 +145,7 @@ export class ServicoDetailComponent implements OnInit {
                 this.onRefresh();
                 this.atividade = new Atividade();
                 this.toastr.success('Atividade adicionada com sucesso!');
-            });
+            }, error => this.toastr.error('Erro ao efetuar requisição!'));
     }
 
     onDelete(id: number) {
@@ -126,7 +153,15 @@ export class ServicoDetailComponent implements OnInit {
             .subscribe(x => {
                 this.toastr.success('Atividade excluída com sucesso!');
                 this.onRefresh();
-            });
+            }, error => this.toastr.error('Erro ao efetuar requisição!'));
+    }
+
+    cancelServico(id: number) {
+        this.service.cancelServico(id)
+            .subscribe(x => {
+                this.toastr.success('Serviço cancelado com sucesso!');
+                this.onRefresh();
+            }, error => this.toastr.error('Erro ao efetuar requisição!'));
     }
 
     onRefresh() {
@@ -136,16 +171,7 @@ export class ServicoDetailComponent implements OnInit {
                 this.model.entrada = data.entrada.slice(0, 10);
                 this.model.prazo = data.prazo ? data.prazo.slice(0, 10) : null;
                 this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
-            });
-    }
-
-    changeAtividade(tipo: number) {
-        if (tipo !== null) {
-            this.atividade.responsavel = null;
-            this.atividade.responsavelId = null;
-            this.atividadeService.getResponsavel(tipo)
-                .subscribe((data: IKeyValuePair[]) => this.responsavel = data);
-        }
+            }, error => this.toastr.error('Erro ao efetuar requisição!'));
     }
 
     onCancel() {
@@ -157,7 +183,27 @@ export class ServicoDetailComponent implements OnInit {
                 let link = 'calcular/servico/cadastro';
                 this.router.navigateByUrl(link);
             }
-        });
+        }, error => this.toastr.error('Erro ao efetuar requisição!'));
+    }
+
+    tipoExecucaoDescription(id: number): string {
+        if (this.tiposExecucao) {
+            var a = _.find(this.tiposExecucao, ['key', id]);
+            return a ? a.value : null;
+        }
+        return null;
+    }
+
+    statusDescription(id: number): string {
+        if (this.status) {
+            var a = _.find(this.status, ['key', id]);
+            return a ? a.value : null;
+        }
+        return null;
+    }
+
+    atividadesPendentes(): boolean {
+        return _.some(this.model.atividades, x => x.tipoExecucao !== 1);
     }
 
     print(): void {

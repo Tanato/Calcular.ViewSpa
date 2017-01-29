@@ -30,12 +30,11 @@
 					<tr>
 						<th width="50"></th>
 						<th width="200">Nº Processo</th>
-						<th width="100">Autor</th>
-						<th width="100">Réu</th>
-						<th width="100">Advogado/Cliente</th>
-						<th>Atividade</th>
-						<th>Responsável</th>
-						<th>Impressão</th>
+						<th>Autor</th>
+						<th>Réu</th>
+						<th>Advogado/Cliente</th>
+						<th width="160">Atividade</th>
+						<th width="90">Impressão</th>
 						<th width="90">Prazo</th>
 						<th width="80">Status</th>
 					</tr>
@@ -43,19 +42,17 @@
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
-							&nbsp;
-							&nbsp;
+							&nbsp; &nbsp;
 							<a [routerLink]="['/calcular/servico/detail', {id: item.id}]"><i class="fa fa-calculator"></i></a> &nbsp;
 						</td>
 						<td>{{ item.processo?.numero }}</td>
 						<td>{{ item.processo?.autor }}</td>
 						<td>{{ item.processo?.reu }}</td>
 						<td>{{ item.processo?.advogado?.nome }}</td>
-						<td>{{ item.atividades[0]?.tipoAtividade?.nome }}</td>
-						<td>{{ item.atividades[0]?.responsavel?.name }}</td>
-						<td>{{ item.impressaoDescricao }}</td>
+						<td>{{ item.tipoServico?.nome }}</td>
+						<td>{{ tipoImpressaoDescription(item.tipoImpressao) }}</td>
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
-						<td>{{ item.status === 0 ? 'Pendente' : 'Entregue'  }}</td>
+						<td>{{statusDescription(item.status)}}</td>
 					</tr>
 				</tbody>
 			</table>
