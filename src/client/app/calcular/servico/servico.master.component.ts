@@ -28,6 +28,7 @@ export class ServicoMasterComponent implements OnInit {
     private editId: number;
     private status: IKeyValuePair[];
     private tipoImpressao: IKeyValuePair[];
+    private all: boolean;
 
     constructor(private service: ServicoService,
         private processoService: ProcessoService,
@@ -45,7 +46,7 @@ export class ServicoMasterComponent implements OnInit {
     }
 
     filter() {
-        this.busy = this.service.getServicos(this.filterText)
+        this.busy = this.service.getServicos(this.filterText, this.all)
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;

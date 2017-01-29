@@ -46,7 +46,7 @@
 						<td>{{ item.contato }}</td>
 						<td>{{ item.celular }}</td>
 						<td>{{ item.telefone }}</td>
-						<td align="right"><label *ngIf="item?.honorario !== null">R$ {{item?.honorario?.toFixed(2)}}</label></td>
+						<td><label *ngIf="item?.honorario !== null">R$ {{item?.honorario?.toFixed(2)}}</label></td>
 						<td>{{ item.dataProposta | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.fechado ? 'Sim' : 'Não' }}</td>
 					</tr>

@@ -32,7 +32,11 @@ export class TipoAtividadeComponent implements OnInit {
         this.service.postTipoAtividade(this.model)
             .subscribe(x => {
                 this.toastr.success('Atividade adicionada com sucesso!');
+                this.model = null;
                 this.filter();
+            }, error => {
+                this.toastr.error(error);
+                this.model = null;
             });
     }
 
@@ -61,6 +65,8 @@ export class TipoAtividadeComponent implements OnInit {
             .subscribe(x => {
                 this.toastr.success(this.modelName + ' excluído com sucesso!');
                 this.filter();
+            }, error => {
+                this.toastr.error(error);
             });
     }
 

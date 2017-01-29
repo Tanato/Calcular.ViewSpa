@@ -73,11 +73,11 @@ export class CobrancaDetailComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        this.service.deleteCobranca(id)
-            .subscribe(x => {
-                this.toastr.success(this.modelName + ' excluída com sucesso!');
-                this.onRefresh();
-            });
+        // this.service.deleteCobranca(id)
+        //     .subscribe(x => {
+        //         this.toastr.success(this.modelName + ' excluída com sucesso!');
+        //         this.onRefresh();
+        //     });
     }
 
     onRefresh() {

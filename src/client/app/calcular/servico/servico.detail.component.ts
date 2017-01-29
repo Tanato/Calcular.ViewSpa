@@ -43,6 +43,7 @@ export class ServicoDetailComponent implements OnInit {
 
     private id: Observable<string>;
     private busy: Subscription;
+    private save: Subscription;
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -102,7 +103,7 @@ export class ServicoDetailComponent implements OnInit {
 
     onSubmit() {
         if (this.formType === 'new' && !this.model.id) {
-            this.service.postServico(this.model)
+            this.save = this.service.postServico(this.model)
                 .subscribe(data => {
                     this.model = data;
                     this.model.entrada = data.entrada.slice(0, 10);
@@ -112,7 +113,7 @@ export class ServicoDetailComponent implements OnInit {
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
                 }, error => this.toastr.error('Erro ao efetuar requisição!'));
         } else {
-            this.service.putServico(this.model)
+            this.save = this.service.putServico(this.model)
                 .subscribe(data => {
                     this.model = data;
                     this.model.entrada = data.entrada.slice(0, 10);

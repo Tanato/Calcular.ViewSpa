@@ -21,7 +21,6 @@ export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
 
 var busyConfig = new BusyConfig({
                 message: 'Carregando...',
-				delay: 100,
             });
 
 @NgModule({

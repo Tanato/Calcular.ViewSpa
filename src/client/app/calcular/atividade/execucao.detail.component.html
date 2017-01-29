@@ -114,9 +114,9 @@
 						</div>
 						<div class="form-group col-lg-2">
 							<label>Tempo:</label>
-							<input class="form-control" id="tempo" [textMask]="{mask: maskTimespan}" [(ngModel)]="model.tempo" name="tempo" required />
+							<input class="form-control" id="tempo" [textMask]="{mask: maskTimespan}" [(ngModel)]="model.tempo" name="tempo" required
+							/>
 						</div>
-
 						<div class="form-group col-lg-2">
 							<label>Status:</label>
 							<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucaoNew" name="tipoExecucao" required>
@@ -133,8 +133,8 @@
 					</div>
 					<div class="row">
 						<div class="form-group col-lg-6">
-							<label>Observação para comissão:</label>
-							<textarea class="form-control" rows="2" [(ngModel)]="model.observacaoComissao" name="observacaoComissao"></textarea>
+							<label [hidden]="model.etapaAtividade === 2">Observação para comissão:</label>
+							<textarea class="form-control" rows="2" [(ngModel)]="model.observacaoComissao" name="observacaoComissao" [hidden]="model.etapaAtividade === 2"></textarea>
 						</div>
 						<div class="form-group col-lg-6" [hidden]="model.tipoExecucaoNew != 2">
 							<label>Observação para Revisor:</label>
@@ -171,7 +171,8 @@
 						<div class="form-group col-lg-8">
 							<div class="form-group col-lg-6">
 								<label [hidden]="model.tipoExecucaoNew == 1">Observações para Refazer:</label>
-								<textarea [hidden]="model.tipoExecucaoNew == 1" class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+								<textarea [hidden]="model.tipoExecucaoNew == 1" class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao"
+									name="observacao"></textarea>
 							</div>
 							<div class="form-group col-lg-6">
 								<label>Observações apenas para Revisor:</label>

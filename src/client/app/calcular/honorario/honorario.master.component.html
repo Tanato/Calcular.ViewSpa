@@ -44,7 +44,7 @@
 						<td>{{ item.numero }}</td>
 						<td>{{ item.autor }}</td>
 						<td>{{ item.reu }}</td>
-						<td align="right"><label *ngIf="item?.total !== null">R$ {{item?.total?.toFixed(2)}}</label></td>
+						<td><label *ngIf="item?.total !== null">R$ {{item?.total?.toFixed(2)}}</label></td>
 						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.status }}</td>
 					</tr>

@@ -15,9 +15,10 @@ export class ServicoService {
 
     constructor(private http: Http) { }
 
-    getServicos(filterText: string): Observable<Servico[]> {
+    getServicos(filterText: string, all: boolean): Observable<Servico[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filterText);
+        params.set('all', all ? 'true' : 'false');
 
         return this.http.get(this.url, { search: params })
             .map((res: Response) => res.json())

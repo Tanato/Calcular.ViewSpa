@@ -117,6 +117,6 @@ export class AtividadeService {
 
     private handleError(error: any) {
         console.error(error._body ? error._body : error);
-        return Observable.throw(error.json().Error || 'Server error');
+        return Observable.throw(error._body ? error._body : error.json().Error || 'Server error');
     }
 }
