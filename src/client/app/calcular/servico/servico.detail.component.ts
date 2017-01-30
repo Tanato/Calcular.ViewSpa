@@ -207,7 +207,7 @@ export class ServicoDetailComponent implements OnInit {
         return _.some(this.model.atividades, x => x.tipoExecucao !== 1);
     }
 
-    print(): void {
+    print(): Boolean {
         let printContents: any, popupWin: any;
         printContents = document.getElementById('print-section').innerHTML;
         popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
@@ -215,22 +215,38 @@ export class ServicoDetailComponent implements OnInit {
         popupWin.document.write(`
         <html>
             <head>
-                <style>
-                    table {border: solid 2px #000}
-                    td,th { padding-top: 1px; padding-bottom:1px}
+                <style type="text/css">
                     body {
+                        -webkit-print-color-adjust: exact;
                         font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-                        font-size: 0.9rem;
+                        font-size: 12px;
+                    }
+                    img{
+                        -webkit-print-color-adjust:exact;
+                        display:visible;
+                    }
+                    td, tr {
+                        padding-top: 3px;
+                        padding-bottom: 3px;
                     }
                 </style>
             </head>
-            <body onload="window.print();window.close()">${printContents}</body>
+            <body onload="PrintDiv()">${printContents}</body>
+            <script>
+            function PrintDiv() {
+                setTimeout(function() {
+                    window.print();
+                    window.close();
+                }, 60);
+            }
+            </script>
         </html>`);
         popupWin.document.close();
+        return false;
     }
 
     getParteDescription(): string {
-        if (this.parte && this.model.processo && this.model.processo.parte) {
+        if (this.parte && this.model.processo && this.model.processo.parte !== null) {
             return _.find(this.parte, x => x.key === this.model.processo.parte).value;
         }
         return null;
