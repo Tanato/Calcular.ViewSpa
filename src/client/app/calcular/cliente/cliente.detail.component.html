@@ -38,7 +38,7 @@
 					</div>
 					<div class="form-group col-lg-3">
 						<label *ngIf="model.perfil === 1 || model.perfil === 2">Vara:</label>
-						<input *ngIf="model.perfil === 1 || model.perfil === 2" class="form-control" [required]="model.perfil === 1" [(ngModel)]="model.vara" name="vara">
+						<input *ngIf="model.perfil === 1 || model.perfil === 2" class="form-control" [required]="model.perfil === 1 || model.perfil === 2" [(ngModel)]="model.vara" name="vara">
 					</div>
 					<div class="form-group col-lg-4">
 						<label>Empresa:</label>

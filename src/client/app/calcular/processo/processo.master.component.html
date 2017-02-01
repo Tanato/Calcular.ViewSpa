@@ -24,7 +24,7 @@
 			<table class="table table-hover table-striped table-sm">
 				<thead>
 					<tr>
-						<th width="65"></th>
+						<th width="50"></th>
 						<th width="200">Nº Processo</th>
 						<th>Autor</th>
 						<th>Réu</th>
@@ -37,8 +37,8 @@
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
-							&nbsp;&nbsp;
-							<a [routerLink]="['/calcular/processo/detail', {id: item.id}]"><i class="fa fa-edit"></i></a> &nbsp;
+							&nbsp;&nbsp;&nbsp;
+							<a [routerLink]="['/calcular/processo/detail', {id: item.id}]"><i class="fa fa-edit"></i></a>
 							<!--<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
 							<div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 								aria-hidden="true">
