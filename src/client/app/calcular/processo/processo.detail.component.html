@@ -20,22 +20,25 @@
 				<div class="row">
 					<div class="form-group col-lg-3">
 						<label>Tipo:</label>
-						<select class="form-control" id="localSelect" [disabled]="model.id" [(ngModel)]="model.local" (ngModelChange)="clearNumero()"
+						<select class="form-control" id="localSelect" [disabled]="disableChangeNumero" [(ngModel)]="model.local" (ngModelChange)="clearNumero()"
 							name="localSelect" required>
 							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
 						</select>
 					</div>
 					<div class="form-group col-lg-3">
 						<label>Numero:</label>
-						<input class="form-control" [disabled]="!(model.local >= 0) || model.id" [textMask]="{mask: maskNumeroProcesso }" id="numero"
+						<input class="form-control" [disabled]="disableChangeNumero" [textMask]="{mask: maskNumeroProcesso }" id="numero"
 							[(ngModel)]="model.numero" name="numero" [required]="model.local != 3" />
 					</div>
 
 					<div class="form-group col-lg-6">
 						<label>Advogado/Cliente:</label>
-						<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)"
+						<!--<ng-select [active]="advogadoInit" [allowClear]="true" [items]="advogado" (data)="refreshValueAdvogado($event)" (typed)="typedAdvogado($event)"
 							idField="key" textField="value" placeholder="Digite 3 letras para pesquisar" required="true">
-						</ng-select>
+						</ng-select>-->
+						<input class="form-control" ng2-auto-complete no-match-found-text="sem registro, cadastrar novo cliente" [source]="advogados"
+							[ngModel]="model.advogado" (ngModelChange)="refreshValueAdvogado($event)" value-property-name="none" display-property-name="nome"
+							name="advogadoSelect" min-chars="3" accept-user-input="false" required>
 					</div>
 				</div>
 
@@ -74,13 +77,13 @@
 					<div class="form-group col-lg-6" [hidden]="model.parte === 2"></div>
 					<div class="form-group col-lg-6" [hidden]="model.parte !== 2">
 						<label>Perito Nomeado:</label>
-						<input class="form-control" ng2-auto-complete [source]="perito" id="perito" 
-						[(ngModel)]="model.perito" name="perito" min-chars="2" [accept-user-input]="true" [required]="model.parte === 2">
+						<input class="form-control" ng2-auto-complete [source]="perito" id="perito" [(ngModel)]="model.perito" name="perito" min-chars="2"
+							[accept-user-input]="true" [required]="model.parte === 2">
 					</div>
 					<div class="form-group col-lg-6">
 						<label>Indicação:</label>
 						<input class="form-control" ng2-auto-complete [source]="indicacao" id="indicacao" [(ngModel)]="model.indicacao" name="indicacao"
-							min-chars="2" [accept-user-input]="true">
+							min-chars="2" [accept-user-input]="true" [disabled]="model.parte === 2">
 					</div>
 				</div>
 

@@ -31,6 +31,7 @@ export class ProcessoDetailComponent implements OnInit {
 
     public id: Observable<string>;
     private busy: Subscription;
+    private disableChangeNumero: boolean = false;
 
     constructor(public service: ProcessoService,
         private route: ActivatedRoute,
@@ -47,6 +48,27 @@ export class ProcessoDetailComponent implements OnInit {
             }
             return mask;
         };
+    }
+
+    // Advogado select    
+    // public typedAdvogado(value: string): void {
+    //     if (value && value.length > 2) {
+    //         clearTimeout(this.wtoInput);
+    //         this.wtoInput = setTimeout(() => {
+    //             this.service.getAdvogadoSelect(value).subscribe(data => {
+    //                 this.advogado = data;
+    //             });
+    //         }, 500);
+    //     }
+    // }
+
+    advogados = (startsWith: string): Observable<any[]> => {
+        var result = this.service.getAdvogadoSelect(startsWith);
+
+        result.subscribe(data => {
+            this.advogado = data;
+        });
+        return result;
     }
 
     vara = (startsWith: string): Observable<any[]> => {
@@ -81,12 +103,13 @@ export class ProcessoDetailComponent implements OnInit {
                 this.busy = this.service.getProcessoById(id)
                     .subscribe((data: Processo) => {
                         this.model = data;
-                        if (this.model.advogadoId) {
-                            this.service.getAdvogadoSelectById(this.model.advogadoId)
-                                .subscribe((x: any) => {
-                                    this.advogadoInit = [x];
-                                });
-                        }
+                        this.disableChangeNumero = data.id && data.local !== 3;
+                        // if (this.model.advogadoId) {
+                        //     this.service.getAdvogadoSelectById(this.model.advogadoId)
+                        //         .subscribe((x: any) => {
+                        //             this.advogadoInit = [x];
+                        //         });
+                        // }
                     });
             } else {
                 this.blockEdit = false;
@@ -116,18 +139,6 @@ export class ProcessoDetailComponent implements OnInit {
 
     enableEdit() {
         this.blockEdit = false;
-    }
-
-    // Advogado select    
-    public typedAdvogado(value: string): void {
-        if (value && value.length > 2) {
-            clearTimeout(this.wtoInput);
-            this.wtoInput = setTimeout(() => {
-                this.service.getAdvogadoSelect(value).subscribe(data => {
-                    this.advogado = data;
-                });
-            }, 500);
-        }
     }
 
     refreshValueAdvogado(value: IKeyValuePair): void {

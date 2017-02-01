@@ -172,7 +172,7 @@
             </div>
             <div class="col-lg-2">
                 <label>&nbsp;</label>
-                <button (click)="cancelModal.show()" [hidden]="blockEdit || !model.id || model.atividades.length < 1" class="btn btn-danger btn-block">Cancelar</button>
+                <button (click)="cancelModal.show()" [hidden]="blockEdit || !model.id || model.atividades.length < 1" class="btn btn-danger btn-block">Cancelar serviço</button>
                 <div bsModal #cancelModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-sm">
