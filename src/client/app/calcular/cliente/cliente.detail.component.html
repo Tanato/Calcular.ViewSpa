@@ -30,20 +30,20 @@
 				</div>
 
 				<div class="row">
-					<div class="form-group col-lg-4">
+					<div class="form-group col-lg-3">
 						<label>Perfil:</label>
 						<select class="form-control" id="perfilSelect" [(ngModel)]="model.perfil" name="perfilSelect" required>
 							<option *ngFor="let item of perfil" [ngValue]="item.key">{{item.value}}</option>
 						</select>
 					</div>
-					<div class="form-group col-lg-2">
-						<label *ngIf="model.perfil === 1">Vara:</label>
-						<input *ngIf="model.perfil === 1" class="form-control" [required]="model.perfil === 1" [(ngModel)]="model.vara" name="vara">
+					<div class="form-group col-lg-3">
+						<label *ngIf="model.perfil === 1 || model.perfil === 2">Vara:</label>
+						<input *ngIf="model.perfil === 1 || model.perfil === 2" class="form-control" [required]="model.perfil === 1" [(ngModel)]="model.vara" name="vara">
 					</div>
 					<div class="form-group col-lg-4">
 						<label>Empresa:</label>
 						<input class="form-control" ng2-auto-complete [source]="empresa" id="empresa" [(ngModel)]="model.empresa" name="empresa"
-							min-chars="2" [accept-user-input]="true">
+							min-chars="2" [accept-user-input]="true" [disabled]="model.perfil === 1 || model.perfil === 2">
 					</div>
 				</div>
 

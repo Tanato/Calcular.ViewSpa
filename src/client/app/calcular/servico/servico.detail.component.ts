@@ -204,7 +204,7 @@ export class ServicoDetailComponent implements OnInit {
     }
 
     atividadesPendentes(): boolean {
-        return _.some(this.model.atividades, x => x.tipoExecucao !== 1);
+        return _.some(this.model.atividades, x => x.tipoExecucao !== 1 && x.tipoExecucao !== 2 && x.tipoExecucao !== 3);
     }
 
     print(): Boolean {
