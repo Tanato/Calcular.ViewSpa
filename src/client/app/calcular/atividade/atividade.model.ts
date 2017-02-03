@@ -22,6 +22,7 @@ export class Atividade {
     etapaAtividade: number;
     atividadeOrigemId: number;
     atividadeOrigem: Atividade;
+    valor: number;
 }
 
 export class TipoAtividade {

@@ -7,6 +7,7 @@ import { Atividade } from './atividade.model';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
+import { TopnavService, IUser } from '../../shared/topnav/topnav.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
@@ -33,6 +34,7 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     public blockEdit: boolean = true;
     public id: Observable<string>;
     private busy: Subscription;
+	private user: IUser = <IUser>{};
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -46,11 +48,15 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     constructor(public servicoService: ServicoService,
         private processoService: ProcessoService,
         private service: AtividadeService,
+        private topnavService: TopnavService,
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastsManager) { }
 
     ngOnInit() {
+        this.topnavService.getLoggedUser()
+			.subscribe((data: IUser) => this.user = data);
+
         this.processoService.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);
 
@@ -97,17 +103,14 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
         this.model.servico.processoId = processo.id;
     }
 
-    changeAtividade(tipo: number) {
-        if (tipo !== null) {
-            this.model.responsavel = null;
-            this.model.responsavelId = null;
-            this.service.getResponsavel()
-                .subscribe((data: IKeyValuePair[]) => this.responsavel = data);
-        }
-    }
-
     onCancel() {
         let link = 'calcular/atividade/execucao';
         this.router.navigateByUrl(link);
     };
+
+	isInRole(role: string){
+		return this.user
+				&& this.user.roles
+				&& this.user.roles.indexOf(role) !== -1;
+	}
 }

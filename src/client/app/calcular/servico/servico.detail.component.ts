@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
 import { Subscription } from 'rxjs';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask.js';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import * as _ from 'lodash';
@@ -20,6 +21,7 @@ import * as _ from 'lodash';
 })
 export class ServicoDetailComponent implements OnInit {
 
+    public moneyMask: any = createNumberMask({ prefix: 'R$ ', includeThousandsSeparator: false, allowNegative: true, allowDecimal: true });
     public wtoInput: NodeJS.Timer;
 
     public advogado: Observable<IKeyValuePair[]>;
@@ -32,7 +34,7 @@ export class ServicoDetailComponent implements OnInit {
 
     private parte: IKeyValuePair[];
     private tipoAtividade: IKeyValuePair[];
-    private responsavel: IKeyValuePair[];
+    private responsavel: any[];
     private tipoServico: IKeyValuePair[];
     private tiposExecucao: IKeyValuePair[];
     private status: IKeyValuePair[];
@@ -44,6 +46,7 @@ export class ServicoDetailComponent implements OnInit {
     private id: Observable<string>;
     private busy: Subscription;
     private save: Subscription;
+    private valorAux: string;
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -75,7 +78,7 @@ export class ServicoDetailComponent implements OnInit {
             .subscribe((data: IKeyValuePair[]) => this.tipoServico = data, error => this.toastr.error('Erro ao efetuar requisição!'));
 
         this.atividadeService.getResponsavel()
-            .subscribe((data: IKeyValuePair[]) => this.responsavel = data, error => this.toastr.error('Erro ao efetuar requisição!'));
+            .subscribe((data: any[]) => this.responsavel = data, error => this.toastr.error('Erro ao efetuar requisição!'));
 
         this.atividadeService.getTipoExecucao()
             .subscribe((data: IKeyValuePair[]) => this.tiposExecucao = data, error => this.toastr.error('Erro ao efetuar requisição!'));
@@ -121,7 +124,7 @@ export class ServicoDetailComponent implements OnInit {
                     this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     this.blockEdit = data.status !== 0 ? true : false;
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
-                }, error => this.toastr.error('Erro ao efetuar requisição!'));
+                }, error => this.toastr.error(error));
         }
     }
 
@@ -133,6 +136,11 @@ export class ServicoDetailComponent implements OnInit {
         return null;
     }
 
+    onChangeResponsavel(user: any) {
+        this.atividade.responsavelId = user.id;
+        this.atividade.responsavel = user;
+    }
+
     onChangeProcesso(processo: Processo) {
         this.model.processo = processo;
         this.model.processoId = processo.id;
@@ -140,6 +148,8 @@ export class ServicoDetailComponent implements OnInit {
 
     addAtividade() {
         this.atividade.servicoId = this.model.id;
+        this.atividade.valor = this.valorAux ? parseFloat(this.valorAux.replace(/[^0-9\.]/g, '')) : null;
+        this.valorAux = null;
 
         this.atividadeService.postAtividade(this.atividade)
             .subscribe(x => {
