@@ -1,52 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { Atividade } from './atividade.model';
-import { AtividadeService } from './atividade.service';
-
+import { TipoServico } from './servico.model';
+import { ServicoService } from './servico.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
-import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
-    selector: 'execucaodemaster-cmp',
-    templateUrl: './execucao.master.component.html',
+    selector: 'tiposervico-cmp',
+    templateUrl: './servico.tipo.component.html',
 })
-export class AtividadeExecucaoMasterComponent implements OnInit {
+export class TipoServicoComponent implements OnInit {
 
     private busy: Subscription;
-    private modelName = 'Atividade';
+    private modelName = 'Serviço';
 
-    private data: Atividade[];
-    private rows: Atividade[];
-
+    private data: TipoServico[];
     private totalItems: number = 0;
     private currentPage: number = 1;
     private itemsPerPage: number = 50;
-
-    private filterText: string = '';
+    private model: string;
     private editId: number;
-    private all: boolean;
+    private rows: TipoServico[];
 
-    constructor(private service: AtividadeService,
-        private toastr: ToastsManager) {
-    }
+    constructor(private service: ServicoService, private toastr: ToastsManager) { }
 
     ngOnInit() {
         this.filter();
     }
 
-    isRevisor() {
-        return this.data && _.some(this.data, x => x.etapaAtividade === 1);
+    submit() {
+        this.service.postTipoServico(this.model)
+            .subscribe(x => {
+                this.toastr.success('Servico adicionada com sucesso!');
+                this.model = null;
+                this.filter();
+            }, error => {
+                this.toastr.error(error);
+                this.model = null;
+            });
     }
 
     filter() {
-        this.busy = this.service.getAtividadesByUser(this.filterText, this.all)
+        this.busy = this.service.getTipoServico()
             .subscribe(response => {
                 this.data = response;
                 this.totalItems = this.data.length;
                 this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage });
             },
             error => {
+                alert(error);
                 console.log(error);
                 this.toastr.warning('Erro ao efetuar operação. Tente novamente');
             });
@@ -59,10 +61,12 @@ export class AtividadeExecucaoMasterComponent implements OnInit {
     }
 
     onDelete(id: number) {
-        this.service.deleteAtividade(id)
+        this.service.deleteTipoServico(id)
             .subscribe(x => {
                 this.toastr.success(this.modelName + ' excluído com sucesso!');
                 this.filter();
+            }, error => {
+                this.toastr.error(error);
             });
     }
 

@@ -62,6 +62,13 @@
 						</a>
 					</li>
 				</ul>
+				<ul class="submenu" *ngIf="isInRole('Colaborador Externo')">
+					<li>
+						<a routerLink="/calcular/atividade/execucao" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-hourglass-half"></i> Apontamento de Atividades
+						</a>
+					</li>
+				</ul>
 				<ul class="submenu" *ngIf="isInRole('Revisor')">
 					<li>
 						<a routerLink="/calcular/atividade/execucao" [routerLinkActive]="['router-link-active']" class="list-group-item">
@@ -159,6 +166,11 @@
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'parametrizacao' }">
 				<ul class="submenu">
 					<li>
+						<a routerLink="/calcular/servico/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-table"></i> Serviço
+						</a>
+					</li>
+					<li>
 						<a routerLink="/calcular/atividade/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
 							<i class="fa fa-fw fa-table"></i> Atividade
 						</a>
@@ -178,7 +190,7 @@
 			</a>
 			<li class="nested" [ngClass]="{'expand' : showMenu === 'usuario' }">
 				<ul class="submenu">
-					<li *ngIf="isInRole('Administrativo')">
+					<li *ngIf="isInRole('Gerencial')">
 						<a routerLink="/calcular/usuario" [routerLinkActive]="['router-link-active']" class="list-group-item">
 							<i class="fa fa-fw fa-table"></i> Cadastro
 						</a>
@@ -191,47 +203,5 @@
 				</ul>
 			</li>
 		</div>
-
-
-
-		<!--<a routerLink="/dashboard/home" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-dashboard"></i> Dashboard
-        </a>
-        <a [routerLink]="['chart']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-bar-chart-o"></i> Charts
-        </a>
-        <a [routerLink]="['tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-table"></i> Tables
-        </a>
-        <a [routerLink]="['forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-edit"></i> Forms
-        </a>
-        <a [routerLink]="['element']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-desktop"></i> Bootstrap Elements
-        </a>
-        <a [routerLink]="['grid']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-wrench"></i> Bootstrap Grid
-        </a>
-        <a [routerLink]="['components']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-th-list"></i> &nbsp;Component
-        </a>
-        <div class="nested-menu">
-            <a class="list-group-item" (click)="addExpandClass('pages')">
-                <span><i class="fa fa-plus"></i> &nbsp; Menu</span>
-            </a>
-            <li class="nested" [ngClass]="{'expand' : showMenu === 'pages' }">
-                <ul class="submenu">
-                    <li>
-                        <a href><span>Submenu</span></a>
-                    </li>
-                    <li>
-                        <a href><span>Submenu</span></a>
-                    </li>
-                </ul>
-            </li>
-        </div>
-        <a [routerLink]="['blankpage']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-file-o"></i> &nbsp;BlankPage
-        </a>-->
 	</ul>
 </nav>

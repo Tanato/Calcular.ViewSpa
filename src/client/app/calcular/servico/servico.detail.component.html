@@ -1,4 +1,4 @@
-<div class="container-fluid" [ngBusy]="busy">
+<div class="container-fluid" [ngBusy]="[busy, save]">
     <!-- Page Heading -->
     <div class="row">
         <div class="col-xl-12">
@@ -19,63 +19,77 @@
                 <div class="row">
                     <div class="form-group col-lg-3">
                         <label>Processo:</label>
-                        <input class="form-control" ng2-auto-complete [source]="processos" [ngModel]="model.processo" (ngModelChange)="loadServico($event)"
+                        <input class="form-control" ng2-auto-complete [source]="processos" [ngModel]="model.processo" (ngModelChange)="onChangeProcesso($event)"
                             value-property-name="none" [disabled]="id | async" display-property-name="numero" name="numero" min-chars="3"
                             required>
                     </div>
-
-                    <div class="form-group col-lg-3">
-                        <label>Parte:</label>
-                        <select class="form-control" id="parteSelect" [ngModel]="model.processo?.parte" name="parteSelect" disabled>
-                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label>Advogado/Cliente:</label>
-                        <input class="form-control" id="advogado" [ngModel]="model.processo?.advogado?.nome" name="advogado" disabled/>
-                    </div>
                     <div class="form-group col-lg-2">
                         <label>Vara:</label>
-                        <input class="form-control" id="vara" [ngModel]="model.processo?.vara" name="vara" disabled/>
+                        <input class="form-control" [ngModel]="model.processo?.vara" name="vara" disabled/>
+                    </div>
+
+                    <div class="form-group col-lg-4">
+                        <label>Advogado/Cliente:</label>
+                        <input class="form-control" [ngModel]="model.processo?.advogado?.nome" name="advogado" disabled/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Parte:</label>
+                        <select class="form-control" [ngModel]="model.processo?.parte" name="parteSelect" disabled>
+                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label>Autor:</label>
-                        <input class="form-control" id="autor" [ngModel]="model.processo?.autor" name="autor" disabled/>
+                    <div class="form-group col-lg-3">
+                        <label>Serviço:</label>
+                        <select class="form-control" name="servicoSelect" [(ngModel)]="model.tipoServicoId" required>
+                            <option *ngFor="let item of tipoServico" [ngValue]="item.key">{{item.value}}</option>
+                        </select>
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-4">
+                        <label>Autor:</label>
+                        <input class="form-control" [ngModel]="model.processo?.autor" name="autor" disabled/>
+                    </div>
+                    <div class="form-group col-lg-4">
                         <label>Réu:</label>
-                        <input class="form-control" id="reu" [ngModel]="model.processo?.reu" name="reu" disabled/>
+                        <input class="form-control" [ngModel]="model.processo?.reu" name="reu" disabled/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-lg-2">
                         <label>Volumes:</label>
-                        <input class="form-control" id="volumes" [(ngModel)]="model.volumes" name="volumes" required/>
+                        <input class="form-control" [(ngModel)]="model.volumes" name="volumes" required/>
                     </div>
                     <div class="form-group col-lg-2">
                         <label>Data de Entrada:</label>
-                        <input type="date" class="form-control" id="entrada" #date="ngModel" [ngModel]="model.entrada" (ngModelChange)="model.entrada = $event"
+                        <input type="date" class="form-control" #date="ngModel" [ngModel]="model.entrada" (ngModelChange)="model.entrada = $event"
                             name="entrada" required/>
                     </div>
                     <div class="form-group col-lg-2">
                         <label>Prazo:</label>
-                        <input type="date" class="form-control" id="prazo" #prazo="ngModel" [ngModel]="model.prazo" (ngModelChange)="model.prazo = $event"
-                            name="prazo" min="model.entrada | date" required/>
+                        <input type="date" class="form-control" #prazo="ngModel" [ngModel]="model.prazo" (ngModelChange)="model.prazo = $event" name="prazo"
+                            min="model.entrada | date" required/>
                     </div>
                     <div class="form-group col-lg-2">
                         <label>Data de Saída:</label>
-                        <input type="date" class="form-control" id="saida" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event"
-                            name="saida" min="model.entrada | date" />
+                        <input type="date" class="form-control" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event" name="saida"
+                            min="model.entrada | date" [hidden]="!model.id || model.atividades?.length === 0 || atividadesPendentes()"
+                        />
+                        <input class="form-control" [hidden]="!(!model.id || model.atividades?.length === 0 || atividadesPendentes())" disabled/>
                     </div>
-                    <div class="form-group col-lg-2">
+                    <div class="col-lg-2 text-center" [hidden]="!model.tipoImpressao">
+                        <label>Impressão</label>
+                        <input class="form-control" [ngModel]="tipoImpressaoDescription(model.tipoImpressao)" name="tipoImpressao" disabled/>
                     </div>
-                    <div class="col-lg-2 text-center">
+                    <div class="col-lg-2 text-center" [hidden]="model.status !== 0 && model.id">
                         <label>&nbsp;</label>
-                        <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()">Salvar</button>
+                        <button class="btn btn-primary btn-block" [hidden]="blockEdit" [disabled]="!form.form.valid" (click)="onSubmit()">Salvar</button>
+                    </div>
+                    <div class="col-lg-2 text-center" [hidden]="model.status === 0 || !model.id">
+                        <label>Status</label>
+                        <input class="form-control" [ngModel]="statusDescription(model.status)" name="status" disabled/>
                     </div>
                 </div>
             </fieldset>
@@ -83,23 +97,27 @@
         </form>
         <form role="formAtividade" [hidden]="!model.id" #formAtividade="ngForm">
             <div class="card card-block">
-                <fieldset [disabled]="blockEdit">
+                <fieldset [hidden]="blockEdit" [disabled]="blockEdit">
                     <div class="row">
-                        <div class="form-group col-lg-3">
+                        <div class="form-group col-lg-4">
                             <label>Atividade:</label>
-                            <select class="form-control" id="atividadeSelect" [(ngModel)]="atividade.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
-                                required>
+                            <select class="form-control" [(ngModel)]="atividade.tipoAtividadeId" name="atividadeSelect" required>
                                 <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
                             </select>
                         </div>
                         <div class="form-group col-lg-3">
                             <label>Responsável:</label>
-                            <select class="form-control" id="responsavelSelect" [disabled]="isNaN(atividade.tipoAtividadeId)" [(ngModel)]="atividade.responsavelId"
+                            <select class="form-control" [disabled]="isNaN(atividade.tipoAtividadeId)" [ngModel]="atividade.responsavel" (ngModelChange)="onChangeResponsavel($event)"
                                 name="responsavelSelect" required>
-                                <option *ngFor="let item of responsavel" [ngValue]="item.key">{{item.value}}</option>
-                            </select>
+                                <option *ngFor="let item of responsavel" [ngValue]="item">{{item.nome}}</option>
+                                </select>
                         </div>
-                        <div class="form-group col-lg-4">
+                        <div class="form-group col-lg-2">
+                            <label [hidden]="!atividade.responsavel?.isExterno">Valor:</label>
+                            <input [hidden]="!atividade.responsavel?.isExterno" step="0.01" class="form-control" id="valor" [(ngModel)]="valorAux" name="valor"
+                                [required]="atividade.responsavel?.isExterno" [textMask]="{mask: moneyMask}" />
+                        </div>
+                        <div class="form-group col-lg-1">
                         </div>
                         <div class="col-lg-2 text-center">
                             <label>&nbsp;</label>
@@ -107,24 +125,25 @@
                         </div>
                     </div>
                 </fieldset>
-                <br>
+                <br [hidden]="blockEdit">
 
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-sm">
                         <thead class="thead-default">
                             <tr>
                                 <th width="40"></th>
-                                <th>Atividade</th>
+                                <th width="250">Atividade</th>
                                 <th>Responsável</th>
-                                <th>Entrega</th>
-                                <th>Status</th>
+                                <th width="110">Valor</th>
+                                <th width="140">Entrega</th>
+                                <th width="150">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of model?.atividades">
                                 <td>
                                     &nbsp;
-                                    <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+                                    <a [hidden]="(item.tipoExecucao && item.tipoExecucao !== 0) || blockEdit" (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
                                     <div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-sm">
@@ -133,40 +152,61 @@
                                                     <h5 class="modal-title">Deseja excluir o registro?</h5>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Excluir</button>
+                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Sim</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>{{ item?.tipoAtividade?.nome }}</td>
-                                <td>{{ item?.responsavel?.name }}</td>
-                                <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
-                                <td>{{ item.tipoExecucao === 0 ? 'Pendente' : 'Finalizado' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
+                </td>
+                <td>{{ item?.tipoAtividade?.nome }}</td>
+                <td>{{ item?.responsavel?.name }}</td>
+                <td>{{ item?.valor ? 'R$ ' + item.valor.toFixed(2) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-' }}</td>
+                <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
+                <td>{{ tipoExecucaoDescription(item.tipoExecucao) }}</td>
+                </tr>
+                </tbody>
+                </table>
             </div>
-        </form>
-        <div class="row">
-            <div class="col-lg-2">
-                <label>&nbsp;</label>
-                <button [hidden]="!blockEdit" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
-            </div>
-            <div class="form-group col-lg-6">
-            </div>
-            <div class="col-lg-2">
-                <label>&nbsp;</label>
-                <button (click)="printModal.show()" class="btn btn-default btn-block">Imprimir</button>
-            </div>
-            <div class="col-lg-2">
-                <label>&nbsp;</label>
-                <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
-            </div>
+    </div>
+    </form>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>&nbsp;</label>
+            <button [hidden]="!blockEdit || model.status !== 0" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
+        </div>
+        <div class="form-group col-lg-2">
+        </div>
+        <div class="col-lg-2">
+            <label>&nbsp;</label>
+            <button (click)="cancelModal.show()" [hidden]="blockEdit || !model.id || model.atividades.length < 1" class="btn btn-danger btn-block">Cancelar serviço</button>
+            <div bsModal #cancelModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Deseja cancelar o serviço?</h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" (click)="cancelModal.hide()" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                            <button type="button" (click)="cancelServico(model.id); cancelModal.hide()" class="btn btn-primary">Sim</button>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
+    <div class="col-lg-2">
+        <label>&nbsp;</label>
+        <button (click)="printModal.show()" [hidden]="!model.atividades || model.status === 2" class="btn btn-default btn-block">Imprimir</button>
+    </div>
+    <div class="form-group col-lg-2">
+    </div>
+    <div class="col-lg-2">
+        <label>&nbsp;</label>
+        <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
+    </div>
+</div>
+</div>
 </div>
 
 <div bsModal #printModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -174,98 +214,123 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header" align="right">
-                <button type="button" (click)="printModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" (click)="printModal.hide()" class="btn btn-secondary" data-dismiss="modal">Fechar</button>                &nbsp;&nbsp;
                 <button type="button" (click)="print()" class="btn btn-primary">Imprimir</button>
             </div>
-            <div class="modal-content" id="print-section">
-                <div align="center" class="initial">
-                    <table frame="box" style="width:85%" padding="30px">
-                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+            <div class="modal-content" style="padding-left: 70px; padding-right: 70px;">
+                <div align="center" id="print-section">
+                    <table style="width:100%; border: solid 1px #000;border-collapse: collapse;" padding="30px">
                         <tr>
-                            <td width="50px"></td>
-                            <td align="left"><font size="4"><b>PROCESSO:</b></font></td>
-                            <td align="left"><font size="4"><b font-size="30px" >{{model?.processo?.numero}}</b></font></td>
-                            <td width="50px"></td>
+                            <th width="10%"></th>
+                            <th width="35%"></th>
+                            <th width="35%"></th>
+                            <th width="10%"></th>
+                            <th width="10%"></th>
                         </tr>
-                        <tr height="20px" style="border-bottom: solid"><td></td><td></td><td></td><td></td></tr>
-                        <tr  >
-                            <td width="50px"></td>
+                        <tr height="20px">
+                            <td colspan="5"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="left">
+                                <font size="4"><b>PROCESSO:</b></font>
+                            </td>
+                            <td align="left">
+                                <font size="4"><b font-size="30px">{{model?.processo?.numero}}</b></font>
+                            </td>
+                            <td colspan="2" align="center"><img src="http://calcular.mybluemix.net/assets/img/logoCalcularOnly.png" width="60px" /></td>
+                        </tr>
+                        <tr height="20px">
+                            <td colspan="5" style="border-bottom: solid 1px #000"></td>
+                        </tr>
+                        <tr height="20px">
+                            <td colspan="5"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
                             <td align="left">VARA:</td>
                             <td align="left">{{model?.processo?.vara}}</td>
-                            <td width="50px"></td>
+                            <td colspan="2"></td>
                         </tr>
-                        <tr  >
-                            <td width="50px"></td>
+                        <tr>
+                            <td></td>
                             <td align="left">EMPRESA/ADVOGADO:</td>
                             <td align="left">{{model?.processo?.advogado?.nome}}</td>
-                            <td width="50px"></td>
+                            <td colspan="2"></td>
                         </tr>
-                        <tr  >
-                            <td width="50px"></td>
+                        <tr>
+                            <td></td>
                             <td align="left">AUTOR:</td>
                             <td align="left">{{model?.processo?.autor}}</td>
-                            <td width="50px"></td>
+                            <td colspan="2"></td>
                         </tr>
-                        <tr  >
-                            <td width="50px"></td>
+                        <tr>
+                            <td></td>
                             <td align="left">RÉU:</td>
                             <td align="left">{{model?.processo?.reu}}</td>
-                            <td width="50px"></td>
+                            <td colspan="2"></td>
                         </tr>
-                        <tr  >
-                            <td width="50px"></td>
+                        <tr>
+                            <td></td>
                             <td align="left">PARTE:</td>
                             <td align="left">{{ getParteDescription() }}</td>
-                            <td width="50px"></td>
+                            <td colspan="2"></td>
                         </tr>
-                        <tr  >
-                            <td width="50px"></td>
-                            <td align="left">DATA ENTRADA:</td>
-                            <td align="left">{{model?.entrada | date:"dd/MM/yyyy" }}</td>
-                            <td width="50px"></td>
-                        </tr>
-                        <tr  >
-                            <td width="50px"></td>
-                            <td align="left"> VOLUME: </td>
-                            <td align="left"> {{model?.volumes }} </td>
-                            <td width="50px"></td>
-                        </tr>
-                        <tr  >
-                            <td width="50px"></td>
-                            <td align="left"> ELABORAR: </td>
-                            <td></td>
-                            <td width="50px"></td>
-                        </tr>
-                        <tr *ngFor="let item of model?.atividades" >
-                            <td width="50px"></td>
-                            <td align="left"><label  style="padding-left: 30px"> {{ item?.tipoAtividade?.nome }}</label></td>
-                            <td align="left">{{ item?.responsavel?.name }}</td>
-                            <td width="50px"></td>
-                        </tr>
-                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
                         <tr>
-                            <td width="50px"></td>
+                            <td></td>
+                            <td align="left">DATA ENTRADA:</td>
+                            <td align="left">{{ dateIso(model?.entrada) | date:"dd/MM/yyyy" }}</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="left">VOLUMES:</td>
+                            <td align="left">{{model?.volumes }}</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td align="left"> ELABORAR: </td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr *ngFor="let item of model?.atividades">
+                            <td></td>
+                            <td align="left">
+                                <label style="padding-left: 30px"> {{ item?.tipoAtividade?.nome }}</label>
+                            </td>
+                            <td align="left">{{ item?.responsavel?.name }}</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr height="20px">
+                            <td colspan="5"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
                             <td align="left"><b>PRAZO FINAL:</b></td>
                             <td align="left"><b>{{model?.prazo | date:"dd/MM/yyyy" }}</b></td>
-                            <td width="50px"></td>
+                            <td colspan="2"></td>
                         </tr>
-                        <tr height="20px"><td></td><td></td><td></td><td></td></tr>
+                        <tr height="20px">
+                            <td colspan="5"></td>
+                        </tr>
                         <tr>
-                            <td width="50px"></td>
+                            <td></td>
                             <td align="left">OBSERVAÇÕES:</td>
+                            <td colspan="2"></td>
                             <td></td>
-                            <td width="50px"></td>
                         </tr>
-                        <tr height="250px">
-                            <td width="50px"></td>
+                        <tr height="200px">
                             <td></td>
+                            <td colspan="3" style="border: solid 1px #000"></td>
                             <td></td>
-                            <td width="50px"></td>
                         </tr>
-
+                        <tr height="30px">
+                            <td colspan="5"></td>
+                        </tr>
                     </table>
                 </div>
+                <br>
             </div>
         </div>
     </div>
-</div>
+    </div>

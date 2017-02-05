@@ -21,6 +21,8 @@
     padding: 3px 10px
 }
 
+
+
 textarea {
     resize: none;
 }
@@ -88,6 +90,10 @@ input[type="date"] {
     border: none;
     border-radius: 0.25rem;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+body{
+    -webkit-print-color-adjust:exact;
 }
 
 label{

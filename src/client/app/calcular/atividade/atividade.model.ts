@@ -6,11 +6,12 @@ export class Atividade {
     servicoId: number;
     nome: string;
     entrega: any;
-    tempo: number;
+    tempo: any;
     tipoImpressao: number;
     tipoImpressaoDescricao: string;
     observacao: string;
     observacaoRevisor: string;
+    observacaoComissao: string;
     tipoAtividadeId: number;
     tipoAtividade: TipoAtividade;
     responsavelId: string;
@@ -21,6 +22,7 @@ export class Atividade {
     etapaAtividade: number;
     atividadeOrigemId: number;
     atividadeOrigem: Atividade;
+    valor: number;
 }
 
 export class TipoAtividade {

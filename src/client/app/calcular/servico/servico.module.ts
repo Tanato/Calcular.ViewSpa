@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { ServicoMasterComponent } from './servico.master.component';
 import { ServicoDetailComponent } from './servico.detail.component';
+import { TipoServicoComponent } from './servico.tipo.component';
 
 import { ServicoService } from './servico.service';
 import { ProcessoService } from '../processo/processo.service';
@@ -21,6 +22,14 @@ let options: any = {
     animate: 'flyRight',
     positionClass: 'toast-bottom-right',
 };
+
+@NgModule({
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options), BusyModule],
+    providers: [ServicoService],
+    declarations: [TipoServicoComponent],
+    exports: [TipoServicoComponent]
+})
+export class TipoServicoModule { }
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,

@@ -66,8 +66,8 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
-    getResponsavel(tipo: number) {
-        return this.http.get(this.url + '/responsavel/' + tipo)
+    getResponsavel() {
+        return this.http.get(this.url + '/responsavel')
             .map(this.handleResult)
             .catch(this.handleError);
     }
@@ -104,13 +104,19 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
+    getTipoExecucao() {
+        return this.http.get(this.url + '/tipoexecucao')
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
     private handleResult(res: Response) {
         let body = res.json();
         return body || {};
     }
 
     private handleError(error: any) {
-        console.error(error);
-        return Observable.throw(error.json().Error || 'Server error');
+        console.error(error._body ? error._body : error);
+        return Observable.throw(error._body ? error._body : error.json().Error || 'Server error');
     }
 }

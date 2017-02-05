@@ -27,7 +27,7 @@ export class UsuarioAlterarSenhaComponent {
             .subscribe(x => {
                 this.toastr.success('Senha alterada com sucesso!');
                 this.onCancel();
-            });
+            }, error => this.toastr.error('Senha inválida!'));
     }
 
     onCancel() {

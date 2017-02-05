@@ -60,8 +60,8 @@
 									<label *ngIf="model.etapaAtividade === 2">Atividade à Refazer:</label>
 									<select class="form-control" id="atividadeOrigemSelect" [ngModel]="model.atividadeOrigem?.tipoAtividadeId" name="atividadeOrigemSelect"
 										disabled>
-                                <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
-                            </select>
+										<option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
+										</select>
 								</div>
 								<div class="form-group col-lg-4">
 									<label>Data de Entrega:</label>
@@ -82,7 +82,7 @@
 									<select class="form-control" id="tipoImpressaoOrigem" [ngModel]="model.atividadeOrigem?.tipoImpressao" name="tipoImpressaoOrigem"
 										disabled>
 										<option *ngFor="let item of tipoImpressao" [ngValue]="item.key">{{item.value}}</option>
-									</select>
+										</select>
 								</div>
 							</div>
 						</div>
@@ -102,10 +102,10 @@
 						<div class="form-group col-lg-4">
 							<label>Atividade:</label>
 							<input class="form-control" value="Refazer" disabled *ngIf="model.etapaAtividade === 2" />
-							<select class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" (ngModelChange)="changeAtividade($event)"
-								*ngIf="model.etapaAtividade === 0" disabled>
-                                <option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
-                            </select>
+							<select class="form-control" id="atividadeSelect" [(ngModel)]="model.tipoAtividadeId" name="atividadeSelect" *ngIf="model.etapaAtividade === 0"
+								disabled>
+								<option *ngFor="let item of tipoAtividade" [ngValue]="item.key">{{item.value}}</option>
+								</select>
 						</div>
 						<div class="form-group col-lg-2">
 							<label>Data de Entrega:</label>
@@ -113,10 +113,10 @@
 								name="entrega" required/>
 						</div>
 						<div class="form-group col-lg-2">
-							<label>Tempo: (minutos)</label>
-							<input type="number" class="form-control" id="tempo" [(ngModel)]="model.tempo" name="tempo" required />
+							<label *ngIf="isInRole('Calculista')">Tempo:</label>
+							<input class="form-control" id="tempo" [textMask]="{mask: maskTimespan}" [(ngModel)]="model.tempo" name="tempo" required="isInRole('Calculista')"
+								*ngIf="isInRole('Calculista')" />
 						</div>
-
 						<div class="form-group col-lg-2">
 							<label>Status:</label>
 							<select class="form-control" id="tipoExecucao" [(ngModel)]="model.tipoExecucaoNew" name="tipoExecucao" required>
@@ -126,15 +126,19 @@
 						</div>
 						<div class="form-group col-lg-2" *ngIf="model.etapaAtividade === 0">
 							<label>Tipo de Impressão:</label>
-							<select class="form-control" id="tipoImpressao" [(ngModel)]="model.tipoImpressao" name="tipoImpressao" [required]="model.etapaAtividade === 0">
+							<select class="form-control" [(ngModel)]="model.tipoImpressao" name="tipoImpressao" [required]="model.etapaAtividade === 0">
 								<option *ngFor="let item of tipoImpressao" [ngValue]="item.key">{{item.value}}</option>
 							</select>
 						</div>
 					</div>
 					<div class="row">
-						<div class="form-group col-lg-12">
-							<label>Observações:</label>
-							<textarea class="form-control" rows="1" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+						<div class="form-group col-lg-6">
+							<label [hidden]="model.etapaAtividade === 2">Observação para comissão:</label>
+							<textarea class="form-control" rows="2" [(ngModel)]="model.observacaoComissao" name="observacaoComissao" [hidden]="model.etapaAtividade === 2"></textarea>
+						</div>
+						<div class="form-group col-lg-6" [hidden]="model.tipoExecucaoNew != 2">
+							<label>Observação para Revisor:</label>
+							<textarea class="form-control" rows="2" [(ngModel)]="model.observacao" name="observacao"></textarea>
 						</div>
 					</div>
 				</div>
@@ -167,11 +171,12 @@
 						<div class="form-group col-lg-8">
 							<div class="form-group col-lg-6">
 								<label [hidden]="model.tipoExecucaoNew == 1">Observações para Refazer:</label>
-								<textarea [hidden]="model.tipoExecucaoNew == 1" class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao" name="observacao"></textarea>
+								<textarea [hidden]="model.tipoExecucaoNew == 1" class="form-control" rows="4" id="observacao" [(ngModel)]="model.observacao"
+									name="observacao"></textarea>
 							</div>
 							<div class="form-group col-lg-6">
 								<label>Observações apenas para Revisor:</label>
-								<textarea class="form-control" rows="4" id="observacaoRevisor" [(ngModel)]="model.observacaoRevisor" name="observacaoRevisor"></textarea>
+								<textarea class="form-control" rows="4" [(ngModel)]="model.observacaoRevisor" name="observacaoRevisor"></textarea>
 							</div>
 						</div>
 					</div>
@@ -186,7 +191,7 @@
 				</div>
 				<div class="col-lg-2 text-center">
 					<label>&nbsp;</label>
-					<button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()"><i class="fa fa-plus"></i> Salvar</button>
+					<button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="onSubmit()">Salvar</button>
 				</div>
 			</div>
 		</form>

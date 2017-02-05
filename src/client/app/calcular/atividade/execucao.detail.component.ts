@@ -7,6 +7,7 @@ import { Atividade } from './atividade.model';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
+import { UserService, IUser } from '../../shared/user/user.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
@@ -17,6 +18,8 @@ import { Subscription } from 'rxjs';
     templateUrl: './execucao.detail.component.html'
 })
 export class AtividadeExecucaoDetailComponent implements OnInit {
+
+    public maskTimespan = [/\d/, /\d/, ':', /\d/, /\d/];
 
     public wtoInput: NodeJS.Timer;
     public modelName = 'Serviço';
@@ -31,6 +34,7 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     public blockEdit: boolean = true;
     public id: Observable<string>;
     private busy: Subscription;
+	private user: IUser = <IUser>{};
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -44,11 +48,14 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     constructor(public servicoService: ServicoService,
         private processoService: ProcessoService,
         private service: AtividadeService,
+        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastsManager) { }
 
     ngOnInit() {
+        this.userService.getUser().subscribe((data: IUser) => this.user = data);
+
         this.processoService.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);
 
@@ -95,17 +102,14 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
         this.model.servico.processoId = processo.id;
     }
 
-    changeAtividade(tipo: number) {
-        if (tipo !== null) {
-            this.model.responsavel = null;
-            this.model.responsavelId = null;
-            this.service.getResponsavel(tipo)
-                .subscribe((data: IKeyValuePair[]) => this.responsavel = data);
-        }
-    }
-
     onCancel() {
         let link = 'calcular/atividade/execucao';
         this.router.navigateByUrl(link);
     };
+
+	isInRole(role: string){
+		return this.user
+				&& this.user.roles
+				&& this.user.roles.indexOf(role) !== -1;
+	}
 }

@@ -1,0 +1,15 @@
+<div class="panel-body" [ngBusy]="busy">
+    <div class="list-group">
+        <div *ngFor="let item of data" [routerLink]="['../atividade/execucao/detail', {id: item.id}]" class="list-group-item" style="cursor: pointer;">
+            <div style="height: 42px;">
+                {{item.tipoAtividade?.nome}}
+                <br>
+                <span class="small">{{item.servico?.processo?.numero }}</span>
+                <span class="pull-right"><em>Prazo:<b> {{ item?.servico?.prazo | date:"dd/MM/yyyy" }}</b></em></span>
+            </div>
+        </div>
+        <div [hidden]="data?.length" class="list-group-item">
+            Nenhuma atividade pendente.
+        </div>
+    </div>
+</div>

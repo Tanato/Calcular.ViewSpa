@@ -27,13 +27,13 @@
 				<thead>
 					<tr>
 						<th width="50"></th>
-						<th width="220">Numero do Processo</th>
+						<th width="210">Numero do Processo</th>
 						<th>Autor</th>
-						<th>Réu</th>
-						<th colspan="2">Atividade</th>
-						<th *ngIf="isRevisor()">Responsável</th>
+						<th>Réu&nbsp;&nbsp;</th>
+						<th width="160">Atividade</th>
+						<th width="160" *ngIf="isRevisor()">Responsável</th>
 						<th width="120">Prazo</th>
-						<th width="150">Status</th>
+						<th width="120">Status</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,7 +46,7 @@
 						<td>{{ item.servico?.processo?.autor }}</td>
 						<td>{{ item.servico?.processo?.reu }}</td>
 						<td>{{ item.tipoAtividade?.nome }}</td>
-						<td>{{ item.etapaAtividade === 2 ? "Refazer" : item.etapaAtividade === 1 ? "Revisão" : "" }}</td>
+						<!--<td>{{ item.etapaAtividade === 2 ? "Refazer" : item.etapaAtividade === 1 ? "Revisão" : "" }}</td>-->
 						<td *ngIf="isRevisor()">{{ item.atividadeOrigem?.responsavel?.name }}</td>
 						<td>{{ item.servico?.prazo | date:"dd/MM/yyyy" }}</td>
 						<td>{{ item.tipoExecucao === 0 ? "Pendente" : "Finalizado" }}</td>

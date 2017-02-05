@@ -26,21 +26,21 @@
 			<table class="table table-hover table-striped table-sm">
 				<thead>
 					<tr>
-						<th width="70"></th>
-						<th >Nome</th>
-						<th width="200">Empresa</th>
-						<th width="125">Celular</th>
-						<th width="125">Telefone</th>
-						<th width="120">Honorários</th>
-						<th width="100">Nº Processos</th>
+						<th width="50"></th>
+						<th>Nome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>Empresa</th>
+						<th width="160">Celular</th>
+						<th width="150">Telefone</th>
+						<th width="110">Honorários</th>
+						<th width="110">Nº Processos</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
 							&nbsp; &nbsp;
-							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-edit"></i></a> &nbsp;
-							<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-edit"></i></a>
+							<!--<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
 							<div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 								aria-hidden="true">
 								<div class="modal-dialog modal-sm">
@@ -54,14 +54,14 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div>-->
 						</td>
 						<td>{{ item.nome }}</td>
 						<td>{{ item.empresa }}</td>
 						<td>{{ item.celular }}</td>
 						<td>{{ item.telefone }}</td>
-						<td align="right"><label *ngIf="item?.honorarios !== null">R$ {{item?.honorarios?.toFixed(2)}}</label></td>
-						<td>{{ item.processos }}</td>
+						<td>{{ item?.honorarios }}</td>
+						<td align="center">{{ item.processos }}</td>
 					</tr>
 				</tbody>
 			</table>

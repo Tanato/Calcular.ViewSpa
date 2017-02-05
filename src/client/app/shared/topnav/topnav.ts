@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TopnavService, IUser } from './topnav.service';
+import { UserService } from '../user/user.service';
 
 @Component({
 	moduleId: module.id,
@@ -10,11 +11,10 @@ export class TopNavComponent implements OnInit {
 
 	username: IUser = <IUser>{};
 
-	constructor(private topnavService: TopnavService) { }
+	constructor(private topnavService: TopnavService, private userService: UserService) { }
 
 	ngOnInit() {
-		this.topnavService.getLoggedUser()
-			.subscribe((data: IUser) => this.username = data);
+		this.userService.getUser().subscribe(x => this.username = x);
 	}
 
 	changeTheme(color: string): void {

@@ -28,7 +28,6 @@ export class ClienteDetailComponent implements OnInit {
 
     public formType: string = 'new';
     public blockEdit: boolean = true;
-    public honorariosAux: string;
 
     public id: Observable<string>;
 
@@ -65,7 +64,6 @@ export class ClienteDetailComponent implements OnInit {
                 this.busy = this.service.getClienteById(id)
                     .subscribe((data: Cliente) => {
                         data.nascimento = data.nascimento ? data.nascimento.slice(0, 10) : null;
-                        this.honorariosAux = data.honorarios !== null ? data.honorarios.toString() : null;
                         this.model = data;
                     });
             } else {
@@ -75,9 +73,6 @@ export class ClienteDetailComponent implements OnInit {
     }
 
     onSubmit() {
-
-        this.model.honorarios = parseFloat(this.honorariosAux.replace(/[^0-9\.]/g, ''));
-
         if (this.formType === 'new' && !this.model.id) {
             this.service.postCliente(this.model)
                 .subscribe(x => {

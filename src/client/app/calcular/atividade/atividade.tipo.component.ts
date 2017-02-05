@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Atividade } from './atividade.model';
+import { TipoAtividade } from './atividade.model';
 import { AtividadeService } from './atividade.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
@@ -14,13 +14,13 @@ export class TipoAtividadeComponent implements OnInit {
     private busy: Subscription;
     private modelName = 'Atividade';
 
-    private data: Atividade[];
+    private data: TipoAtividade[];
     private totalItems: number = 0;
     private currentPage: number = 1;
     private itemsPerPage: number = 50;
     private model: string;
     private editId: number;
-    private rows: Atividade[];
+    private rows: TipoAtividade[];
 
     constructor(private service: AtividadeService, private toastr: ToastsManager) { }
 
@@ -32,7 +32,11 @@ export class TipoAtividadeComponent implements OnInit {
         this.service.postTipoAtividade(this.model)
             .subscribe(x => {
                 this.toastr.success('Atividade adicionada com sucesso!');
+                this.model = null;
                 this.filter();
+            }, error => {
+                this.toastr.error(error);
+                this.model = null;
             });
     }
 
@@ -61,6 +65,8 @@ export class TipoAtividadeComponent implements OnInit {
             .subscribe(x => {
                 this.toastr.success(this.modelName + ' excluído com sucesso!');
                 this.filter();
+            }, error => {
+                this.toastr.error(error);
             });
     }
 

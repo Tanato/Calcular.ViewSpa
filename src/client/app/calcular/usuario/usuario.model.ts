@@ -7,6 +7,7 @@ export class Usuario {
     roles: string[];
     perfis: string;
     inativo: boolean;
+    isExterno: boolean;
 }
 
 export class AlterarSenha {

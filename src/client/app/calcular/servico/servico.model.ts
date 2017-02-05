@@ -12,4 +12,12 @@ export class Servico {
     atividades: Atividade[];
     status: number;
     statusDescricao: string;
+    tipoServico: TipoServico;
+    tipoServicoId: number;
+    tipoImpressao: number;
+}
+
+export class TipoServico {
+    id: number;
+    nome: string;
 }

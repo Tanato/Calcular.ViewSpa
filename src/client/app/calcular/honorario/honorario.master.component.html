@@ -26,27 +26,28 @@
 			<table class="table table-hover table-striped table-sm">
 				<thead>
 					<tr>
-						<th width="70"></th>
+						<th width="46"></th>
 						<th width="200">Nº Processo</th>
 						<th>Autor</th>
 						<th>Réu</th>
+						<th width="170">Advogado/Cliente</th>
+						<th width="150">Empresa</th>
 						<th width="100">Honorário Pendente</th>
-						<th width="100">Prazo Pagamento</th>
-						<th width="100">Status</th>
+						<th width="115">Status</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let item of rows">
-						<td>
-							&nbsp; &nbsp; &nbsp;
-							<a [routerLink]="['/calcular/honorario/detail', {id: item.id}]"><i class="fa fa-calculator"></i></a> &nbsp;
+						<td align="center">
+							<a [routerLink]="['/calcular/honorario/detail', {id: item.id}]"><i class="fa fa-calculator"></i></a>
 						</td>
 						<td>{{ item.numero }}</td>
 						<td>{{ item.autor }}</td>
 						<td>{{ item.reu }}</td>
-						<td align="right"><label *ngIf="item?.total !== null">R$ {{item?.total?.toFixed(2)}}</label></td>
-						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
-						<td>{{ item.status }}</td>
+						<td>{{ item.advogado?.nome }}</td>
+						<td>{{ item.advogado?.empresa }}</td>
+						<td><label *ngIf="item?.total !== null">R$ {{item?.total?.toFixed(2)}}</label></td>
+						<td>{{ item.statusHonorario ? item.statusHonorario : '&nbsp;&nbsp;&nbsp;&nbsp;-' }}</td>
 					</tr>
 				</tbody>
 			</table>
