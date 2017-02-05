@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TopnavService, IUser } from '../topnav/topnav.service';
+import { IUser } from '../topnav/topnav.service';
+import { UserService } from '../user/user.service';
 
 @Component({
 	moduleId: module.id,
@@ -12,11 +13,10 @@ export class SidebarComponent implements OnInit  {
 
 	user: IUser = <IUser>{};
 
-	constructor(private topnavService: TopnavService) { }
+	constructor(private userService: UserService) { }
 
 	ngOnInit() {
-		this.topnavService.getLoggedUser()
-			.subscribe((data: IUser) => this.user = data);
+		this.userService.getUser().subscribe((data: IUser) => this.user = data);
 	}
 
 	eventCalled() {

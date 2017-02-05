@@ -8,6 +8,16 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { BusyModule } from 'angular2-busy';
 
+import {
+    BirthDayComponent,
+    AtividadeComponent,
+    DistribuirServicoComponent,
+    EnviarServicoComponent,
+    AtividadeRefazerComponent,
+    AtividadeRevisarComponent,
+    PrazoServicoComponent,
+} from './evento.master.component';
+
 let options: any = {
     animate: 'flyRight',
     positionClass: 'toast-bottom-right',
@@ -22,7 +32,23 @@ let options: any = {
         ToastModule.forRoot(options),
         BusyModule],
     providers: [EventoService],
-    declarations: [EventoMasterComponent],
-    exports: [EventoMasterComponent]
+    declarations: [EventoMasterComponent,
+        BirthDayComponent,
+        AtividadeComponent,
+        DistribuirServicoComponent,
+        EnviarServicoComponent,
+        AtividadeRefazerComponent,
+        AtividadeRevisarComponent,
+        PrazoServicoComponent,
+    ],
+    exports: [EventoMasterComponent,
+        BirthDayComponent,
+        AtividadeComponent,
+        DistribuirServicoComponent,
+        EnviarServicoComponent,
+        AtividadeRefazerComponent,
+        AtividadeRevisarComponent,
+        PrazoServicoComponent,
+    ]
 })
 export class EventoMasterModule { }

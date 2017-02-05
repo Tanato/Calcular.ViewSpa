@@ -47,7 +47,6 @@ export class AtividadeExecucaoMasterComponent implements OnInit {
                 this.onPageChange({ page: this.currentPage, itemsPerPage: this.itemsPerPage });
             },
             error => {
-                alert(error);
                 console.log(error);
                 this.toastr.warning('Erro ao efetuar operação. Tente novamente');
             });

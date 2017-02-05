@@ -1,0 +1,15 @@
+<div class="panel-body" [ngBusy]="busy">
+    <div class="list-group">
+        <div *ngFor="let item of data" [routerLink]="['../processo/detail', {id: item.id}]" class="list-group-item" style="cursor: pointer;">
+            <div style="height: 42px;">
+                {{ item.processo?.numero }}
+                <br>
+                <span class="small"><em>{{item.tipoServico?.nome}}</em></span>
+                <span class="pull-right"><em>Prazo:<b> {{ item?.prazo | date:"dd/MM/yyyy" }}</b></em></span>
+            </div>
+        </div>
+        <div [hidden]="data?.length" class="list-group-item">
+            Não há prazo de serviço vencendo.
+        </div>
+    </div>
+</div>

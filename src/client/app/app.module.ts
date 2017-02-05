@@ -7,13 +7,14 @@ import { HttpModule, XHRBackend, RequestOptions, Http } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import { AuthHttp } from './auth.http';
-import { TopnavService } from './shared/topnav/topnav.service';
 
 import { LoginModule } from './login/login.module';
 import { SignupModule } from './signup/signup.module';
 import { CalcularModule } from './calcular/calcular.module';
 import { SharedModule } from './shared/shared.module';
 import { BusyModule, BusyConfig } from 'angular2-busy';
+
+import { UserService } from './shared/user/user.service';
 
 export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions, router: Router) {
 	return new AuthHttp(backend, defaultOptions, router);
@@ -44,7 +45,7 @@ var busyConfig = new BusyConfig({
 		useFactory: httpFactory,
 		deps: [XHRBackend, RequestOptions, Router]
 	},
-		TopnavService,
+		UserService,
 	],
 	bootstrap: [AppComponent]
 })

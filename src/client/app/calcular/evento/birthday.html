@@ -1,0 +1,11 @@
+<div class="panel-body" [ngBusy]="busy">
+    <div class="list-group">
+        <div *ngFor="let item of data" class="list-group-item">
+            {{item.nome}}
+            <span class="pull-right small"><em>{{item.data}}</em></span>
+        </div>
+        <div [hidden]="data?.length" class="list-group-item">
+            Nenhum aniversário.
+        </div>
+    </div>
+</div>

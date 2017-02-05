@@ -7,7 +7,7 @@ import { Atividade } from './atividade.model';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
-import { TopnavService, IUser } from '../../shared/topnav/topnav.service';
+import { UserService, IUser } from '../../shared/user/user.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
@@ -48,14 +48,13 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     constructor(public servicoService: ServicoService,
         private processoService: ProcessoService,
         private service: AtividadeService,
-        private topnavService: TopnavService,
+        private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
         private toastr: ToastsManager) { }
 
     ngOnInit() {
-        this.topnavService.getLoggedUser()
-			.subscribe((data: IUser) => this.user = data);
+        this.userService.getUser().subscribe((data: IUser) => this.user = data);
 
         this.processoService.getParteSelect()
             .subscribe((data: IKeyValuePair[]) => this.parte = data);

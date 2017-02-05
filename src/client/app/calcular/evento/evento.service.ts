@@ -22,6 +22,12 @@ export class EventoService {
             .catch(this.handleError);
     }
 
+    getAniversarios(): Observable<any[]> {
+        return this.http.get(this.url + '/aniversarios')
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     putEvento(evento: Evento) {
         return this.http
             .put(this.url, JSON.stringify(evento))

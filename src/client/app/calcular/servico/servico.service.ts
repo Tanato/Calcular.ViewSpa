@@ -25,6 +25,24 @@ export class ServicoService {
             .catch(this.handleError);
     }
 
+    getServicosDistribuir(): Observable<Servico[]> {
+        return this.http.get(this.url + '/distribuir')
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    getServicosEnviar(): Observable<Servico[]> {
+        return this.http.get(this.url + '/enviar')
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    getServicosPrazo(): Observable<Servico[]> {
+        return this.http.get(this.url + '/prazo')
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     getServicosSelect(numero: string): Observable<Servico[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', numero);

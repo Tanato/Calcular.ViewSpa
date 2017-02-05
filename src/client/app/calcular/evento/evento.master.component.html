@@ -1,4 +1,4 @@
-<div class="container-fluid" [ngBusy]="busy">
+<div class="container-fluid">
 	<!-- Page Heading -->
 	<div class="row">
 		<div class="col-xl-12">
@@ -11,45 +11,54 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xl-8">
+		<div class="col-lg-4">
+			<div class="card card-default" *ngIf="isCalculista || isExterno">
+				<div class="card-header">
+					<i class="fa fa-clock-o fa-hourglass-half"></i> Atividades
+				</div>
+				<atividade-cmp></atividade-cmp>
+			</div>
+			<div class="card card-default" *ngIf="isRevisor">
+				<div class="card-header">
+					<i class="fa fa-search fa-fw"></i> Revisar
+				</div>
+				<atividade-revisar-cmp></atividade-revisar-cmp>
+			</div>
+			<div class="card card-default" *ngIf="isAdministrativo || isGerencial">
+				<div class="card-header">
+					<i class="fa fa-fw fa-clock-o"></i> Prazo
+				</div>
+				<prazo-servico-cmp></prazo-servico-cmp>
+			</div>
 		</div>
-		<div class="form-group input-group col-xl-4">
-			<input type="text" class="form-control" [(ngModel)]="filterText" (keydown.Enter)="filter()">
-			<span class="input-group-btn"><button class="btn btn-secondary" (click)="filter()" type="button"><i class="fa fa-search"></i></button></span>
-		</div>
-	</div>
-	<div class="row col-xl-12">
-		<div class="table-responsive">
-			<table class="table table-hover table-striped table-sm">
-				<thead>
-					<tr>
-						<th>Evento</th>
-						<th>Detalhe</th>
-						<th *ngIf="exibeResponsavel()" >Responsável</th>
-						<th hidden>Observação</th>
-						<th>Status</th>
-						<th>Data</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let item of rows">
-						<td>{{ item.evento }}</td>
-						<td>{{ item.detalhe }}</td>
-						<td *ngIf="exibeResponsavel()">{{ item.responsavel }}</td>
-						<td hidden>{{ item.observacao }}</td>
-						<td>{{ item.status }}</td>
-						<td>{{ item.data | date:"dd/MM/yyyy" }}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xl-12 centered">
-			<pagination previousText="Anterior" nextText="Próximo" firstText="Primeira" lastText="Última" [totalItems]="totalItems" [(ngModel)]="currentPage"
-				[itemsPerPage]="itemsPerPage" [maxSize]="maxSize" class="pagination-sm" [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event"
-				(pageChanged)="onPageChange($event)">
-			</pagination>
+		<div class="col-lg-4">
+			<div class="card card-default" *ngIf="isCalculista || isExterno">
+				<div class="card-header">
+					<i class="fa fa-refresh fa-fw"></i> Refazer
+				</div>
+				<atividade-refazer-cmp></atividade-refazer-cmp>
+			</div>
+			<div class="card card-default" *ngIf="isAdministrativo || isGerencial">
+				<div class="card-header">
+					<i class="fa fa-fw fa-share-square-o"></i> Distribuir
+				</div>
+				<distribuir-servico-cmp></distribuir-servico-cmp>
+			</div>
+			<div class="card card-default" *ngIf="isAdministrativo || isGerencial">
+				<div class="card-header">
+					<i class="fa fa-fw fa-sign-out"></i> Enviar
+				</div>
+				<enviar-servico-cmp></enviar-servico-cmp>
+			</div>
+			
+		</div>		
+		<div class="col-lg-4">
+			<div class="card card-default">
+				<div class="card-header">
+					<i class="fa fa-bell fa-fw fa-birthday-cake"></i> Aniversários
+				</div>
+				<birthday-cmp></birthday-cmp>
+			</div>
 		</div>
 	</div>
 </div>

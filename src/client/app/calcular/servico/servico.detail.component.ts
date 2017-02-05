@@ -217,6 +217,12 @@ export class ServicoDetailComponent implements OnInit {
         return _.some(this.model.atividades, x => x.tipoExecucao !== 1 && x.tipoExecucao !== 2 && x.tipoExecucao !== 3);
     }
 
+    dateIso(date: any): string {
+        if (date)
+            return date + 'T00:00:00-03:00';
+        return null;
+    }
+
     print(): Boolean {
         let printContents: any, popupWin: any;
         printContents = document.getElementById('print-section').innerHTML;
