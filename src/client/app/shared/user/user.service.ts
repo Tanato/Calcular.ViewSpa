@@ -43,6 +43,11 @@ export class UserService {
         return this.observable;
     }
 
+    logoutUser() {
+        this.user = null;
+        this.observable = null;
+    }
+
     handleResult(res: Response) {
         let body = res.json();
         return body || {};

@@ -18,6 +18,8 @@ import {
     PrazoServicoComponent,
 } from './evento.master.component';
 
+import { AlocacaoComponent } from './alocacao-calculista.component';
+
 let options: any = {
     animate: 'flyRight',
     positionClass: 'toast-bottom-right',
@@ -40,6 +42,7 @@ let options: any = {
         AtividadeRefazerComponent,
         AtividadeRevisarComponent,
         PrazoServicoComponent,
+        AlocacaoComponent,
     ],
     exports: [EventoMasterComponent,
         BirthDayComponent,
@@ -49,6 +52,7 @@ let options: any = {
         AtividadeRefazerComponent,
         AtividadeRevisarComponent,
         PrazoServicoComponent,
+        AlocacaoComponent,
     ]
 })
 export class EventoMasterModule { }

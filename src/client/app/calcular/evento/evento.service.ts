@@ -13,11 +13,8 @@ export class EventoService {
 
     constructor(private http: Http) { }
 
-    getEventos(filterText: string): Observable<Evento[]> {
-        let params: URLSearchParams = new URLSearchParams();
-        params.set('filter', filterText);
-
-        return this.http.get(this.url, { search: params })
+    getAlocacao(): Observable<any[]> {
+        return this.http.get(this.url + '/alocacao')
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }

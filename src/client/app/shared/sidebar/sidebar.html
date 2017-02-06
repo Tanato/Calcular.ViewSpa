@@ -21,7 +21,7 @@
 			</li>
 		</div>
 
-		<div class="nested-menu">
+		<div class="nested-menu" *ngIf="!isInRole('Colaborador Externo')">
 			<a class="list-group-item" (click)="addExpandClass('processo')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'processo'" [class.fa-chevron-right]="showMenu !== 'processo'"></i>&nbsp; Processo</span>
 			</a>
@@ -33,7 +33,7 @@
 						</a>
 					</li>
 				</ul>
-				<ul class="submenu">
+				<ul class="submenu" *ngIf="!isInRole('Colaborador Externo')">
 					<li>
 						<a routerLink="/calcular/processo/notes" [routerLinkActive]="['router-link-active']" class="list-group-item">
 							<i class="fa fa-fw fa-comment-o"></i> Detalhes de Processo
@@ -43,7 +43,7 @@
 			</li>
 		</div>
 
-		<div class="nested-menu">
+		<div class="nested-menu" *ngIf="!isInRole('Colaborador Externo')">
 			<a class="list-group-item" (click)="addExpandClass('servico')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'servico'" [class.fa-chevron-right]="showMenu !== 'servico'"></i>&nbsp; Serviço</span>
 			</a>
@@ -62,13 +62,6 @@
 						</a>
 					</li>
 				</ul>
-				<ul class="submenu" *ngIf="isInRole('Colaborador Externo')">
-					<li>
-						<a routerLink="/calcular/atividade/execucao" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-hourglass-half"></i> Apontamento de Atividades
-						</a>
-					</li>
-				</ul>
 				<ul class="submenu" *ngIf="isInRole('Revisor')">
 					<li>
 						<a routerLink="/calcular/atividade/execucao" [routerLinkActive]="['router-link-active']" class="list-group-item">
@@ -79,129 +72,139 @@
 			</li>
 		</div>
 
-		<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
-			<a class="list-group-item" (click)="addExpandClass('honorario')">
-				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'honorario'" [class.fa-chevron-right]="showMenu !== 'honorario'"></i>&nbsp; Honorário</span>
+		<a *ngIf="isInRole('Colaborador Externo')" routerLink="/calcular/atividade/execucao" [routerLinkActive]="['router-link-active']"
+			class="list-group-item">
+			<i class="fa fa-fw fa-hourglass-half"></i> Atividades
 			</a>
-			<li class="nested" [ngClass]="{'expand' : showMenu === 'honorario' }">
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/honorario/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-dollar"></i> Registro
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/honorario/cobranca" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-fax"></i> Cobrança
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/honorario/proposta" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-handshake-o"></i> Proposta
-						</a>
-					</li>
-				</ul>
-			</li>
-		</div>
 
-		<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial') || isInRole('Calculista')">
-			<a class="list-group-item" (click)="addExpandClass('apuracao')">
-				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'apuracao'" [class.fa-chevron-right]="showMenu !== 'apuracao'"></i>&nbsp; Apuração</span>
-			</a>
-			<li class="nested" [ngClass]="{'expand' : showMenu === 'apuracao' }">
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/processo/apuracao-comissao" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-calculator"></i> Comissão
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu" [hidden]="isInRole('Calculista')">
-					<li>
-						<a routerLink="/calcular/processo/apuracao-associados" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-calculator"></i> Associados
-						</a>
-					</li>
-				</ul>
-			</li>
-		</div>
+			<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
+				<a class="list-group-item" (click)="addExpandClass('honorario')">
+					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'honorario'" [class.fa-chevron-right]="showMenu !== 'honorario'"></i>&nbsp; Honorário</span>
+				</a>
+				<li class="nested" [ngClass]="{'expand' : showMenu === 'honorario' }">
+					<ul class="submenu">
+						<li>
+							<a routerLink="/calcular/honorario/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-dollar"></i> Registro
+							</a>
+						</li>
+					</ul>
+					<ul class="submenu">
+						<li>
+							<a routerLink="/calcular/honorario/cobranca" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-fax"></i> Cobrança
+							</a>
+						</li>
+					</ul>
+					<ul class="submenu">
+						<li>
+							<a routerLink="/calcular/honorario/proposta" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-handshake-o"></i> Proposta
+							</a>
+						</li>
+					</ul>
+				</li>
+			</div>
 
-		<div class="nested-menu" *ngIf="isInRole('Gerencial')">
-			<a class="list-group-item" (click)="addExpandClass('relatorios')">
-				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'relatorios'" [class.fa-chevron-right]="showMenu !== 'relatorios'"></i>&nbsp; Relatórios</span>
-			</a>
-			<li class="nested" [ngClass]="{'expand' : showMenu === 'relatorios' }">
-				<ul class="submenu">
-					<li>
-						<a [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-line-chart"></i> Financeiro
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-line-chart"></i> Cliente
-						</a>
-					</li>
-				</ul>
-				<ul class="submenu">
-					<li>
-						<a [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-line-chart"></i> Equipe
-						</a>
-					</li>
-				</ul>
-			</li>
-		</div>
+			<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial') || isInRole('Calculista')">
+				<a class="list-group-item" (click)="addExpandClass('apuracao')">
+					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'apuracao'" [class.fa-chevron-right]="showMenu !== 'apuracao'"></i>&nbsp; Apuração</span>
+				</a>
+				<li class="nested" [ngClass]="{'expand' : showMenu === 'apuracao' }">
+					<ul class="submenu">
+						<li>
+							<a routerLink="/calcular/processo/apuracao-comissao" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-calculator"></i> Comissão
+							</a>
+						</li>
+					</ul>
+					<ul class="submenu" [hidden]="isInRole('Calculista')">
+						<li>
+							<a routerLink="/calcular/processo/apuracao-associados" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-calculator"></i> Associados
+							</a>
+						</li>
+					</ul>
+				</li>
+			</div>
 
-		<div class="nested-menu" *ngIf="isInRole('Administrativo')">
-			<a class="list-group-item" (click)="addExpandClass('parametrizacao')">
-				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'parametrizacao'" [class.fa-chevron-right]="showMenu !== 'parametrizacao'"></i>&nbsp; Parametrização</span>
-			</a>
-			<li class="nested" [ngClass]="{'expand' : showMenu === 'parametrizacao' }">
-				<ul class="submenu">
-					<li>
-						<a routerLink="/calcular/servico/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-table"></i> Serviço
-						</a>
-					</li>
-					<li>
-						<a routerLink="/calcular/atividade/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-table"></i> Atividade
-						</a>
-					</li>
-					<li>
-						<a routerLink="/calcular/comissao/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-table"></i> Comissão
-						</a>
-					</li>
-				</ul>
-			</li>
-		</div>
+			<div class="nested-menu" *ngIf="isInRole('Gerencial')">
+				<a class="list-group-item" (click)="addExpandClass('relatorios')">
+					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'relatorios'" [class.fa-chevron-right]="showMenu !== 'relatorios'"></i>&nbsp; Relatórios</span>
+				</a>
+				<li class="nested" [ngClass]="{'expand' : showMenu === 'relatorios' }">
+					<ul class="submenu">
+						<li>
+							<a [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-line-chart"></i> Financeiro
+							</a>
+						</li>
+					</ul>
+					<ul class="submenu">
+						<li>
+							<a [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-line-chart"></i> Cliente
+							</a>
+						</li>
+					</ul>
+					<ul class="submenu">
+						<li>
+							<a [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-line-chart"></i> Equipe
+							</a>
+						</li>
+					</ul>
+				</li>
+			</div>
 
-		<div class="nested-menu">
-			<a class="list-group-item" (click)="addExpandClass('usuario')">
-				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'usuario'" [class.fa-chevron-right]="showMenu !== 'usuario'"></i>&nbsp; Usuário</span>
+			<div class="nested-menu" *ngIf="isInRole('Administrativo')">
+				<a class="list-group-item" (click)="addExpandClass('parametrizacao')">
+					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'parametrizacao'" [class.fa-chevron-right]="showMenu !== 'parametrizacao'"></i>&nbsp; Parametrização</span>
+				</a>
+				<li class="nested" [ngClass]="{'expand' : showMenu === 'parametrizacao' }">
+					<ul class="submenu">
+						<li>
+							<a routerLink="/calcular/servico/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Serviço
+							</a>
+						</li>
+						<li>
+							<a routerLink="/calcular/atividade/tipo" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Atividade
+							</a>
+						</li>
+						<li>
+							<a routerLink="/calcular/comissao/cadastro" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Comissão
+							</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+
+			<div class="nested-menu" *ngIf="!isInRole('Colaborador Externo')">
+				<a class="list-group-item" (click)="addExpandClass('usuario')">
+					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'usuario'" [class.fa-chevron-right]="showMenu !== 'usuario'"></i>&nbsp; Usuário</span>
+				</a>
+				<li class="nested" [ngClass]="{'expand' : showMenu === 'usuario' }">
+					<ul class="submenu">
+						<li *ngIf="isInRole('Gerencial')">
+							<a routerLink="/calcular/usuario" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Cadastro
+							</a>
+						</li>
+						<li>
+							<a routerLink="/calcular/usuario/alterarSenha" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Alterar Senha
+							</a>
+						</li>
+					</ul>
+				</li>
+			</div>
+
+			<a *ngIf="isInRole('Colaborador Externo')" routerLink="/calcular/usuario/alterarSenha" [routerLinkActive]="['router-link-active']" class="list-group-item">
+				<i class="fa fa-fw fa-table"></i> Alterar Senha
 			</a>
-			<li class="nested" [ngClass]="{'expand' : showMenu === 'usuario' }">
-				<ul class="submenu">
-					<li *ngIf="isInRole('Gerencial')">
-						<a routerLink="/calcular/usuario" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-table"></i> Cadastro
-						</a>
-					</li>
-					<li>
-						<a routerLink="/calcular/usuario/alterarSenha" [routerLinkActive]="['router-link-active']" class="list-group-item">
-							<i class="fa fa-fw fa-table"></i> Alterar Senha
-						</a>
-					</li>
-				</ul>
-			</li>
-		</div>
+
 	</ul>
 </nav>

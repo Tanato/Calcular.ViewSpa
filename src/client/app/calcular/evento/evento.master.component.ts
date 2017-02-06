@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Evento } from './evento.model';
 import { EventoService } from './evento.service';
 import { AtividadeService } from '../atividade/atividade.service';
 import { Atividade } from '../atividade/atividade.model';
-import { ProcessoService } from '../processo/processo.service';
-import { Processo } from '../processo/processo.model';
 import { ServicoService } from '../servico/servico.service';
 import { Servico } from '../servico/servico.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../shared/user/user.service';
 
-import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -36,7 +32,7 @@ export class EventoMasterComponent implements OnInit {
             .subscribe(user => {
                 this.isCalculista = this.userService.isInRole('Calculista');
                 this.isRevisor = this.userService.isInRole('Revisor');
-                this.isExterno = this.userService.isInRole('Externo');
+                this.isExterno = this.userService.isInRole('Colaborador Externo');
                 this.isAdministrativo = this.userService.isInRole('Administrativo');
                 this.isGerencial = this.userService.isInRole('Gerencial');
             });
@@ -82,7 +78,6 @@ export class AtividadeComponent implements OnInit {
         this.busy = this.service.getAtividadesByUser('original', false)
             .subscribe(response => {
                 this.data = response;
-                _.each(this.data, x => x.servico.prazo = x.servico.prazo ? x.servico.prazo.slice(0, 10) : null);
             },
             error => {
                 console.log(error);
@@ -105,7 +100,6 @@ export class AtividadeRefazerComponent implements OnInit {
         this.busy = this.service.getAtividadesByUser('refazer', false)
             .subscribe(response => {
                 this.data = response;
-                _.each(this.data, x => x.servico.prazo = x.servico.prazo ? x.servico.prazo.slice(0, 10) : null);
             },
             error => {
                 console.log(error);
@@ -128,7 +122,6 @@ export class AtividadeRevisarComponent implements OnInit {
         this.busy = this.service.getAtividadesByUser('revisar', false)
             .subscribe(response => {
                 this.data = response;
-                _.each(this.data, x => x.servico.prazo = x.servico.prazo ? x.servico.prazo.slice(0, 10) : null);
             },
             error => {
                 console.log(error);
@@ -151,7 +144,6 @@ export class DistribuirServicoComponent implements OnInit {
         this.busy = this.service.getServicosDistribuir()
             .subscribe(response => {
                 this.data = response;
-                _.each(this.data, x => x.prazo = x.prazo ? x.prazo.slice(0, 10) : null);
             },
             error => {
                 console.log(error);
@@ -174,7 +166,6 @@ export class EnviarServicoComponent implements OnInit {
         this.busy = this.service.getServicosEnviar()
             .subscribe(response => {
                 this.data = response;
-                _.each(this.data, x => x.prazo = x.prazo ? x.prazo.slice(0, 10) : null);
             },
             error => {
                 console.log(error);
@@ -197,7 +188,6 @@ export class PrazoServicoComponent implements OnInit {
         this.busy = this.service.getServicosPrazo()
             .subscribe(response => {
                 this.data = response;
-                _.each(this.data, x => x.prazo = x.prazo ? x.prazo.slice(0, 10) : null);
             },
             error => {
                 console.log(error);
