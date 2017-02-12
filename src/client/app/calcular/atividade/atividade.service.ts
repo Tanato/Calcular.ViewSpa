@@ -66,6 +66,12 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
+    editObervacao(atividade: Atividade) {
+        return this.http.post(this.url + '/observacao', atividade)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
     getResponsavel() {
         return this.http.get(this.url + '/responsavel')
             .map(this.handleResult)

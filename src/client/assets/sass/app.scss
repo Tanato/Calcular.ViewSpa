@@ -58,6 +58,14 @@ textarea {
     padding-left: 0px;
 }
 
+@media screen and (max-width: 768px) {
+    .main-container{
+    margin-left: 15px;
+    padding-left: 0px;
+}
+
+}
+
 .pagination-sm{
     text-align: center;
     display: inline-block;

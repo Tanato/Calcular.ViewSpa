@@ -11,6 +11,7 @@ import { UserService, IUser } from '../../shared/user/user.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
     moduleId: module.id,
@@ -34,7 +35,7 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     public blockEdit: boolean = true;
     public id: Observable<string>;
     private busy: Subscription;
-	private user: IUser = <IUser>{};
+    private user: IUser = <IUser>{};
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -90,11 +91,19 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     onSubmit() {
         this.model.tipoExecucao = this.model.tipoExecucaoNew;
 
-        this.service.executeAtividade(this.model)
-            .subscribe(data => {
-                this.onCancel();
-                this.toastr.success('Atividade finalizada com sucesso!');
-            });
+        if (this.model.tipoExecucao === 0) {
+            this.service.executeAtividade(this.model)
+                .subscribe(data => {
+                    this.onCancel();
+                    this.toastr.success('Atividade finalizada com sucesso!');
+                });
+        } else {
+            this.service.editObervacao(this.model)
+                .subscribe(data => {
+                    this.onCancel();
+                    this.toastr.success('Observação salva com sucesso!');
+                });
+        }
     }
 
     loadServico(processo: Processo) {
@@ -107,9 +116,9 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
         this.router.navigateByUrl(link);
     };
 
-	isInRole(role: string){
-		return this.user
-				&& this.user.roles
-				&& this.user.roles.indexOf(role) !== -1;
-	}
+    isInRole(role: string) {
+        return this.user
+            && this.user.roles
+            && this.user.roles.indexOf(role) !== -1;
+    }
 }

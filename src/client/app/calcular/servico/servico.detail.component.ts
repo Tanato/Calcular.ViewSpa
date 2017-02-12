@@ -5,6 +5,7 @@ import { AtividadeService } from '../atividade/atividade.service';
 import { Atividade } from '../atividade/atividade.model';
 import { Servico } from './servico.model';
 import { ServicoService } from './servico.service';
+import { UserService } from '../../shared/user/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
@@ -47,6 +48,7 @@ export class ServicoDetailComponent implements OnInit {
     private busy: Subscription;
     private save: Subscription;
     private valorAux: string;
+    private isCalculista: boolean = false;
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -62,9 +64,18 @@ export class ServicoDetailComponent implements OnInit {
         private atividadeService: AtividadeService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager) { }
+        private toastr: ToastsManager,
+        private userService: UserService) { }
 
     ngOnInit() {
+        this.userService
+            .getUser()
+            .subscribe(user => {
+                this.isCalculista = this.userService.isInRole('Calculista')
+                            && !this.userService.isInRole('Administrativo')
+                            && !this.userService.isInRole('Gerencial');
+            });
+
         this.atividadeService.getTipoImpressao()
             .subscribe((data: IKeyValuePair[]) => this.tipoImpressao = data, error => this.toastr.error('Erro ao efetuar requisição!'));
 
