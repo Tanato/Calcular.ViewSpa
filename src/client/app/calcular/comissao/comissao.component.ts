@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 })
 export class ComissaoComponent implements OnInit {
 
+    public maskTimespan = [/\d/, /\d/, ':', /\d/, /\d/];
+
     private busy: Subscription;
     private modelName = 'Atividade';
 

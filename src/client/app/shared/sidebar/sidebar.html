@@ -108,19 +108,19 @@
 
 			<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial') || isInRole('Calculista')">
 				<a class="list-group-item" (click)="addExpandClass('apuracao')">
-					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'apuracao'" [class.fa-chevron-right]="showMenu !== 'apuracao'"></i>&nbsp; Apuração</span>
+					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'apuracao'" [class.fa-chevron-right]="showMenu !== 'apuracao'"></i>&nbsp; Comissão</span>
 				</a>
 				<li class="nested" [ngClass]="{'expand' : showMenu === 'apuracao' }">
 					<ul class="submenu">
 						<li>
-							<a routerLink="/calcular/processo/apuracao-comissao" [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-calculator"></i> Comissão
+							<a routerLink="/calcular/comissao/apuracao" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-calculator"></i> Apuração
 							</a>
 						</li>
 					</ul>
 					<ul class="submenu" [hidden]="isInRole('Calculista')">
 						<li>
-							<a routerLink="/calcular/processo/apuracao-associados" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<a routerLink="/calcular/comissao/associados" [routerLinkActive]="['router-link-active']" class="list-group-item">
 								<i class="fa fa-fw fa-calculator"></i> Associados
 							</a>
 						</li>

@@ -20,11 +20,11 @@
 			</div>
 			<div class="col-xl-2">
 				<label>Hora Mín.:</label>
-				<input type="number" step="0.1" class="form-control" [(ngModel)]="model.horaMinima" name="horasMin">
+				<input class="form-control" name="horaMin" [textMask]="{mask: maskTimespan}" [(ngModel)]="model.horaMin"/>
 			</div>
 			<div class="col-xl-2">
 				<label>Hora Máx:</label>
-				<input type="number" step="0.1" class="form-control" [(ngModel)]="model.horaMaxima" name="horasMax">
+				<input class="form-control" name="horaMax" [textMask]="{mask: maskTimespan}" [(ngModel)]="model.horaMax"/>
 			</div>
 			<div class="col-xl-2">
 				<label>Valor:</label>
@@ -80,8 +80,8 @@
 							</div>
 						</td>
 						<td>{{ item.tipoAtividade?.nome }}</td>
-						<td>{{ item.horaMinima }}</td>
-						<td>{{ item.horaMaxima }}</td>
+						<td>{{ item.horaMin }}</td>
+						<td>{{ item.horaMax }}</td>
 						<td>{{ item.valor }}</td>
 						<td>{{ item.vigencia | date:"dd/MM/yyyy" }}</td>
 					</tr>

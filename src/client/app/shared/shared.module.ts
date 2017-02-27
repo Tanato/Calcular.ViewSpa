@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TopnavService } from './topnav/topnav.service';
+import { MonthPickerComponent, YearPickerComponent } from './tools/index';
 
 import { NameListService } from './name-list/index';
 
@@ -11,16 +12,15 @@ import { NameListService } from './name-list/index';
 */
 
 @NgModule({
-    imports: [CommonModule, RouterModule],
-    declarations: [],
-    exports: [CommonModule, FormsModule, RouterModule]
+    imports: [CommonModule, RouterModule, FormsModule],
+    declarations: [MonthPickerComponent, YearPickerComponent],
+    exports: [CommonModule, FormsModule, RouterModule, MonthPickerComponent, YearPickerComponent]
 })
-
 export class SharedModule {
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: SharedModule,
-            providers: [NameListService, TopnavService]
+            providers: [NameListService, TopnavService, MonthPickerComponent, YearPickerComponent]
         };
     }
 }

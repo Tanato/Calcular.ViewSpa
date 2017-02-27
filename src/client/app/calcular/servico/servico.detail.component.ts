@@ -159,7 +159,7 @@ export class ServicoDetailComponent implements OnInit {
 
     addAtividade() {
         this.atividade.servicoId = this.model.id;
-        this.atividade.valor = this.valorAux ? parseFloat(this.valorAux.replace(/[^0-9\.]/g, '')) : null;
+        this.atividade.valor = this.valorAux ? parseFloat(this.valorAux.replace(/[^0-9\.-]/g, '')) : null;
         this.valorAux = null;
 
         this.atividadeService.postAtividade(this.atividade)

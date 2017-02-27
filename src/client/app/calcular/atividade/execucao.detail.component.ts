@@ -11,7 +11,6 @@ import { UserService, IUser } from '../../shared/user/user.service';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
-import * as $ from 'jquery';
 
 @Component({
     moduleId: module.id,
@@ -89,9 +88,10 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     }
 
     onSubmit() {
+        let isExecute = this.model.tipoExecucao === 0;
         this.model.tipoExecucao = this.model.tipoExecucaoNew;
 
-        if (this.model.tipoExecucao === 0) {
+        if (isExecute) {
             this.service.executeAtividade(this.model)
                 .subscribe(data => {
                     this.onCancel();

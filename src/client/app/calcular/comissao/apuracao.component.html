@@ -1,0 +1,88 @@
+<div class="container-fluid" [ngBusy]="busy">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li>
+					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li class="active"> Apuração </li>
+			</ol>
+		</div>
+	</div>
+	<form role="form" #form="ngForm">
+		<div class="row">
+			<div class="col-xl-4">
+			</div>
+			<div class="col-xl-3">
+				<label>Responsável:</label>
+				<select class="form-control" [(ngModel)]="responsavel" name="responsavelSelect">
+					<option *ngFor="let item of responsavelList" [ngValue]="item">{{item.nome}}</option>
+				</select>
+			</div>
+			<div class="col-xl-2">
+				<label>Mês:</label>
+				<month-picker name="mes" [(model)]="mesFilter"></month-picker>
+			</div>
+			<div class="col-xl-2">
+				<label>Ano:</label>
+				<year-picker name="year" [(model)]="anoFilter" yearBase="2017"></year-picker>
+			</div>
+			<div class="col-xl-1">
+				<label>&nbsp;</label>
+				<button class="btn btn-primary btn-block" (click)="filter()"><i class="fa fa-search"></i></button>
+			</div>
+		</div>
+	</form>
+	<hr>
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-hover table-striped table-sm">
+				<thead>
+					<tr>
+						<th width="10"></th>
+						<th width="195">Processo</th>
+						<th width="60">Autores</th>
+						<th width="95">Entrega</th>
+						<th>Responsável</th>
+						<th width="220">Atividade</th>
+						<th width="70">Tempo</th>
+						<th width="25"></th>
+						<th width="90">Valor</th>
+						<th width="100">Adicional</th>
+						<th width="90">Valor Final</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of data">
+						<td></td>
+						<td>{{item.atividade?.servico?.processo?.numero}}</td>
+						<td align="center">{{item.atividade?.servico?.processo?.numeroAutores}}</td>
+						<td>{{item.atividade?.servico?.saida | date:'dd/MM/yyyy'}}</td>
+						<td>{{item.atividade?.responsavel?.name}}</td>
+						<td>{{item.atividade?.tipoAtividade?.nome}}</td>
+						<td>{{item.atividade?.tempo}}</td>
+						<td><i *ngIf="item.atividade?.observacaoComissao" class="fa fa-info-circle" tooltip="{{item.atividade?.observacaoComissao}}"></i></td>
+						<td>R$ {{item?.valorBase?.toFixed(2)}}</td>
+						<td>
+							<input [textMask]="{mask: moneyMask}" class="form-control-no-padding" [(ngModel)]="item.valorAdicionalAux" name="valor" (change)="onCanculaValorFinal(item)"></td>
+						<td>R$ {{item?.valorFinal?.toFixed(2)}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="form-group col-lg-8">
+		</div>
+		<div class="form-group col-lg-2">
+			<label>Valor Total:</label>
+			<input class="form-control" id="total" [ngModel]="getValorTotal()" [textMask]="{mask: moneyMask}" name="total" disabled/>
+		</div>
+		<div class="col-lg-2">
+			<label>&nbsp;</label>
+			<button routerLink="/calcular/honorario/cadastro" class="btn btn-default btn-block">Fechar</button>
+		</div>
+	</div>
+</div>

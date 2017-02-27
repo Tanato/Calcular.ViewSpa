@@ -4,13 +4,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/config/env.config';
-import { Comissao } from './comissao.model';
-import { IKeyValuePair } from '../../shared/interfaces';
+import { Comissao, ComissaoFuncionarioMes } from './comissao.model';
+import { ComissaoAtividade } from './comissao.model';
 
 @Injectable()
 export class ComissaoService {
 
     private url: string = Config.API + 'comissao';
+    private urlApuracao: string = Config.API + 'apuracaocomissao';
 
     constructor(private http: Http) { }
 
@@ -31,6 +32,27 @@ export class ComissaoService {
     deleteComissao(id: number) {
         return this.http.delete(this.url + '/' + id)
             .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getApuracaoComissao(mes: number, ano: number, funcionarioId: string): Observable<ComissaoAtividade[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('mes', mes ? mes.toString() : '');
+        params.set('ano', ano ? ano.toString() : '');
+        params.set('funcionarioId', funcionarioId);
+
+        return this.http.get(this.urlApuracao, { search: params })
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    postApuracaoComissao(value: ComissaoFuncionarioMes) {
+        return this.http.post(this.urlApuracao, value)
+            .catch(this.handleError);
+    }
+
+    putApuracaoComissao(value: ComissaoFuncionarioMes) {
+        return this.http.put(this.urlApuracao, value)
             .catch(this.handleError);
     }
 

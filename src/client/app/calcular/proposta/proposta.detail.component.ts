@@ -116,7 +116,7 @@ export class PropostaDetailComponent implements OnInit {
     }
 
     onSubmit() {
-        this.model.honorario = parseFloat(this.honorarioAux.replace(/[^0-9\.]/g, ''));
+        this.model.honorario = parseFloat(this.honorarioAux.replace(/[^0-9\.-]/g, ''));
 
         if (this.formType === 'new' && !this.model.id) {
             this.service.postProposta(this.model)
