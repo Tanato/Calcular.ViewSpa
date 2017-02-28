@@ -65,17 +65,17 @@
                     <div class="form-group col-lg-2">
                         <label>Data de Entrada:</label>
                         <input type="date" class="form-control" #date="ngModel" [ngModel]="model.entrada" (ngModelChange)="model.entrada = $event"
-                            name="entrada" required/>
+                            name="entrada" [disabled]="id | async" required/>
                     </div>
                     <div class="form-group col-lg-2">
                         <label>Prazo:</label>
                         <input type="date" class="form-control" #prazo="ngModel" [ngModel]="model.prazo" (ngModelChange)="model.prazo = $event" name="prazo"
-                            min="model.entrada | date" required/>
+                            [min]="model.entrada | date" required/>
                     </div>
                     <div class="form-group col-lg-2">
                         <label>Data de Saída:</label>
                         <input type="date" class="form-control" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event" name="saida"
-                            min="model.entrada | date" [hidden]="!model.id || model.atividades?.length === 0 || atividadesPendentes()"
+                            [min]="getMinSaida() | date:'yyyy-MM-dd'" [hidden]="!model.id || model.atividades?.length === 0 || atividadesPendentes()"
                         />
                         <input class="form-control" [hidden]="!(!model.id || model.atividades?.length === 0 || atividadesPendentes())" disabled/>
                     </div>
@@ -156,30 +156,30 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>{{ item?.tipoAtividade?.nome }}</td>
-                                <td>{{ item?.responsavel?.name }}</td>
-                                <td *ngIf="!isCalculista">{{ item?.valor ? 'R$ ' + item.valor.toFixed(2) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-' }}</td>
-                                <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
-                                <td>{{ tipoExecucaoDescription(item.tipoExecucao) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
+                </td>
+                <td>{{ item?.tipoAtividade?.nome }}</td>
+                <td>{{ item?.responsavel?.name }}</td>
+                <td *ngIf="!isCalculista">{{ item?.valor ? 'R$ ' + item.valor.toFixed(2) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-' }}</td>
+                <td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
+                <td>{{ tipoExecucaoDescription(item.tipoExecucao) }}</td>
+                </tr>
+                </tbody>
+                </table>
             </div>
-        </form>
-        <div class="row">
-            <div class="col-lg-2">
-                <label>&nbsp;</label>
-                <button [hidden]="!blockEdit || model.status !== 0" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
-            </div>
-            <div class="form-group col-lg-2">
-            </div>
-            <div class="col-lg-2">
-                <label>&nbsp;</label>
-                <button (click)="cancelModal.show()" *ngIf="!isCalculista" [hidden]="blockEdit || !model.id || model.atividades.length < 1"
-                    class="btn btn-danger btn-block">Cancelar serviço</button>
+    </div>
+    </form>
+    <div class="row">
+        <div class="col-lg-2">
+            <label>&nbsp;</label>
+            <button [hidden]="!blockEdit || model.status !== 0" (click)="blockEdit = false" class="btn btn-warning btn-block">Editar</button>
+        </div>
+        <div class="form-group col-lg-2">
+        </div>
+        <div class="col-lg-2">
+            <label>&nbsp;</label>
+            <button (click)="cancelModal.show()" *ngIf="!isCalculista" [hidden]="blockEdit || !model.id || model.atividades.length < 1"
+                class="btn btn-danger btn-block">Cancelar serviço</button>
                 <div bsModal #cancelModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-sm">
@@ -193,20 +193,20 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <label>&nbsp;</label>
-                <button (click)="printModal.show()" [hidden]="!model.atividades || model.status === 2" class="btn btn-default btn-block">Imprimir</button>
-            </div>
-            <div class="form-group col-lg-2">
-            </div>
-            <div class="col-lg-2">
-                <label>&nbsp;</label>
-                <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
-            </div>
         </div>
     </div>
+    <div class="col-lg-2">
+        <label>&nbsp;</label>
+        <button (click)="printModal.show()" [hidden]="!model.atividades || model.status === 2" class="btn btn-default btn-block">Imprimir</button>
+    </div>
+    <div class="form-group col-lg-2">
+    </div>
+    <div class="col-lg-2">
+        <label>&nbsp;</label>
+        <button routerLink="/calcular/servico/cadastro" class="btn btn-default btn-block">Fechar</button>
+    </div>
+</div>
+</div>
 </div>
 
 <div bsModal #printModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"

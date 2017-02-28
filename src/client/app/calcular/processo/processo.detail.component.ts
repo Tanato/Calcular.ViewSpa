@@ -50,18 +50,6 @@ export class ProcessoDetailComponent implements OnInit {
         };
     }
 
-    // Advogado select    
-    // public typedAdvogado(value: string): void {
-    //     if (value && value.length > 2) {
-    //         clearTimeout(this.wtoInput);
-    //         this.wtoInput = setTimeout(() => {
-    //             this.service.getAdvogadoSelect(value).subscribe(data => {
-    //                 this.advogado = data;
-    //             });
-    //         }, 500);
-    //     }
-    // }
-
     advogados = (startsWith: string): Observable<any[]> => {
         var result = this.service.getAdvogadoSelect(startsWith);
 
@@ -104,12 +92,6 @@ export class ProcessoDetailComponent implements OnInit {
                     .subscribe((data: Processo) => {
                         this.model = data;
                         this.disableChangeNumero = data.id && data.local !== 3;
-                        // if (this.model.advogadoId) {
-                        //     this.service.getAdvogadoSelectById(this.model.advogadoId)
-                        //         .subscribe((x: any) => {
-                        //             this.advogadoInit = [x];
-                        //         });
-                        // }
                     });
             } else {
                 this.blockEdit = false;

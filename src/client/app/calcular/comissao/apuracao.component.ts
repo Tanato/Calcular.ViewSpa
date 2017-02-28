@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ComissaoAtividade, ComissaoFuncionarioMes } from './comissao.model';
 import { ComissaoService } from './comissao.service';
 import { AtividadeService } from '../atividade/atividade.service';
@@ -19,10 +19,12 @@ export class ApuracaoComponent implements OnInit {
 
     public moneyMask: any = createNumberMask({ prefix: 'R$ ', includeThousandsSeparator: false, allowNegative: true, allowDecimal: true });
 
+    @ViewChild('scrollMe') private myScrollContainer: ElementRef;
     private busy: Subscription;
     private modelName = 'Apuração de Comissão';
 
     private data: ComissaoAtividade[];
+    private comissaoFuncionarioMes: ComissaoFuncionarioMes;
     private editId: number;
     private tipoAtividade: IKeyValuePair[];
 
@@ -33,6 +35,8 @@ export class ApuracaoComponent implements OnInit {
     private isCalculista: boolean;
     private isAdminOrGerencial: boolean = false;
     private edit: boolean = false;
+    private edited: boolean = false;
+    private currentDate = new Date();
 
     constructor(private service: ComissaoService,
         private atividadeService: AtividadeService,
@@ -40,7 +44,7 @@ export class ApuracaoComponent implements OnInit {
         private toastr: ToastsManager) { }
 
     ngOnInit() {
-        this.busy = this.atividadeService.getResponsavel()
+        this.busy = this.atividadeService.getCalculista()
             .subscribe((data: any[]) => {
                 this.responsavelList = data;
                 this.userService
@@ -71,36 +75,82 @@ export class ApuracaoComponent implements OnInit {
             return item;
         });
 
+        let uniqId = _.uniqBy(_.map(_.filter(this.data, f => f.comissaoFuncionarioMesId), x => x.comissaoFuncionarioMes), x => x.id);
+
+        if (uniqId.length > 1) {
+            this.toastr.error('Não é possível salvar alterações para mais de um funcionário ao mesmo tempo');
+            return;
+        }
+
         let model = new ComissaoFuncionarioMes({
+            id: (this.comissaoFuncionarioMes ? this.comissaoFuncionarioMes.id : 0),
             mes: this.mesFilter,
             ano: this.anoFilter,
             comissaoAtividades: comissoes,
         });
 
-        this.service.postApuracaoComissao(model)
-            .subscribe(x => {
-                this.toastr.success('Atividade adicionada com sucesso!');
-                this.filter();
-            });
+        if (!model.id) {
+            this.service.postApuracaoComissao(model)
+                .subscribe(success => {
+                    this.toastr.success('Comissões salvas com sucesso!');
+                    this.filter(true);
+                }, error => this.toastr.error('Erro ao salvar comissões!'));
+        } else {
+            this.service.putApuracaoComissao(model)
+                .subscribe(success => {
+                    this.toastr.success('Comissões salvas com sucesso!');
+                    this.filter(true);
+                }, error => this.toastr.error('Erro ao salvar comissões!'));
+        }
     }
 
-    filter() {
+    filter(toBottom: boolean = false) {
         this.busy = this.service.getApuracaoComissao(this.mesFilter, this.anoFilter, this.responsavel ? this.responsavel.id : '')
             .subscribe(response => {
+
+                let uniqComissao =
+                    _.uniqBy(_.map(_.filter(response, f => f.comissaoFuncionarioMesId), x => x.comissaoFuncionarioMes), x => x.id);
+
+                if (uniqComissao.length === 1) {
+                    this.comissaoFuncionarioMes = uniqComissao[0];
+                } else {
+                    this.comissaoFuncionarioMes = null;
+                }
+
+                // Indica se foi filtrado com todos os parâmetros
+                this.edit = this.mesFilter
+                    && this.anoFilter
+                    && this.responsavel
+                    && this.responsavel.id
+                    && uniqComissao.length < 2
+                    && (!this.comissaoFuncionarioMes || this.comissaoFuncionarioMes.status === 0);
+                this.edited = false;
+
                 this.data = _.map(response, item => {
                     item.valorFinal = item.valorFinal ? item.valorFinal : item.valorBase;
                     item.valorAdicionalAux = item.valorAdicional ? item.valorAdicional.toFixed(2) : '';
                     return item;
                 });
+
+                if (toBottom) {
+                    this.scrollToBottom();
+                }
             },
             error => {
+                this.edit = false;
+                this.edited = false;
+                this.comissaoFuncionarioMes = null;
                 alert(error);
                 console.log(error);
                 this.toastr.warning('Erro ao efetuar operação.');
             });
     }
 
-    getValorTotal(){
+    allowEdit() {
+        return this.edit && this.isAdminOrGerencial;
+    }
+
+    getValorTotal() {
         return _.sumBy(this.data, x => x.valorFinal).toFixed(2);
     }
 
@@ -110,11 +160,45 @@ export class ApuracaoComponent implements OnInit {
 
     onCanculaValorFinal(item: ComissaoAtividade) {
         item.valorFinal = item.valorBase + (item.valorAdicionalAux ? parseFloat(item.valorAdicionalAux.replace(/[^0-9\.-]/g, '')) : 0);
+        this.edited = true;
     }
 
-    // onPageChange(page: any, data: Array<any> = this.data) {
-    //     let start = (page.page - 1) * page.itemsPerPage;
-    //     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-    //     this.rows = data.slice(start, end);
-    // }
+    canClosePayment() {
+        var dataFechamentoOk = false;
+        // Se o mês filtrado é maior ou igual o atual, só permite fechar se estver após o d.
+        if (this.mesFilter - 2 === this.currentDate.getMonth()) {
+            dataFechamentoOk = this.currentDate.getDate() >=  3;
+        } else if(this.mesFilter - 1 < this.currentDate.getMonth()){
+            dataFechamentoOk = true;
+        }
+
+        return this.isAdminOrGerencial
+            && this.comissaoFuncionarioMes
+            && this.comissaoFuncionarioMes.status === 0
+            && dataFechamentoOk;
+    }
+
+    closedPayment() {
+        return this.comissaoFuncionarioMes && this.comissaoFuncionarioMes.status === 1;
+    }
+
+    closePayment() {
+        if (this.comissaoFuncionarioMes) {
+            this.service.postClosePayment(this.comissaoFuncionarioMes.id)
+                .subscribe(success => {
+                    this.toastr.success('Comissão fechada com sucesso!');
+                    this.filter(true);
+                }, error => this.toastr.error('Erro ao fechar comissões!'));
+        } else {
+            this.toastr.error('Não foi possível executar o fechamento de comissões!')
+        }
+    }
+
+    scrollToBottom(): void {
+        try {
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        } catch (err) {
+            console.log('cannot navigate to bottom');
+        }
+    }
 }

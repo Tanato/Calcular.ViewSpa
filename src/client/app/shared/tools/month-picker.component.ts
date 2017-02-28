@@ -37,7 +37,7 @@ export class MonthPickerComponent implements OnInit {
     ngOnInit() {
         this.getMonth();
 
-        if(!this.model){
+        if (!this.model) {
             this.updateData(this.mm);
         }
     }

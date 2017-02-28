@@ -50,6 +50,8 @@ export class ServicoDetailComponent implements OnInit {
     private valorAux: string;
     private isCalculista: boolean = false;
 
+    private current = new Date();
+
     isNaN = (value: number) => {
         return isNaN(value);
     }
@@ -72,8 +74,8 @@ export class ServicoDetailComponent implements OnInit {
             .getUser()
             .subscribe(user => {
                 this.isCalculista = this.userService.isInRole('Calculista')
-                            && !this.userService.isInRole('Administrativo')
-                            && !this.userService.isInRole('Gerencial');
+                    && !this.userService.isInRole('Administrativo')
+                    && !this.userService.isInRole('Gerencial');
             });
 
         this.atividadeService.getTipoImpressao()
@@ -145,6 +147,19 @@ export class ServicoDetailComponent implements OnInit {
             return a ? a.value : null;
         }
         return null;
+    }
+
+    getMinSaida() {
+        if (this.model && this.model.entrada) {
+            var entrada = new Date(this.model.entrada + 'T03:00:00Z');
+
+            // Se data atual é até dia 3, permite inserir fechamento para o mês anterior, caso contrário apenas mês atual.
+            var fechamento = new Date(this.current.getFullYear(), this.current.getMonth() + (this.current.getDate() <= 3 ? - 1 : 0), 1);
+
+            return _.max([entrada, fechamento]);
+        } else {
+            return this.current;
+        }
     }
 
     onChangeResponsavel(user: any) {

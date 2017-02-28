@@ -22,6 +22,7 @@ export class ComissaoFuncionarioMes {
     mes: number;
     ano: number;
     comissaoAtividades: ComissaoAtividade[];
+    status: number;
 
     public constructor(init?: Partial<ComissaoFuncionarioMes>) {
         Object.assign(this, init);
@@ -33,8 +34,8 @@ export class ComissaoAtividade {
     id: number;
     atividadeId: number;
     atividade: Atividade;
-    comissaoMesId: number;
-    comissaoMes: ComissaoFuncionarioMes;
+    comissaoFuncionarioMesId: number;
+    comissaoFuncionarioMes: ComissaoFuncionarioMes;
     valorBase: number;
     valorAdicional: number;
     valorAdicionalAux: string;

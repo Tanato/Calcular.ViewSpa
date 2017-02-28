@@ -16,7 +16,8 @@
 			</div>
 			<div class="col-xl-3">
 				<label>Responsável:</label>
-				<select class="form-control" [(ngModel)]="responsavel" name="responsavelSelect">
+				<select class="form-control" [(ngModel)]="responsavel" name="responsavelSelect" [disabled]="!isAdminOrGerencial">
+					<option></option>
 					<option *ngFor="let item of responsavelList" [ngValue]="item">{{item.nome}}</option>
 				</select>
 			</div>
@@ -46,11 +47,13 @@
 						<th width="95">Entrega</th>
 						<th>Responsável</th>
 						<th width="220">Atividade</th>
-						<th width="70">Tempo</th>
+						<th width="60">Tempo</th>
 						<th width="25"></th>
-						<th width="90">Valor</th>
+						<th width="100">Valor</th>
 						<th width="100">Adicional</th>
-						<th width="90">Valor Final</th>
+						<th width="5"></th>
+						<th width="100">Valor Final</th>
+						<th width="5"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -61,12 +64,16 @@
 						<td>{{item.atividade?.servico?.saida | date:'dd/MM/yyyy'}}</td>
 						<td>{{item.atividade?.responsavel?.name}}</td>
 						<td>{{item.atividade?.tipoAtividade?.nome}}</td>
-						<td>{{item.atividade?.tempo}}</td>
+						<td>{{item.atividade?.tempo | slice:0:5}}</td>
 						<td><i *ngIf="item.atividade?.observacaoComissao" class="fa fa-info-circle" tooltip="{{item.atividade?.observacaoComissao}}"></i></td>
 						<td>R$ {{item?.valorBase?.toFixed(2)}}</td>
 						<td>
-							<input [textMask]="{mask: moneyMask}" class="form-control-no-padding" [(ngModel)]="item.valorAdicionalAux" name="valor" (change)="onCanculaValorFinal(item)"></td>
+							<input [disabled]="!allowEdit()" [textMask]="{mask: moneyMask}" class="form-control-no-padding" [(ngModel)]="item.valorAdicionalAux"
+								name="valor" (change)="onCanculaValorFinal(item)">
+						</td>
+						<td></td>
 						<td>R$ {{item?.valorFinal?.toFixed(2)}}</td>
+						<td></td>
 					</tr>
 				</tbody>
 			</table>
@@ -74,15 +81,45 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="form-group col-lg-8">
+		<div class="col-lg-4">
+		</div>
+		<div class="col-lg-2">
+			<label>&nbsp;</label>
+			<button (click)="closePaymentModal.show()" *ngIf="canClosePayment()" [hidden]="!allowEdit() || edited || !data.length" class="btn btn-danger btn-block">Fechar Pagamento</button>
+			<div bsModal #closePaymentModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Deseja fechar o pagamento?</h5>
+						</div>
+						<div class="modal-body">
+							Após fechar o pagamento do funcionário, este não poderá ser editado.
+						</div>
+						<div class="modal-footer">
+							<button type="button" (click)="closePaymentModal.hide()" class="btn btn-secondary" data-dismiss="modal">Não</button>
+							<button type="button" (click)="closePayment(); closePaymentModal.hide()" class="btn btn-primary">Sim</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-2"> 
+			<label>&nbsp;</label>
+			<button (click)="submit()" *ngIf="isAdminOrGerencial" [hidden]="!allowEdit() || !data.length" class="btn btn-primary btn-block">Salvar</button>
+		</div>
+		<div class="col-lg-2">
+			<label>Status:</label>
+			<input class="form-control" id="status" name="status" disabled value="{{ closedPayment() ? 'Fechado' : 'Aberto' }}"/>
 		</div>
 		<div class="form-group col-lg-2">
 			<label>Valor Total:</label>
 			<input class="form-control" id="total" [ngModel]="getValorTotal()" [textMask]="{mask: moneyMask}" name="total" disabled/>
 		</div>
-		<div class="col-lg-2">
-			<label>&nbsp;</label>
-			<button routerLink="/calcular/honorario/cadastro" class="btn btn-default btn-block">Fechar</button>
+	</div>
+	<div class="row">
+		<div class="col-lg-8">
 		</div>
 	</div>
+	<br>
 </div>

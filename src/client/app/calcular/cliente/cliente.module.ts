@@ -28,7 +28,9 @@ let options: any = {
 export class ClienteMasterModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ToastModule.forRoot(options), Ng2AutoCompleteModule, BusyModule],
+    imports: [CommonModule, PaginationModule, RouterModule,
+        TextMaskModule, ToastModule.forRoot(options),
+        Ng2AutoCompleteModule, BusyModule],
     providers: [ClienteService],
     declarations: [ClienteDetailComponent],
     exports: [ClienteDetailComponent]

@@ -56,6 +56,14 @@ export class ComissaoService {
             .catch(this.handleError);
     }
 
+    postClosePayment(apuracaoId: Number) {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('apuracaoId', apuracaoId ? apuracaoId.toString() : '');
+
+        return this.http.post(this.urlApuracao + '/fechaapuracao', null, { search: params })
+            .catch(this.handleError);
+    }
+
     private handleResult(res: Response) {
         let body = res.json();
         return body || {};

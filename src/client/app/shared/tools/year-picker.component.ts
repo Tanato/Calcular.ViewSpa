@@ -21,7 +21,7 @@ export class YearPickerComponent implements OnInit {
     ngOnInit() {
         this.getYear();
 
-        if(!this.model){
+        if (!this.model) {
             this.updateData(this.yy);
         }
     }

@@ -7,7 +7,7 @@ import { UserService } from '../user/user.service';
 	selector: 'sidebar-cmp',
 	templateUrl: 'sidebar.html'
 })
-export class SidebarComponent implements OnInit  {
+export class SidebarComponent implements OnInit {
 	isActive = false;
 	showMenu: string = '';
 
@@ -23,10 +23,10 @@ export class SidebarComponent implements OnInit  {
 		this.isActive = !this.isActive;
 	}
 
-	isInRole(role: string){
+	isInRole(role: string) {
 		return this.user
-				&& this.user.roles
-				&& this.user.roles.indexOf(role) !== -1;
+			&& this.user.roles
+			&& this.user.roles.indexOf(role) !== -1;
 	}
 
 	addExpandClass(element: any) {
