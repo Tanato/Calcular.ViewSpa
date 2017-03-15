@@ -78,12 +78,6 @@ export class AtividadeService {
             .catch(this.handleError);
     }
 
-    getCalculista() {
-        return this.http.get(this.url + '/calculista')
-            .map(this.handleResult)
-            .catch(this.handleError);
-    }
-
     postTipoAtividade(tipoAtividade: string) {
         var model = new TipoAtividade();
         model.nome = tipoAtividade;

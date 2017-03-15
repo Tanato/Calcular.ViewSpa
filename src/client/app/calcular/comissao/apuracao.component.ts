@@ -44,7 +44,7 @@ export class ApuracaoComponent implements OnInit {
         private toastr: ToastsManager) { }
 
     ngOnInit() {
-        this.busy = this.atividadeService.getCalculista()
+        this.busy = this.atividadeService.getResponsavel()
             .subscribe((data: any[]) => {
                 this.responsavelList = data;
                 this.userService
@@ -167,15 +167,15 @@ export class ApuracaoComponent implements OnInit {
         var dataFechamentoOk = false;
         // Se o mês filtrado é maior ou igual o atual, só permite fechar se estver após o d.
         if (this.mesFilter - 2 === this.currentDate.getMonth()) {
-            dataFechamentoOk = this.currentDate.getDate() >=  3;
-        } else if(this.mesFilter - 1 < this.currentDate.getMonth()){
+            dataFechamentoOk = this.currentDate.getDate() >= 3;
+        } else if (this.mesFilter - 1 < this.currentDate.getMonth()) {
             dataFechamentoOk = true;
         }
 
         return this.isAdminOrGerencial
             && this.comissaoFuncionarioMes
             && this.comissaoFuncionarioMes.status === 0
-            && dataFechamentoOk;
+            && true;//dataFechamentoOk;
     }
 
     closedPayment() {

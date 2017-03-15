@@ -64,7 +64,7 @@
 						<td>{{item.atividade?.servico?.saida | date:'dd/MM/yyyy'}}</td>
 						<td>{{item.atividade?.responsavel?.name}}</td>
 						<td>{{item.atividade?.tipoAtividade?.nome}}</td>
-						<td>{{item.atividade?.tempo | slice:0:5}}</td>
+						<td>{{item.atividade?.tempo ? (item.atividade?.tempo | slice:0:5) : '-' }}</td>
 						<td><i *ngIf="item.atividade?.observacaoComissao" class="fa fa-info-circle" tooltip="{{item.atividade?.observacaoComissao}}"></i></td>
 						<td>R$ {{item?.valorBase?.toFixed(2)}}</td>
 						<td>

@@ -84,7 +84,7 @@ export class HonorarioDetailComponent implements OnInit {
 
     addHonorario() {
         this.honorario.processoId = this.model.id;
-        this.honorario.valor = parseFloat(this.valorAux.replace(/[^0-9\.]/g, ''));
+        this.honorario.valor = this.valorAux ? parseFloat(this.valorAux.replace(/[^0-9\.]/g, '')) : null;
 
         this.service.postHonorario(this.honorario)
             .subscribe(x => {
