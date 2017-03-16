@@ -31,6 +31,7 @@ export class TopNavComponent implements OnInit {
 	}
 
 	logout(): void {
+		this.userService.logoutUser();
 		this.topnavService.logout()
 			.subscribe();
 	}

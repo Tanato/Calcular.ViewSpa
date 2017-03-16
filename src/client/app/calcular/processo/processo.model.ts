@@ -19,6 +19,7 @@ export class Processo {
     honorarios: Honorario[];
     servicos: Servico[];
     total: number;
+    custoComissao: number;
 }
 
 export class ProcessoDetalhe {

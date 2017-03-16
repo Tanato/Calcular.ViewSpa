@@ -34,7 +34,7 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     public blockEdit: boolean = true;
     public id: Observable<string>;
     private busy: Subscription;
-	private user: IUser = <IUser>{};
+    private user: IUser = <IUser>{};
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -88,13 +88,22 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
     }
 
     onSubmit() {
+        let isExecute = this.model.tipoExecucao === 0;
         this.model.tipoExecucao = this.model.tipoExecucaoNew;
 
-        this.service.executeAtividade(this.model)
-            .subscribe(data => {
-                this.onCancel();
-                this.toastr.success('Atividade finalizada com sucesso!');
-            });
+        if (isExecute) {
+            this.service.executeAtividade(this.model)
+                .subscribe(data => {
+                    this.onCancel();
+                    this.toastr.success('Atividade finalizada com sucesso!');
+                });
+        } else {
+            this.service.editObervacao(this.model)
+                .subscribe(data => {
+                    this.onCancel();
+                    this.toastr.success('Observação salva com sucesso!');
+                });
+        }
     }
 
     loadServico(processo: Processo) {
@@ -107,9 +116,9 @@ export class AtividadeExecucaoDetailComponent implements OnInit {
         this.router.navigateByUrl(link);
     };
 
-	isInRole(role: string){
-		return this.user
-				&& this.user.roles
-				&& this.user.roles.indexOf(role) !== -1;
-	}
+    isInRole(role: string) {
+        return this.user
+            && this.user.roles
+            && this.user.roles.indexOf(role) !== -1;
+    }
 }

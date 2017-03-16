@@ -5,6 +5,7 @@ import { AtividadeService } from '../atividade/atividade.service';
 import { Atividade } from '../atividade/atividade.model';
 import { Servico } from './servico.model';
 import { ServicoService } from './servico.service';
+import { UserService } from '../../shared/user/user.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IKeyValuePair } from '../../shared/interfaces';
@@ -47,6 +48,9 @@ export class ServicoDetailComponent implements OnInit {
     private busy: Subscription;
     private save: Subscription;
     private valorAux: string;
+    private isCalculista: boolean = false;
+
+    private current = new Date();
 
     isNaN = (value: number) => {
         return isNaN(value);
@@ -62,9 +66,18 @@ export class ServicoDetailComponent implements OnInit {
         private atividadeService: AtividadeService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager) { }
+        private toastr: ToastsManager,
+        private userService: UserService) { }
 
     ngOnInit() {
+        this.userService
+            .getUser()
+            .subscribe(user => {
+                this.isCalculista = this.userService.isInRole('Calculista')
+                    && !this.userService.isInRole('Administrativo')
+                    && !this.userService.isInRole('Gerencial');
+            });
+
         this.atividadeService.getTipoImpressao()
             .subscribe((data: IKeyValuePair[]) => this.tipoImpressao = data, error => this.toastr.error('Erro ao efetuar requisição!'));
 
@@ -136,6 +149,21 @@ export class ServicoDetailComponent implements OnInit {
         return null;
     }
 
+    getMinSaida() {
+        if (this.model && this.model.entrada) {
+            return new Date(2016, 1, 1);
+
+            // var entrada = new Date(this.model.entrada + 'T03:00:00Z');
+
+            // // Se data atual é até dia 3, permite inserir fechamento para o mês anterior, caso contrário apenas mês atual.
+            // var fechamento = new Date(this.current.getFullYear(), this.current.getMonth() + (this.current.getDate() <= 3 ? - 1 : 0), 1);
+
+            // return _.max([entrada, fechamento]);
+        } else {
+            return this.current;
+        }
+    }
+
     onChangeResponsavel(user: any) {
         this.atividade.responsavelId = user.id;
         this.atividade.responsavel = user;
@@ -148,7 +176,7 @@ export class ServicoDetailComponent implements OnInit {
 
     addAtividade() {
         this.atividade.servicoId = this.model.id;
-        this.atividade.valor = this.valorAux ? parseFloat(this.valorAux.replace(/[^0-9\.]/g, '')) : null;
+        this.atividade.valor = this.valorAux ? parseFloat(this.valorAux.replace(/[^0-9\.-]/g, '')) : null;
         this.valorAux = null;
 
         this.atividadeService.postAtividade(this.atividade)

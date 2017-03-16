@@ -32,7 +32,7 @@ export class HonorarioMasterComponent implements OnInit {
     }
 
     filter(page: number = null) {
-        this.busy = this.processoService.getProcessosPaged(this.filterText, page ? page : this.currentPage, this.itemsPerPage)
+        this.busy = this.service.getProcessosPaged(this.filterText, page ? page : this.currentPage, this.itemsPerPage)
             .subscribe(response => {
                 this.data = response.data;
                 this.totalItems = response.totalItems;

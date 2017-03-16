@@ -75,14 +75,14 @@
                             <label>Nota Fiscal/Complemento:</label>
                             <input class="form-control" id="notaFiscal" [(ngModel)]="honorario.notaFiscal" name="notaFiscal" />
                         </div>
-                        <div class="form-group col-lg-3" [hidden]="honorario.tipoPagamento !== 7">
+                        <!--<div class="form-group col-lg-3" [hidden]="honorario.tipoPagamento !== 7">
                             <label>Conta:</label>
                             <select class="form-control" id="notaFiscal" [(ngModel)]="honorario.notaFiscal" name="notaFiscal" [required]="honorario.tipoPagamento === 7">
                                 <option value="Conta1">Conta 1</option>
                                 <option value="Conta2">Conta 2</option>
                                 <option value="Conta3">Conta 3</option>
                             </select>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-2">
@@ -93,8 +93,7 @@
                         <div class="form-group col-lg-2" [hidden]="honorario.registro !== 0">
                             <label>Prazo:</label>
                             <input type="date" class="form-control" id="prazo" #date="ngModel" [ngModel]="honorario.prazo" (ngModelChange)="honorario.prazo = $event"
-                                name="prazo" [required]="honorario.registro === 0 && honorario.tipoPagamento !== 2 && honorario.tipoPagamento !== 3"
-                            />
+                                name="prazo" />
                         </div>
                         <div class="form-group" [class.col-lg-8]="honorario.registro !== 0" [class.col-lg-6]="honorario.registro === 0">
                             <label>Observação:</label>
@@ -115,27 +114,28 @@
                                 <th width="40"></th>
                                 <th width="110">Tipo</th>
                                 <th width="110">Data</th>
-                                <th width="110">Prazo</th>
+                                <th width="100">Prazo</th>
                                 <th width="100">Valor</th>
-                                <th width="180">Forma de Pagamento</th>
+                                <th width="170">Forma de Pagamento</th>
                                 <th>Observação</th>
+                                <th width="90">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of model?.honorarios">
                                 <td>
                                     &nbsp;
-                                    <a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+                                    <a *ngIf="!item.cancelado" (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
                                     <div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-sm">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Deseja excluir o registro?</h5>
+                                                    <h5 class="modal-title">Deseja calcelar o registro?</h5>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Excluir</button>
+                                                    <button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                                                    <button type="button" (click)="onDelete(item.id); closeModal.hide()" class="btn btn-primary">Sim</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,6 +147,7 @@
                                 <td>R$  {{item?.valor?.toFixed(2)}}</td>
                                 <td>{{ item?.tipoPagamentoDescription }}</td>
                                 <td>{{ item.observacao }}</td>
+                                <td>{{ item.cancelado ? 'Cancelado' : '' }}</td>
                             </tr>
                         </tbody>
                     </table>

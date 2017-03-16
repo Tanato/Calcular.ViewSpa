@@ -40,7 +40,7 @@
 			</div>
 			<div class="card card-default" *ngIf="isAdministrativo || isGerencial">
 				<div class="card-header">
-					<i class="fa fa-fw fa-share-square-o"></i> Distribuir
+					<i class="fa fa-fw fa-share-square-o"></i> Atribuir
 				</div>
 				<distribuir-servico-cmp></distribuir-servico-cmp>
 			</div>
@@ -50,14 +50,20 @@
 				</div>
 				<enviar-servico-cmp></enviar-servico-cmp>
 			</div>
-			
-		</div>		
+
+		</div>
 		<div class="col-lg-4">
-			<div class="card card-default">
+			<div class="card card-default" *ngIf="!isExterno">
 				<div class="card-header">
 					<i class="fa fa-bell fa-fw fa-birthday-cake"></i> Aniversários
 				</div>
 				<birthday-cmp></birthday-cmp>
+			</div>
+			<div class="card card-default" *ngIf="isAdministrativo || isGerencial">
+				<div class="card-header">
+					<i class="fa fa-fw fa-bar-chart"></i> Alocação de atividades
+				</div>
+				<alocacao-cmp></alocacao-cmp>
 			</div>
 		</div>
 	</div>

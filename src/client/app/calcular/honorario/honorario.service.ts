@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response, Http } from '@angular/http';
+import { Response, Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
@@ -13,6 +13,17 @@ export class HonorarioService {
     private url: string = Config.API + 'honorario';
 
     constructor(private http: Http) { }
+
+    getProcessosPaged(filterText: string, page: number, itemsPerPage: number): Observable<any> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+        params.set('page', page.toString());
+        params.set('itemsPerPage', itemsPerPage.toString());
+
+        return this.http.get(this.url, { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
 
     postHonorario(honorario: Honorario) {
         return this.http.post(this.url, honorario)

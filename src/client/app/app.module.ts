@@ -13,6 +13,7 @@ import { SignupModule } from './signup/signup.module';
 import { CalcularModule } from './calcular/calcular.module';
 import { SharedModule } from './shared/shared.module';
 import { BusyModule, BusyConfig } from 'angular2-busy';
+import { ComponentsHelper } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { UserService } from './shared/user/user.service';
 
@@ -21,8 +22,8 @@ export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
 }
 
 var busyConfig = new BusyConfig({
-                message: 'Carregando...',
-            });
+	message: 'Carregando...',
+});
 
 @NgModule({
 	imports: [
@@ -44,6 +45,9 @@ var busyConfig = new BusyConfig({
 		provide: Http,
 		useFactory: httpFactory,
 		deps: [XHRBackend, RequestOptions, Router]
+	}, {
+		provide: ComponentsHelper,
+		useClass: ComponentsHelper
 	},
 		UserService,
 	],

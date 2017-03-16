@@ -15,10 +15,13 @@ import { AtividadeExecucaoDetailModule, AtividadeExecucaoMasterModule } from './
 import { CobrancaMasterModule, CobrancaDetailModule } from './cobranca/cobranca.module';
 import { PropostaMasterModule, PropostaDetailModule } from './proposta/proposta.module';
 import { ComissaoModule } from './comissao/comissao.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { CalcularComponent } from './calcular.component';
 
 import { HomeModule } from './home/home.module';
+
+import {  } from '../shared';
 
 import { TopNavComponent } from '../shared/index';
 import { SidebarComponent } from '../shared/index';
@@ -52,6 +55,7 @@ import { SidebarComponent } from '../shared/index';
         PropostaMasterModule,
         PropostaDetailModule,
         ComissaoModule,
+        SharedModule.forRoot(),
     ],
     declarations: [CalcularComponent, TopNavComponent, SidebarComponent],
     exports: [CalcularComponent, TopNavComponent, SidebarComponent]

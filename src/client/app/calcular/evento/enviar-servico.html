@@ -4,7 +4,7 @@
             <div style="height: 42px;">
                 {{ item.processo?.numero }}
                 <br>
-                <span class="small">{{item.tipoServico?.nome}}</span>
+                <span class="small"><em>{{ item.processo?.advogado?.nome }}</em></span>
                 <span class="pull-right"><em>Prazo:<b> {{ item?.prazo | date:"dd/MM/yyyy" }}</b></em></span>
             </div>
         </div>

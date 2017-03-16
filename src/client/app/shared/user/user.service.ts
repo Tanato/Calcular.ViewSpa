@@ -3,6 +3,7 @@ import { Response, Http } from '@angular/http';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 export class IUser {
+    id: string;
     name: string;
     roles: string[];
 }
@@ -41,6 +42,11 @@ export class UserService {
             .share();
 
         return this.observable;
+    }
+
+    logoutUser() {
+        this.user = null;
+        this.observable = null;
     }
 
     handleResult(res: Response) {
