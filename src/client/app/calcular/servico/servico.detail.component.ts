@@ -151,14 +151,13 @@ export class ServicoDetailComponent implements OnInit {
 
     getMinSaida() {
         if (this.model && this.model.entrada) {
-            return new Date(2016, 1, 1);
+            // Data de entrada pois data de saida não pode ser menor que entrada.
+            var entrada = new Date(this.model.entrada + 'T03:00:00Z');
 
-            // var entrada = new Date(this.model.entrada + 'T03:00:00Z');
+            // Se data atual é até dia 3, permite inserir fechamento para o mês anterior, caso contrário apenas mês atual.
+            var fechamento = new Date(this.current.getFullYear(), this.current.getMonth() + (this.current.getDate() <= 3 ? - 1 : 0), 1);
 
-            // // Se data atual é até dia 3, permite inserir fechamento para o mês anterior, caso contrário apenas mês atual.
-            // var fechamento = new Date(this.current.getFullYear(), this.current.getMonth() + (this.current.getDate() <= 3 ? - 1 : 0), 1);
-
-            // return _.max([entrada, fechamento]);
+            return _.max([entrada, fechamento]);
         } else {
             return this.current;
         }
