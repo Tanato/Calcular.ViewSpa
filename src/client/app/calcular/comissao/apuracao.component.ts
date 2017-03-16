@@ -190,7 +190,7 @@ export class ApuracaoComponent implements OnInit {
                     this.filter(true);
                 }, error => this.toastr.error('Erro ao fechar comissões!'));
         } else {
-            this.toastr.error('Não foi possível executar o fechamento de comissões!')
+            this.toastr.error('Não foi possível executar o fechamento de comissões!');
         }
     }
 
