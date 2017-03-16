@@ -56,43 +56,45 @@
                         <input class="form-control" [ngModel]="model.processo?.reu" name="reu" disabled/>
                     </div>
                 </div>
+            </fieldset>
 
-                <div class="row">
-                    <div class="form-group col-lg-2">
+            <div class="row">
+                <fieldset class="col-lg-6" [disabled]="blockEdit || isCalculista">
+                    <div class="form-group col-lg-4">
                         <label>Volumes:</label>
                         <input class="form-control" [(ngModel)]="model.volumes" name="volumes" required/>
                     </div>
-                    <div class="form-group col-lg-2">
+                    <div class="form-group col-lg-4">
                         <label>Data de Entrada:</label>
                         <input type="date" class="form-control" #date="ngModel" [ngModel]="model.entrada" (ngModelChange)="model.entrada = $event"
                             name="entrada" [disabled]="id | async" required/>
                     </div>
-                    <div class="form-group col-lg-2">
+                    <div class="form-group col-lg-4">
                         <label>Prazo:</label>
                         <input type="date" class="form-control" #prazo="ngModel" [ngModel]="model.prazo" (ngModelChange)="model.prazo = $event" name="prazo"
                             [min]="model.entrada | date" required/>
                     </div>
-                    <div class="form-group col-lg-2">
-                        <label>Data de Saída:</label>
-                        <input type="date" class="form-control" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event" name="saida"
-                            [min]="getMinSaida() | date:'yyyy-MM-dd'" [hidden]="!model.id || model.atividades?.length === 0 || atividadesPendentes()"
-                        />
-                        <input class="form-control" [hidden]="!(!model.id || model.atividades?.length === 0 || atividadesPendentes())" disabled/>
-                    </div>
-                    <div class="col-lg-2 text-center" [hidden]="!model.tipoImpressao">
-                        <label>Impressão</label>
-                        <input class="form-control" [ngModel]="tipoImpressaoDescription(model.tipoImpressao)" name="tipoImpressao" disabled/>
-                    </div>
-                    <div class="col-lg-2 text-center" [hidden]="model.status !== 0 && model.id">
-                        <label>&nbsp;</label>
-                        <button class="btn btn-primary btn-block" [hidden]="blockEdit" [disabled]="!form.form.valid" (click)="onSubmit()">Salvar</button>
-                    </div>
-                    <div class="col-lg-2 text-center" [hidden]="model.status === 0 || !model.id">
-                        <label>Status</label>
-                        <input class="form-control" [ngModel]="statusDescription(model.status)" name="status" disabled/>
-                    </div>
+                </fieldset>
+                <div class="form-group col-lg-2">
+                    <label>Data de Saída:</label>
+                    <input type="date" class="form-control" #saida="ngModel" [ngModel]="model.saida" (ngModelChange)="model.saida = $event" name="saida"
+                        [min]="getMinSaida() | date:'yyyy-MM-dd'" [hidden]="!model.id || model.atividades?.length === 0 || atividadesPendentes()"
+                    />
+                    <input class="form-control" [hidden]="!(!model.id || model.atividades?.length === 0 || atividadesPendentes())" disabled/>
                 </div>
-            </fieldset>
+                <div class="col-lg-2 text-center" [hidden]="!model.tipoImpressao">
+                    <label>Impressão</label>
+                    <input class="form-control" [ngModel]="tipoImpressaoDescription(model.tipoImpressao)" name="tipoImpressao" disabled/>
+                </div>
+                <div class="col-lg-2 text-center" [hidden]="model.status !== 0 && model.id">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary btn-block" [hidden]="blockEdit && (!model.id || model.atividades?.length === 0 || atividadesPendentes())" [disabled]="!form.form.valid" (click)="onSubmit()">Salvar</button>
+                </div>
+                <div class="col-lg-2 text-center" [hidden]="model.status === 0 || !model.id">
+                    <label>Status</label>
+                    <input class="form-control" [ngModel]="statusDescription(model.status)" name="status" disabled/>
+                </div>
+            </div>
             <br>
         </form>
         <form role="formAtividade" [hidden]="!model.id" #formAtividade="ngForm">
