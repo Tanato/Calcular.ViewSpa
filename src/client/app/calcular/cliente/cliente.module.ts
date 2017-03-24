@@ -14,13 +14,8 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { BusyModule } from 'angular2-busy';
 
-let options: any = {
-    animate: 'flyRight',
-    positionClass: 'toast-bottom-right',
-};
-
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, ToastModule.forRoot(options), BusyModule],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, BusyModule],
     providers: [ClienteService],
     declarations: [ClienteMasterComponent],
     exports: [ClienteMasterComponent]
@@ -29,7 +24,7 @@ export class ClienteMasterModule { }
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule,
-        TextMaskModule, ToastModule.forRoot(options),
+        TextMaskModule,
         Ng2AutoCompleteModule, BusyModule],
     providers: [ClienteService],
     declarations: [ClienteDetailComponent],

@@ -13,7 +13,9 @@ import { SignupModule } from './signup/signup.module';
 import { CalcularModule } from './calcular/calcular.module';
 import { SharedModule } from './shared/shared.module';
 import { BusyModule, BusyConfig } from 'angular2-busy';
+import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { ComponentsHelper } from 'ng2-bootstrap/ng2-bootstrap';
+import { CustomOption } from './toastr-config';
 
 import { UserService } from './shared/user/user.service';
 
@@ -31,6 +33,7 @@ var busyConfig = new BusyConfig({
 		FormsModule,
 		HttpModule,
 		RouterModule.forRoot(routes),
+		ToastModule.forRoot(),
 		LoginModule,
 		SignupModule,
 		CalcularModule,
@@ -48,6 +51,8 @@ var busyConfig = new BusyConfig({
 	}, {
 		provide: ComponentsHelper,
 		useClass: ComponentsHelper
+	}, {
+		provide: ToastOptions, useClass: CustomOption
 	},
 		UserService,
 	],
