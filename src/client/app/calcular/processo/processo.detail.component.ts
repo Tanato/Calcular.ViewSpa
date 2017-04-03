@@ -105,11 +105,15 @@ export class ProcessoDetailComponent implements OnInit {
                 .subscribe(data => {
                     this.model = data;
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
+                }, error => {
+                    this.toastr.error(error);
                 });
         } else {
             this.service.putProcesso(this.model)
                 .subscribe(data => {
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
+                }, error => {
+                    this.toastr.error(error);
                 });
         }
     }

@@ -127,7 +127,7 @@ export class ServicoDetailComponent implements OnInit {
                     this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     this.blockEdit = data.status !== 0 ? true : false;
                     this.toastr.success(this.modelName + ' adicionado com sucesso!');
-                }, error => this.toastr.error('Erro ao efetuar requisição!'));
+                }, error => this.toastr.error(error ? error : 'Erro ao efetuar requisição!'));
         } else {
             this.save = this.service.putServico(this.model)
                 .subscribe(data => {
@@ -137,7 +137,7 @@ export class ServicoDetailComponent implements OnInit {
                     this.model.saida = data.saida ? data.saida.slice(0, 10) : null;
                     this.blockEdit = data.status !== 0 ? true : false;
                     this.toastr.success(this.modelName + ' atualizado com sucesso!');
-                }, error => this.toastr.error(error));
+                }, error => this.toastr.error(error ? error : 'Erro ao efetuar requisição!'));
         }
     }
 
@@ -291,7 +291,8 @@ export class ServicoDetailComponent implements OnInit {
 
     getParteDescription(): string {
         if (this.parte && this.model.processo && this.model.processo.parte !== null) {
-            return _.find(this.parte, x => x.key === this.model.processo.parte).value;
+            var parte = _.find(this.parte, x => x.key === this.model.processo.parte) 
+            return parte ? parte.value : null;
         }
         return null;
     }
