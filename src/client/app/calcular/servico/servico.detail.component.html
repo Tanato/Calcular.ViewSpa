@@ -293,7 +293,7 @@
                             <td align="left"> ELABORAR: </td>
                             <td colspan="3"></td>
                         </tr>
-                        <tr *ngFor="let item of model?.atividades">
+                        <tr *ngFor="let item of (model?.atividades | filterEtapaAtividade)">
                             <td></td>
                             <td align="left">
                                 <label style="padding-left: 30px"> {{ item?.tipoAtividade?.nome }}</label>

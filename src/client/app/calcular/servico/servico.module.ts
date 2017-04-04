@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ServicoMasterComponent } from './servico.master.component';
 import { ServicoDetailComponent } from './servico.detail.component';
 import { TipoServicoComponent } from './servico.tipo.component';
+import { FilterEtapaAtividadePipe } from './servico.filter.pipes';
 
 import { ServicoService } from './servico.service';
 import { ProcessoService } from '../processo/processo.service';
@@ -38,7 +39,7 @@ export class ServicoMasterModule { }
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
         ModalModule, SelectModule, Ng2AutoCompleteModule, BusyModule],
     providers: [ServicoService, ProcessoService, AtividadeService],
-    declarations: [ServicoDetailComponent],
+    declarations: [ServicoDetailComponent, FilterEtapaAtividadePipe],
     exports: [ServicoDetailComponent]
 })
 export class ServicoDetailModule { }
