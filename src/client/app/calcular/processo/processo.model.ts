@@ -20,6 +20,9 @@ export class Processo {
     servicos: Servico[];
     total: number;
     custoComissao: number;
+    valorCausa: number;
+    faseProcessoId: number;
+    faseProcesso: FaseProcesso;
 }
 
 export class ProcessoDetalhe {
@@ -27,3 +30,9 @@ export class ProcessoDetalhe {
     processoId: number;
     descricao: string;
 }
+
+export class FaseProcesso {
+    id: number;
+    nome: string;
+}
+

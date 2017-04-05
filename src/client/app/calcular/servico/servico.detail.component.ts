@@ -291,7 +291,7 @@ export class ServicoDetailComponent implements OnInit {
 
     getParteDescription(): string {
         if (this.parte && this.model.processo && this.model.processo.parte !== null) {
-            var parte = _.find(this.parte, x => x.key === this.model.processo.parte) 
+            var parte = _.find(this.parte, x => x.key === this.model.processo.parte) ;
             return parte ? parte.value : null;
         }
         return null;

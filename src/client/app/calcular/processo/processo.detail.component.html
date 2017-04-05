@@ -45,11 +45,13 @@
 				<div class="row">
 					<div class="form-group col-lg-6">
 						<label>Autor:</label>
-						<input class="form-control" id="autor" [(ngModel)]="model.autor" name="autor" required/>
+						<input class="form-control" ng2-auto-complete [source]="autor" [(ngModel)]="model.autor" name="autor" min-chars="1"
+							[accept-user-input]="true" required/>
 					</div>
 					<div class="form-group col-lg-6">
 						<label>Réu:</label>
-						<input class="form-control" id="reu" [(ngModel)]="model.reu" name="reu" required/>
+						<input class="form-control" ng2-auto-complete [source]="reu" [(ngModel)]="model.reu" name="reu" min-chars="1"
+							[accept-user-input]="true" required/>
 					</div>
 				</div>
 
@@ -57,19 +59,23 @@
 					<div class="form-group col-lg-3">
 						<label>Parte:</label>
 						<select class="form-control" id="parteSelect" [(ngModel)]="model.parte" name="parteSelect" required>
-						<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
-					</select>
+							<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+						</select>
 					</div>
-
 					<div class="form-group col-lg-3">
 						<label>Vara:</label>
 						<input class="form-control" ng2-auto-complete [source]="vara" id="vara" [(ngModel)]="model.vara" name="vara" min-chars="1"
 							[accept-user-input]="true" required/>
 					</div>
-
 					<div class="form-group col-lg-2">
 						<label>Nº Autores:</label>
 						<input type="number" class="form-control" id="numeroAutores" [(ngModel)]="model.numeroAutores" name="numeroAutores" required/>
+					</div>
+					<div class="form-group col-lg-4">
+						<label>Fase Processual:</label>
+						<select class="form-control" [(ngModel)]="model.faseProcessoId" name="faseProcessoSelect" required>
+							<option *ngFor="let item of faseProcesso" [ngValue]="item.key">{{item.value}}</option>
+						</select>
 					</div>
 				</div>
 

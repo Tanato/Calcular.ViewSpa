@@ -42,6 +42,7 @@ export class HonorarioDetailComponent implements OnInit {
     public moneyMask: any = createNumberMask({prefix: 'R$ ', includeThousandsSeparator: false, allowNegative: true, allowDecimal: true});
 
     private valorAux: string;
+    private valorCausa: string;
     private busy: Subscription;
 
     processos = (startsWith: string): Observable<any[]> => {
@@ -69,6 +70,7 @@ export class HonorarioDetailComponent implements OnInit {
                 this.busy = this.processoService.getProcessoById(id)
                     .subscribe((data: Processo) => {
                         this.model = data;
+                        this.valorCausa = data.valorCausa.toFixed(2);
                     });
             }
         });
@@ -92,6 +94,14 @@ export class HonorarioDetailComponent implements OnInit {
                 this.honorario = new Honorario();
                 this.valorAux = null;
                 this.toastr.success(this.modelName + ' adicionado com sucesso!');
+            });
+    }
+
+    setValorCausa() {
+        this.processoService.postValorCausa(this.model.id, this.valorCausa ? parseFloat(this.valorCausa.replace(/[^0-9\.]/g, '')) : null)
+            .subscribe(x => {
+                this.onRefresh();
+                this.toastr.success('Valor da causa salvo com sucesso!');
             });
     }
 

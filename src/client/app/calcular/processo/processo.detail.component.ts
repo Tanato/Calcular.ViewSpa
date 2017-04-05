@@ -15,21 +15,22 @@ import * as _ from 'lodash';
 })
 export class ProcessoDetailComponent implements OnInit {
 
-    public wtoInput: NodeJS.Timer;
+    private wtoInput: NodeJS.Timer;
 
-    public modelName = 'Processo';
+    private modelName = 'Processo';
 
-    public model: Processo = new Processo;
-    public parte: IKeyValuePair[];
-    public local: any[];
+    private model: Processo = new Processo;
+    private parte: IKeyValuePair[];
+    private faseProcesso: IKeyValuePair[];
+    private local: any[];
 
-    public advogado: any[];
-    public advogadoInit: IKeyValuePair[];
+    private advogado: any[];
+    private advogadoInit: IKeyValuePair[];
 
-    public formType: string = 'new';
-    public blockEdit: boolean = true;
+    private formType: string = 'new';
+    private blockEdit: boolean = true;
 
-    public id: Observable<string>;
+    private id: Observable<string>;
     private busy: Subscription;
     private disableChangeNumero: boolean = false;
 
@@ -71,6 +72,14 @@ export class ProcessoDetailComponent implements OnInit {
         return this.service.getPeritoSelect(startsWith);
     }
 
+    autor = (startsWith: string): Observable<any[]> => {
+        return this.service.getAutorSelect(startsWith);
+    }
+
+    reu = (startsWith: string): Observable<any[]> => {
+        return this.service.getReuSelect(startsWith);
+    }
+
     clearNumero() {
         this.model.numero = '';
     }
@@ -81,6 +90,9 @@ export class ProcessoDetailComponent implements OnInit {
 
         this.service.getLocalSelect()
             .subscribe((data: any[]) => this.local = data);
+
+        this.service.getFaseProcessoSelect()
+            .subscribe((data: IKeyValuePair[]) => this.faseProcesso = data, error => this.toastr.error('Erro ao efetuar requisição!'));
 
         this.id = this.route.params.map(params => params['id']);
 

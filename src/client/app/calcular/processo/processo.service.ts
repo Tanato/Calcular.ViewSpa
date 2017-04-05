@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Config } from '../../shared/config/env.config';
 
-import { Processo, ProcessoDetalhe } from './processo.model';
+import { Processo, ProcessoDetalhe, FaseProcesso } from './processo.model';
 
 @Injectable()
 export class ProcessoService {
@@ -17,6 +17,7 @@ export class ProcessoService {
     private url: string = Config.API + 'processo';
     private urlCliente: string = Config.API + 'cliente';
     private urlUser: string = Config.API + 'user';
+    private urlFaseProcesso: string = Config.API + 'faseprocesso'
 
     constructor(private http: Http) { }
 
@@ -44,6 +45,15 @@ export class ProcessoService {
 
         return this.http.get(this.url, { search: params })
             .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    postValorCausa(processoId: number, valorCausa: number) {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('processoId', processoId.toString());
+        params.set('valorCausa', valorCausa.toString());
+
+        return this.http.post(this.url + '/valorCausa', null, { search: params })
             .catch(this.handleError);
     }
 
@@ -148,6 +158,50 @@ export class ProcessoService {
             .catch(this.handleError);
     }
 
+    getAutorSelect(filterText: string = ''): Observable<string[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+
+        return this.http.get(this.url + '/autor', { search: params })
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getReuSelect(filterText: string = ''): Observable<string[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('filter', filterText);
+
+        return this.http.get(this.url + '/reu', { search: params })
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    postFaseProcesso(faseProcesso: string) {
+        var model = new FaseProcesso();
+        model.nome = faseProcesso;
+
+        return this.http.post(this.urlFaseProcesso, model)
+            .catch(this.handleError);
+    }
+
+    deleteFaseProcesso(id: number) {
+        return this.http.delete(this.urlFaseProcesso + '/' + id)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getFaseProcesso() {
+        return this.http.get(this.urlFaseProcesso)
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
+    getFaseProcessoSelect(): Observable<IKeyValuePair[]> {
+        return this.http.get(this.urlFaseProcesso + '/select')
+            .map(this.handleResult)
+            .catch(this.handleError);
+    }
+
     private handleResult(res: Response) {
         let body = res.json();
         return body || {};
@@ -183,4 +237,3 @@ export class ProcessoService {
         return Observable.throw(error._body || 'Server error');
     }
 }
-

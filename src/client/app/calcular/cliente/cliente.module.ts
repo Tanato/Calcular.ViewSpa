@@ -15,19 +15,9 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { BusyModule } from 'angular2-busy';
 
 @NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, BusyModule],
+    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule, ModalModule, BusyModule, Ng2AutoCompleteModule],
     providers: [ClienteService],
-    declarations: [ClienteMasterComponent],
-    exports: [ClienteMasterComponent]
+    declarations: [ClienteMasterComponent, ClienteDetailComponent],
+    exports: [ClienteMasterComponent, ClienteDetailComponent]
 })
-export class ClienteMasterModule { }
-
-@NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule,
-        TextMaskModule,
-        Ng2AutoCompleteModule, BusyModule],
-    providers: [ClienteService],
-    declarations: [ClienteDetailComponent],
-    exports: [ClienteDetailComponent]
-})
-export class ClienteDetailModule { }
+export class ClienteModule { }

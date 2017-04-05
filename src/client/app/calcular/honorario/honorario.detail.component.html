@@ -14,41 +14,52 @@
         </div>
     </div>
     <div class="row col-xl-12">
+        <div class="row">
+            <div class="form-group col-lg-3">
+                <label>Processo:</label>
+                <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" value-property-name="none" [disabled]="id | async"
+                    display-property-name="numero" name="numero" min-chars="3" required>
+            </div>
+
+            <div class="form-group col-lg-3">
+                <label>Parte:</label>
+                <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
+                    <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-lg-6">
+                <label>Advogado/Cliente:</label>
+                <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" required disabled/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-lg-6">
+                <label>Autor:</label>
+                <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>Réu:</label>
+                <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-lg-8">
+            </div>
+            <div class="form-group col-lg-2">
+                <label>Valor da Causa:</label>
+                <input step="0.01" class="form-control" name="valorCausaName" [(ngModel)]="valorCausa" [textMask]="{mask: moneyMask}" />
+            </div>
+            <div class="col-lg-2 text-center">
+                <label>&nbsp;</label>
+                <button class="btn btn-primary btn-block" name="valorCausaSalvar" [disabled]="!valorCausa" (click)="setValorCausa()"><i class="fa fa-check"></i> Salvar</button>
+            </div>
+        </div>
+
+        <br/>
         <form role="form" #form="ngForm">
-            <fieldset [disabled]="false">
-                <div class="row">
-                    <div class="form-group col-lg-3">
-                        <label>Processo:</label>
-                        <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" value-property-name="none" [disabled]="id | async"
-                            display-property-name="numero" name="numero" min-chars="3" required>
-                    </div>
-
-                    <div class="form-group col-lg-3">
-                        <label>Parte:</label>
-                        <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
-                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-lg-6">
-                        <label>Advogado/Cliente:</label>
-                        <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" required disabled/>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label>Autor:</label>
-                        <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label>Réu:</label>
-                        <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
-                    </div>
-                </div>
-            </fieldset>
-            <br>
-
             <div class="card card-block">
                 <fieldset [disabled]="false">
                     <div class="row">
@@ -111,14 +122,15 @@
                     <table class="table table-hover table-striped table-sm">
                         <thead class="thead-default">
                             <tr>
-                                <th width="40"></th>
-                                <th width="110">Tipo</th>
-                                <th width="110">Data</th>
+                                <th width="35"></th>
+                                <th width="100">Tipo</th>
+                                <th width="100">Data</th>
                                 <th width="100">Prazo</th>
                                 <th width="100">Valor</th>
-                                <th width="170">Forma de Pagamento</th>
+                                <th width="160">Forma de Pagamento</th>
+                                <th>Complemento</th>
                                 <th>Observação</th>
-                                <th width="90">Status</th>
+                                <th width="80">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -144,8 +156,9 @@
                                 <td>{{ item?.registroDescription }}</td>
                                 <td>{{ item.data | date:"dd/MM/yyyy" }}</td>
                                 <td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
-                                <td>R$  {{item?.valor?.toFixed(2)}}</td>
+                                <td>R$ {{item?.valor?.toFixed(2)}}</td>
                                 <td>{{ item?.tipoPagamentoDescription }}</td>
+                                <td>{{ item.notaFiscal }}</td>
                                 <td>{{ item.observacao }}</td>
                                 <td>{{ item.cancelado ? 'Cancelado' : '' }}</td>
                             </tr>
