@@ -1,4 +1,5 @@
-import { Processo } from '../processo/processo.model';
+import { Processo, ProcessoCobranca } from '../processo/processo.model';
+import { Cliente } from '../cliente/cliente.model';
 
 export class Cobranca {
     id: number;
@@ -9,4 +10,15 @@ export class Cobranca {
     previsaoPagamento: any;
     observacao: string;
     valorPendente: number;
+}
+
+export class CobrancaDetail {
+    advogadoId: number;
+    advogado: Cliente;
+    dataCobranca: any;
+    totalPendente: number;
+    totalHonorarios: number;
+    totalProcessosPendentes: number;
+    processos: ProcessoCobranca[];
+    statusHonorario: string;
 }

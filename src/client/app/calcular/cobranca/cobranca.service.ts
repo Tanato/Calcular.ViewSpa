@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/config/env.config';
 import { Processo } from '../processo/processo.model';
-import { Cobranca } from './cobranca.model';
+import { Cobranca, CobrancaDetail } from './cobranca.model';
 
 @Injectable()
 export class CobrancaService {
@@ -14,23 +14,27 @@ export class CobrancaService {
 
     constructor(private http: Http) { }
 
-    getProcessos(filterText: string, all: boolean): Observable<Processo[]> {
+    getProcessos(filterText: string, all: boolean): Observable<CobrancaDetail[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', filterText);
         params.set('all', all ? 'true' : 'false');
 
-        return this.http.get(this.url + '/processo/', { search: params })
+        return this.http.get(this.url, { search: params })
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }
 
-    getProcessoById(id: string): Observable<Processo> {
-        return this.http.get(this.url + '/processo/' + id)
+    getProcessoById(id: string, status: string): Observable<CobrancaDetail> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('id', id);
+        params.set('status', status);
+
+        return this.http.get(this.url + '/id/', { search: params })
             .map(this.handleResult)
             .catch(this.handleError);
     }
 
-    postCobranca(cobranca: Cobranca) {
+    postCobranca(cobranca: CobrancaDetail) {
         return this.http.post(this.url, cobranca)
             .map(this.handleResult)
             .catch(this.handleError);

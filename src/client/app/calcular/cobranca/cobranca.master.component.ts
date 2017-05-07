@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CobrancaService } from './cobranca.service';
+import { CobrancaDetail } from './cobranca.model';
 import { Processo } from '../processo/processo.model';
 import { ProcessoService } from '../processo/processo.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -13,8 +14,8 @@ import { Subscription } from 'rxjs';
 export class CobrancaMasterComponent implements OnInit {
 
     private busy: Subscription;
-    private data: Processo[];
-    private rows: Processo[];
+    private data: CobrancaDetail[];
+    private rows: CobrancaDetail[];
 
     private totalItems: number = 0;
     private currentPage: number = 1;

@@ -30,28 +30,26 @@
 				<thead>
 					<tr>
 						<th width="46"></th>
-						<th width="200">Nº Processo</th>
-						<th width="170">Advogado/Cliente</th>
-						<th width="150">Empresa</th>
-						<th width="110">Data Cobrança</th>
-						<th width="110">Previsão Pagamento</th>
-						<th width="100">Valor Pendente</th>
-						<th width="110">Prazo</th>
-						<th width="115">Status</th>
+						<th width="200">Advogado/Cliente</th>
+						<th >Empresa</th>
+						<th width="110">Nº Processos Pendentes</th>
+						<th width="130">Última Cobrança</th>
+						<th width="110">Valor Total</th>
+						<th width="110">Valor Pendente</th>
+						<th width="130">Status</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td align="center">
-							<a [routerLink]="['/calcular/honorario/cobranca/detail', {id: item.id}]"><i class="fa fa-fax"></i></a>
+							<a [routerLink]="['/calcular/honorario/cobranca/detail', {id: item.advogado?.id, status: item.statusHonorario}]"><i class="fa fa-fax"></i></a>
 						</td>
-						<td>{{ item.numero }}</td>
 						<td>{{ item.advogado?.nome }}</td>
 						<td>{{ item.advogado?.empresa }}</td>
-						<td>{{ item.dataCobranca | date:"dd/MM/yyyy" }}</td>
-						<td>{{ item.previsaoPagamento | date:"dd/MM/yyyy" }}</td>
-						<td>R$ {{item?.total?.toFixed(2)}}</td>
-						<td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
+						<td>{{ item.totalProcessosPendentes }}</td>
+						<td>{{ item.dataCobranca ? (item.dataCobranca | date:"dd/MM/yyyy" ) : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-' }}</td>
+						<td>R$ {{item.totalHonorarios?.toFixed(2)}}</td>
+						<td>R$ {{item.totalPendente?.toFixed(2)}}</td>
 						<td>{{ item.statusHonorario ? item.statusHonorario : '&nbsp;&nbsp;&nbsp;&nbsp;-' }}</td>
 					</tr>
 				</tbody>

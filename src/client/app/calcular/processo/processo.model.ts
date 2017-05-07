@@ -1,6 +1,7 @@
 import { Servico } from '../servico/servico.model';
 import { Honorario } from '../honorario/honorario.model';
 import { Cliente } from '../cliente/cliente.model';
+import { Cobranca } from '../cobranca/cobranca.model';
 
 export class Processo {
     id: number;
@@ -18,11 +19,18 @@ export class Processo {
     processoDetalhes: ProcessoDetalhe[];
     honorarios: Honorario[];
     servicos: Servico[];
+    cobrancas: Cobranca[];
     total: number;
     custoComissao: number;
     valorCausa: number;
     faseProcessoId: number;
     faseProcesso: FaseProcesso;
+
+    selected: boolean;
+}
+
+export class ProcessoCobranca extends Processo {
+    ultimaCobranca: Cobranca;
 }
 
 export class ProcessoDetalhe {

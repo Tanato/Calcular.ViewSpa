@@ -17,59 +17,58 @@
         <form role="form" #form="ngForm">
             <fieldset [disabled]="false">
                 <div class="row">
-                    <div class="form-group col-lg-3">
-                        <label>Processo:</label>
-                        <input class="form-control" ng2-auto-complete [source]="processos" [(ngModel)]="model" value-property-name="none" [disabled]="id | async"
-                            display-property-name="numero" name="numero" min-chars="3" required>
-                    </div>
-
-                    <div class="form-group col-lg-3">
-                        <label>Parte:</label>
-                        <select class="form-control" id="parteSelect" [ngModel]="model?.parte" name="parteSelect" disabled>
-                            <option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
-                        </select>
-                    </div>
-
                     <div class="form-group col-lg-6">
-                        <label>Advogado/Cliente:</label>
+                        <label>Nome:</label>
                         <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" disabled/>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label>Autor:</label>
-                        <input class="form-control" id="autor" [ngModel]="model?.autor" name="autor" disabled/>
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label>Réu:</label>
-                        <input class="form-control" id="reu" [ngModel]="model?.reu" name="reu" disabled/>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-lg-3">
-                        <label>Honorários:</label>
-                        <input class="form-control" id="honorario" [ngModel]="model?.honorario" name="honorario" required disabled/>
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label>Valor Pendente:</label>
-                        <input class="form-control" id="total" [textMask]="{mask: moneyMask}" [ngModel]="model?.total?.toFixed(2)" name="total" required disabled/>
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label>Nº de Autores:</label>
-                        <input class="form-control" id="numeroAutores" [ngModel]="model?.numeroAutores" name="numeroAutores" disabled/>
-                    </div>
-                    <div class="form-group col-lg-3">
-						<label>&nbsp;</label>
-						<button class="btn btn-primary btn-block" [hidden]="!model?.id" [routerLink]="['/calcular/honorario/detail', { id: model?.id }]"><i class="fa fa-plus"></i> Adicionar Pagamento</button>
+                    <div class="form-group col-lg-4">
+						<label>Perfil:</label>
+						<select class="form-control" id="perfilSelect" [ngModel]="model?.advogado?.perfil" name="perfilSelect" disabled>
+							<option *ngFor="let item of perfil" [ngValue]="item.key">{{item.value}}</option>
+						</select>
 					</div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+						<label>Empresa:</label>
+						<input class="form-control" id="empresa" [ngModel]="model?.advogado?.empresa" name="empresa" disabled>
+					</div>
+                    
+                    <div class="form-group col-lg-4">
+                        <label>Honorários:</label>
+                        <input class="form-control" id="honorarios" [ngModel]="model?.advogado?.honorarios" name="honorarios" disabled/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-3">
+						<label>Telefone:</label>
+						<input id="telefone" [ngModel]="model?.advogado?.telefone" name="telefone" class="form-control" disabled />
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Celular:</label>
+						<input id="celular" [ngModel]="model?.advogado?.celular" name="celular" class="form-control" disabled />
+					</div>
+                    <div class="form-group col-lg-2">
+                        <label>Valor Total:</label>
+                        <input class="form-control" id="totalHonorarios" [textMask]="{mask: moneyMask}" [ngModel]="model?.totalHonorarios?.toFixed(2)" name="totalHonorarios" disabled/>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Valor Pendente:</label>
+                        <input class="form-control" id="totalPendente" [textMask]="{mask: moneyMask}" [ngModel]="model?.totalPendente?.toFixed(2)" name="totalPendente" disabled/>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary btn-block" [hidden]="isAddCobranca" (click)="isAddCobranca = true">Nova Cobrança</button>
+                    </div>
                 </div>
             </fieldset>
             <br>
 
-            <div class="card card-block">
-                <fieldset>
+            <div class="card card-block" >
+                <fieldset [hidden]="!isAddCobranca">
                     <div class="row">
                         <div class="form-group col-lg-2">
                             <label>Data Cobrança:</label>
@@ -81,47 +80,56 @@
                             <input type="date" class="form-control" id="previsaoPagamento" [ngModel]="cobranca.previsaoPagamento"
                                 (ngModelChange)="cobranca.previsaoPagamento = $event" name="previsaoPagamento"/>
                         </div>
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-3">
                             <label>Contato:</label>
                             <input class="form-control" ng2-auto-complete [source]="contato" id="contato" [(ngModel)]="cobranca.contato" name="contato"
                                 min-chars="2" [accept-user-input]="true" required/>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-lg-10">
+                        <div class="form-group col-lg-4">
                             <label>Observação:</label>
                             <input class="form-control" id="observacao" [(ngModel)]="cobranca.observacao" name="observacao" />
                         </div>
-                        <div class="col-lg-2 text-center">
+                        <div class="col-lg-1 text-center">
                             <label>&nbsp;</label>
-                            <button class="btn btn-primary btn-block" [disabled]="!form.form.valid" (click)="addCobranca()"><i class="fa fa-plus"></i> Adicionar</button>
+                            <button class="btn btn-primary btn-block" (click)="addCobranca()" [disabled]="anySelected()"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
                 </fieldset>
                 <br>
-
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-sm">
-                        <thead class="thead-default">
+                        <thead>
                             <tr>
-                                <th width="40"></th>
-                                <th width="125">Data Cobrança</th>
-                                <th width="160">Previsão Pagamento</th>
-                                <th width="125">Valor Pendente</th>
-                                <th width="180">Contato</th>
-                                <th>Observação</th>
+                                <th width="30" [hidden]="!isAddCobranca">
+                                    &nbsp; <input type="checkbox" [ngModel]="" (ngModelChange)="selectAll($event)" [ngModelOptions]="{standalone: true}"></th>
+                                <th width="42"></th>
+                                <th width="200">Nº Processo</th>
+                                <th>Autor</th>
+                                <th>Réu</th>
+						        <th width="25"></th>
+                                <th width="90">Data Cobrança</th>
+                                <th width="100">Previsão Pagamento</th>
+                                <th width="90">Prazo</th>
+                                <th width="100">Valor Pendente</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of model?.cobrancas">
-                                <td>
+                            <tr *ngFor="let item of model?.processos">
+                                <td [hidden]="!isAddCobranca">
                                     &nbsp;
+                                    <input type="checkbox" #{{item.id}} [(ngModel)]="item.selected" [ngModelOptions]="{standalone: true}">
                                 </td>
-                                <td>{{ item?.dataCobranca | date:"dd/MM/yyyy"}}</td>
-                                <td>{{ item?.previsaoPagamento | date:"dd/MM/yyyy"}}</td>
-                                <td>R$ {{item?.valorPendente?.toFixed(2)}}</td>
-                                <td>{{ item?.contato }}</td>
-                                <td>{{ item.observacao }}</td>
+                                <td align="center">
+                                    <a [routerLink]="['/calcular/honorario/detail', {id: item.id}]"><i class="fa fa-fax"></i></a>
+                                </td>
+                                <td>{{ item.numero }}</td>
+                                <td>{{ item.autor }}</td>
+                                <td>{{ item.reu }}</td>
+                                <td><i *ngIf="item.ultimaCobranca?.observacao || item.ultimaCobranca?.contato" class="fa fa-info-circle" tooltip="{{item.ultimaCobranca?.contato + '  -  ' + (item.ultimaCobranca?.observacao ? item.ultimaCobranca?.observacao : '')}}"></i></td>
+                                <td>{{ item.ultimaCobranca?.dataCobranca | date:"dd/MM/yyyy" }}</td>
+                                <td>{{ item.ultimaCobranca?.previsaoPagamento | date:"dd/MM/yyyy" }}</td>
+                                <td>{{ item.prazo | date:"dd/MM/yyyy" }}</td>
+                                <td>R$ {{item?.total?.toFixed(2)}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -129,7 +137,11 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-lg-10">
+                <div class="form-group col-lg-8">
+                </div>
+                <div class="col-lg-2 text-center">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary btn-block" (click)="saveCobranca()"><i class="fa fa-plus"></i> Salvar</button>
                 </div>
                 <div class="col-lg-2">
                     <label>&nbsp;</label>
