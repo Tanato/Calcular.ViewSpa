@@ -11,10 +11,18 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xl-6">
+		<div class="col-xl-2">
+			<label style="text-align: right; display: block;">Quantidade:</label></div>
+		<div class="col-xl-1">
+			<input type="text" class="form-control" [ngModel]="quantidade()" disabled />
+		</div>
+		<div class="col-xl-1">
+			<label style="text-align: right; display: block;">Total:</label></div>
+		<div class="col-xl-2">
+			<input type="text" class="form-control" [ngModel]="total()" disabled />
 		</div>
 		<div class="col-xl-2">
-			<label><input type="checkbox" [(ngModel)]="all" (ngModelChange)="filter()" /> Pagos</label>
+			<!--<label><input type="checkbox" [(ngModel)]="all" (ngModelChange)="filter()" /> Pagos</label>-->
 		</div>
 		<div class="form-group input-group col-xl-4">
 			<input type="text" class="form-control" [(ngModel)]="filterText" (keydown.Enter)="filter()">

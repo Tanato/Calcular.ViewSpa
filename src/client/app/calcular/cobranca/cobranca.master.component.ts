@@ -5,6 +5,7 @@ import { Processo } from '../processo/processo.model';
 import { ProcessoService } from '../processo/processo.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -26,8 +27,8 @@ export class CobrancaMasterComponent implements OnInit {
     private all: boolean;
 
     constructor(private service: CobrancaService,
-                private processoService: ProcessoService,
-                private toastr: ToastsManager) { }
+        private processoService: ProcessoService,
+        private toastr: ToastsManager) { }
 
     ngOnInit() {
         this.filter();
@@ -45,6 +46,20 @@ export class CobrancaMasterComponent implements OnInit {
                 console.log(error);
                 this.toastr.warning('Erro ao efetuar operação. Tente novamente');
             });
+    }
+
+    quantidade() {
+        if(this.data)
+            return _.sumBy(this.data, x => x.totalProcessosPendentes);
+        else
+            return null;
+    }
+
+    total() {
+        if(this.data)
+            return 'R$ ' + _.sumBy(this.data, x => x.totalHonorarios);
+        else
+            return null;
     }
 
     onPageChange(page: any, data: Array<any> = this.data) {

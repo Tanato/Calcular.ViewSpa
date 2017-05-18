@@ -78,9 +78,7 @@ export class CobrancaDetailComponent implements OnInit {
 
         this.cobranca = new Cobranca();
         this.isAddCobranca = false;
-    }
 
-    saveCobranca() {
         this.service.postCobranca(this.model)
             .subscribe(x => {
                 this.onRefresh();
@@ -90,12 +88,12 @@ export class CobrancaDetailComponent implements OnInit {
     }
 
     anySelected() {
-        if (this.model && this.model.processos) 
+        if (this.model && this.model.processos)
             return !_.some(this.model.processos, x => x.selected) && this.cobranca.dataCobranca && this.cobranca.contato;
         else return false;
     }
 
-    selectAll(value: boolean){
+    selectAll(value: boolean) {
         this.model.processos.forEach(x => x.selected = value);
     }
 
@@ -109,5 +107,59 @@ export class CobrancaDetailComponent implements OnInit {
     onCancel() {
         let link = 'calcular/honorario/cobranca';
         this.router.navigateByUrl(link);
+    }
+
+    showParte(value: number) {
+        if (this.parte) {
+            var d = this.parte.find(x => x.key === value)
+            return d ? d.value : null;
+        }
+        return null;
+    }
+
+    print(): Boolean {
+        let printContents: any, popupWin: any;
+        printContents = document.getElementById('print-section').innerHTML;
+        popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+        popupWin.document.open();
+        popupWin.document.write(`
+        <html>
+            <head>
+                <style type="text/css">
+                    body {
+                        -webkit-print-color-adjust: exact;
+                        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                        font-size: small !important;
+                    }
+                    td {
+                        max-width: 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    img{
+                        -webkit-print-color-adjust:exact;
+                        display:visible;
+                    }
+                    td, tr {
+                        padding-top: 3px;
+                        padding-bottom: 3px;
+                        border-bottom: 1px solid #CCC;
+                        font-size: small !important;
+                    }
+                </style>
+            </head>
+            <body onload="PrintDiv()"><div style="padding-left: 0px; padding-right: 0px;">${printContents}</div></body>
+            <script>
+            function PrintDiv() {
+                setTimeout(function() {
+                    window.print();
+                    window.close();
+                }, 60);
+            }
+            </script>
+        </html>`);
+        popupWin.document.close();
+        return false;
     }
 }

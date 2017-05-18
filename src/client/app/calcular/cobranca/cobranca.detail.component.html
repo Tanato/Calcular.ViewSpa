@@ -40,6 +40,10 @@
                         <label>Honorários:</label>
                         <input class="form-control" id="honorarios" [ngModel]="model?.advogado?.honorarios" name="honorarios" disabled/>
                     </div>
+                    <div class="col-lg-2">
+                        <label>&nbsp;</label>
+                        <button (click)="printModal.show()" class="btn btn-default btn-block">Imprimir</button>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -91,7 +95,7 @@
                         </div>
                         <div class="col-lg-1 text-center">
                             <label>&nbsp;</label>
-                            <button class="btn btn-primary btn-block" (click)="addCobranca()" [disabled]="anySelected()"><i class="fa fa-check"></i></button>
+                            <button class="btn btn-primary btn-block" (click)="addCobranca()" [disabled]="!form.form.valid || anySelected()"><i class="fa fa-check"></i></button>
                         </div>
                     </div>
                 </fieldset>
@@ -137,12 +141,12 @@
             </div>
 
             <div class="row">
-                <div class="form-group col-lg-8">
+                <div class="form-group col-lg-10">
                 </div>
-                <div class="col-lg-2 text-center">
+                <!--<div class="col-lg-2 text-center">
                     <label>&nbsp;</label>
                     <button class="btn btn-primary btn-block" (click)="saveCobranca()"><i class="fa fa-plus"></i> Salvar</button>
-                </div>
+                </div>-->
                 <div class="col-lg-2">
                     <label>&nbsp;</label>
                     <button routerLink="/calcular/honorario/cobranca" class="btn btn-default btn-block">Fechar</button>
@@ -151,3 +155,53 @@
         </form>
     </div>
 </div>
+<div bsModal #printModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" align="right">
+                <button type="button" (click)="printModal.hide()" class="btn btn-secondary" data-dismiss="modal">Fechar</button>                &nbsp;&nbsp;
+                <button type="button" (click)="print()" class="btn btn-primary">Imprimir</button>
+            </div>
+            <div class="modal-content" style="padding-left: 20px; padding-right: 20px;">
+                <div align="center" id="print-section">
+                    <div style="font-size: 18px !important; text-align: left;">
+                    <br>
+                    <b>Nome:</b>
+                    <label>{{ model?.advogado?.nome }} </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>Empresa:</b>
+                    <label>{{ model?.advogado?.empresa }} </label>
+                    <br>
+                    <br>
+                    </div>
+                    <table class="table table-sm" style="border-collapse: collapse">
+                        <thead>
+                            <tr class="border_bottom">
+                                <th width="260">Nº Processo</th>
+                                <th width="90">Parte</th>
+                                <th width="180">Autor</th>
+                                <th width="180">Réu</th>
+                                <th width="90">Data Cobrança</th>
+                                <th width="100">Previsão Pagamento</th>
+                                <th width="100">Valor Pendente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border_bottom" *ngFor="let item of model?.processos">
+                                <td>{{ item.numero }}</td>
+                                <td>{{ showParte(item.parte) }}</td>
+                                <td>{{ item.autor }}</td>
+                                <td>{{ item.reu }}</td>
+                                <td>{{ item.ultimaCobranca?.dataCobranca | date:"dd/MM/yyyy" }}</td>
+                                <td>{{ item.ultimaCobranca?.previsaoPagamento | date:"dd/MM/yyyy" }}</td>
+                                <td>R$ {{item?.total?.toFixed(2)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    </div>

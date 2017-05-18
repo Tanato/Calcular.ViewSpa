@@ -227,3 +227,10 @@ td {
         padding: 40px 0;
     }
 }
+
+@media (min-width: 992px) {
+    .modal-lg {
+        width: 900px;
+        height: 900px; /* control height here */
+    }
+}
