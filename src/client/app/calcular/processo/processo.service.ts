@@ -17,7 +17,7 @@ export class ProcessoService {
     private url: string = Config.API + 'processo';
     private urlCliente: string = Config.API + 'cliente';
     private urlUser: string = Config.API + 'user';
-    private urlFaseProcesso: string = Config.API + 'faseprocesso'
+    private urlFaseProcesso: string = Config.API + 'faseprocesso';
 
     constructor(private http: Http) { }
 

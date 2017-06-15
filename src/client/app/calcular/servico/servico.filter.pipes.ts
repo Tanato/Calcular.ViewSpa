@@ -3,7 +3,7 @@ import { Atividade } from '../atividade/atividade.model';
 /*
  * Filtra as atividades com etapa "Original"
 */
-@Pipe({name: 'filterEtapaAtividade'})
+@Pipe({ name: 'filterEtapaAtividade' })
 export class FilterEtapaAtividadePipe implements PipeTransform {
   transform(atividades: Atividade[]) {
     return atividades ? atividades.filter(a => a.etapaAtividade === 0) : null;

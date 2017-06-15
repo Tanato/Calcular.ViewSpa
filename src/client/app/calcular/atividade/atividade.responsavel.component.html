@@ -1,0 +1,62 @@
+<div class="container-fluid" [ngBusy]="busy">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li>
+					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li class="active"> Status Colaboradores </li>
+			</ol>
+		</div>
+	</div>
+	<!--<div class="row">
+		<div class="col-xl-8">
+		</div>
+		<div class="form-group input-group col-xl-4">
+			<input type="text" class="form-control" [(ngModel)]="filterText" (keydown.Enter)="filter()">
+			<span class="input-group-btn"><button class="btn btn-secondary" (click)="filter()" type="button"><i class="fa fa-search"></i></button></span>
+		</div>
+	</div>-->
+	<div class="row">
+        <div class="col-lg-12">
+            <div class="card card-default" *ngFor="let row of data">
+                <div class="card-header">
+                    &nbsp;{{row.name}}
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th width="30"></th>
+                                <th width="200">Numero do Processo</th>
+                                <th>Autor</th>
+                                <th>Réu&nbsp;&nbsp;</th>
+                                <th width="220">Atividade</th>
+                                <th width="120">Prazo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of row.atividades; let i = index">
+                                <td> &nbsp;{{i + 1}}</td>
+                                <td>{{ item.servico?.processo?.numero }}</td>
+                                <td>{{ item.servico?.processo?.autor }}</td>
+                                <td>{{ item.servico?.processo?.reu }}</td>
+                                <td>{{ item.tipoAtividade?.nome }}</td>
+                                <td>{{ item.servico?.prazo | date:"dd/MM/yyyy" }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+	    </div>
+	</div>
+	<!--<div class="row">
+		<div class="col-xl-12 centered">
+			<pagination previousText="Anterior" nextText="Próximo" firstText="Primeira" lastText="Última" [totalItems]="totalItems" [(ngModel)]="currentPage"
+				[itemsPerPage]="itemsPerPage" [maxSize]="maxSize" class="pagination-sm" [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event"
+				(pageChanged)="onPageChange($event)">
+			</pagination>
+		</div>
+	</div>-->
+</div>

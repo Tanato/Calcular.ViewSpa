@@ -111,7 +111,7 @@ export class CobrancaDetailComponent implements OnInit {
 
     showParte(value: number) {
         if (this.parte) {
-            var d = this.parte.find(x => x.key === value)
+            var d = this.parte.find(x => x.key === value);
             return d ? d.value : null;
         }
         return null;

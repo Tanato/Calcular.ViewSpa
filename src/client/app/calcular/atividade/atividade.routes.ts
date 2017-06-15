@@ -1,8 +1,11 @@
 import { Route } from '@angular/router';
 
-import { TipoAtividadeComponent } from './index';
-import { AtividadeExecucaoMasterComponent } from './index';
-import { AtividadeExecucaoDetailComponent } from './index';
+import {
+	TipoAtividadeComponent,
+	AtividadeExecucaoMasterComponent,
+	AtividadeExecucaoDetailComponent,
+	AtividadeResponsavelComponent
+} from './index';
 
 export const AtividadeRoutes: Route[] = [
 	{
@@ -16,6 +19,10 @@ export const AtividadeRoutes: Route[] = [
 	{
 		path: 'atividade/execucao/detail',
 		component: AtividadeExecucaoDetailComponent
+	},
+	{
+		path: 'atividade/resposavel/status',
+		component: AtividadeResponsavelComponent
 	},
 ];
 

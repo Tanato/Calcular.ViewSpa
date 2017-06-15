@@ -17,18 +17,9 @@ import { BusyModule } from 'angular2-busy';
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
-        ModalModule, SelectModule, BusyModule],
-    providers: [CobrancaService, ProcessoService],
-    declarations: [CobrancaMasterComponent],
-    exports: [CobrancaMasterComponent]
-})
-export class CobrancaMasterModule { }
-
-@NgModule({
-    imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
         ModalModule, SelectModule, Ng2AutoCompleteModule, BusyModule, TooltipModule],
     providers: [CobrancaService, ProcessoService],
-    declarations: [CobrancaDetailComponent],
-    exports: [CobrancaDetailComponent]
+    declarations: [CobrancaDetailComponent, CobrancaMasterComponent],
+    exports: [CobrancaDetailComponent, CobrancaMasterComponent]
 })
-export class CobrancaDetailModule { }
+export class CobrancaModule { }

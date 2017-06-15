@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Rx';
 import { Config } from '../../shared/config/env.config';
-import { Atividade, TipoAtividade } from './atividade.model';
+import { Atividade, TipoAtividade, Colaborador } from './atividade.model';
 import { IKeyValuePair } from '../../shared/interfaces';
 
 @Injectable()
@@ -13,6 +13,7 @@ export class AtividadeService {
     private url: string = Config.API + 'atividade';
     private urlTipoAtividade: string = Config.API + 'tipoatividade';
     private urlExecucao: string = Config.API + 'execucao';
+    private urlAtividadeResponsavel: string = Config.API + 'atividaderesponsavel';
 
     constructor(private http: Http) { }
 
@@ -31,6 +32,12 @@ export class AtividadeService {
         params.set('all', all ? 'true' : 'false');
 
         return this.http.get(this.url + '/currentuser', { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    getAtividadesResponsavel(): Observable<Colaborador[]> {
+        return this.http.get(this.urlAtividadeResponsavel)
             .map((res: Response) => res.json())
             .catch(this.handleError);
     }

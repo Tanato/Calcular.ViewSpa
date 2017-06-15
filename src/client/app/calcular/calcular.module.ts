@@ -10,8 +10,8 @@ import { UsuarioMasterModule, UsuarioDetailModule, UsuarioAlterarSenhaModule } f
 import { HonorarioMasterModule, HonorarioDetailModule } from './honorario/honorario.module';
 import { ServicoMasterModule, ServicoDetailModule, TipoServicoModule } from './servico/servico.module';
 import { EventoMasterModule } from './evento/evento.module';
-import { TipoAtividadeModule, AtividadeExecucaoDetailModule, AtividadeExecucaoMasterModule } from './atividade/atividade.module';
-import { CobrancaMasterModule, CobrancaDetailModule } from './cobranca/cobranca.module';
+import { TipoAtividadeModule, AtividadeExecucaoModule, AtividadeResponsavelModule } from './atividade/atividade.module';
+import { CobrancaModule } from './cobranca/cobranca.module';
 import { PropostaMasterModule, PropostaDetailModule } from './proposta/proposta.module';
 import { ComissaoModule } from './comissao/comissao.module';
 import { SharedModule } from '../shared/shared.module';
@@ -20,7 +20,7 @@ import { CalcularComponent } from './calcular.component';
 
 import { HomeModule } from './home/home.module';
 
-import {  } from '../shared';
+import { } from '../shared';
 
 import { TopNavComponent } from '../shared/index';
 import { SidebarComponent } from '../shared/index';
@@ -44,10 +44,9 @@ import { SidebarComponent } from '../shared/index';
         TipoServicoModule,
         EventoMasterModule,
         TipoAtividadeModule,
-        AtividadeExecucaoMasterModule,
-        AtividadeExecucaoDetailModule,
-        CobrancaMasterModule,
-        CobrancaDetailModule,
+        AtividadeExecucaoModule,
+        AtividadeResponsavelModule,
+        CobrancaModule,
         PropostaMasterModule,
         PropostaDetailModule,
         ComissaoModule,

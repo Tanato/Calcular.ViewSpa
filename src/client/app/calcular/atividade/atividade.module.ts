@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TipoAtividadeComponent } from './atividade.tipo.component';
 import { AtividadeExecucaoMasterComponent } from './execucao.master.component';
 import { AtividadeExecucaoDetailComponent } from './execucao.detail.component';
+import { AtividadeResponsavelComponent } from './atividade.responsavel.component';
 
 import { AtividadeService } from './atividade.service';
 
@@ -27,16 +28,16 @@ export class TipoAtividadeModule { }
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
         SelectModule, Ng2AutoCompleteModule, BusyModule],
     providers: [AtividadeService],
-    declarations: [AtividadeExecucaoMasterComponent],
-    exports: [AtividadeExecucaoMasterComponent]
+    declarations: [AtividadeExecucaoMasterComponent, AtividadeExecucaoDetailComponent],
+    exports: [AtividadeExecucaoMasterComponent, AtividadeExecucaoDetailComponent]
 })
-export class AtividadeExecucaoMasterModule { }
+export class AtividadeExecucaoModule { }
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
         SelectModule, Ng2AutoCompleteModule, BusyModule],
     providers: [AtividadeService],
-    declarations: [AtividadeExecucaoDetailComponent],
-    exports: [AtividadeExecucaoDetailComponent]
+    declarations: [AtividadeResponsavelComponent],
+    exports: [AtividadeResponsavelComponent]
 })
-export class AtividadeExecucaoDetailModule { }
+export class AtividadeResponsavelModule { }

@@ -6,6 +6,9 @@
 		<a [routerLink]="['home']" [routerLinkActive]="['router-link-active']" class="list-group-item">
 			<i class="fa fa-fw fa-calendar-minus-o"></i> Eventos
 		</a>
+		<!--<a [routerLink]="['/calcular/atividade/resposavel/status']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+			<i class="fa fa-fw fa-calendar-minus-o"></i> Status Colaborador
+		</a>-->
 		<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
 			<a class="list-group-item" (click)="addExpandClass('cliente')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'cliente'" [class.fa-chevron-right]="showMenu !== 'cliente'"></i>&nbsp; Cliente</span>
@@ -21,7 +24,7 @@
 			</li>
 		</div>
 
-		<div class="nested-menu" *ngIf="!isInRole('Colaborador Externo')">
+		<div class="nested-menu" *ngIf="!isInRole('Colaborador Externo') && (isInRole('Administrativo') || isInRole('Gerencial') || isInRole('Calculista') || isInRole('Revisor'))">
 			<a class="list-group-item" (click)="addExpandClass('processo')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'processo'" [class.fa-chevron-right]="showMenu !== 'processo'"></i>&nbsp; Processo</span>
 			</a>
@@ -43,7 +46,7 @@
 			</li>
 		</div>
 
-		<div class="nested-menu" *ngIf="!isInRole('Colaborador Externo')">
+		<div class="nested-menu" *ngIf="!isInRole('Colaborador Externo') && (isInRole('Administrativo') || isInRole('Gerencial') || isInRole('Calculista') || isInRole('Revisor'))">
 			<a class="list-group-item" (click)="addExpandClass('servico')">
 				<span><i class="fa" [class.fa-chevron-down]="showMenu === 'servico'" [class.fa-chevron-right]="showMenu !== 'servico'"></i>&nbsp; Serviço</span>
 			</a>
@@ -77,7 +80,7 @@
 			<i class="fa fa-fw fa-hourglass-half"></i> Atividades
 			</a>
 
-			<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
+			<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial') || isInRole('Financeiro')">
 				<a class="list-group-item" (click)="addExpandClass('honorario')">
 					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'honorario'" [class.fa-chevron-right]="showMenu !== 'honorario'"></i>&nbsp; Honorário</span>
 				</a>
@@ -97,7 +100,7 @@
 						</li>
 					</ul>
 					<ul class="submenu">
-						<li>
+						<li *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
 							<a routerLink="/calcular/honorario/proposta" [routerLinkActive]="['router-link-active']" class="list-group-item">
 								<i class="fa fa-fw fa-handshake-o"></i> Proposta
 							</a>

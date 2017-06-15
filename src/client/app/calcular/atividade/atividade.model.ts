@@ -29,3 +29,10 @@ export class TipoAtividade {
     id: number;
     nome: string;
 }
+
+export class Colaborador {
+    id: number;
+    userName: string;
+    name: string;
+    atividades: Atividade[];
+}
