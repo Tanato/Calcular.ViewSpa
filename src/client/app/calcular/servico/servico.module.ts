@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { ServicoMasterComponent } from './servico.master.component';
 import { ServicoDetailComponent } from './servico.detail.component';
+import { ServicoHistoricoMasterComponent } from './historico.master.component';
+import { ServicoHistoricoDetailComponent } from './historico.detail.component';
 import { TipoServicoComponent } from './servico.tipo.component';
 import { FilterEtapaAtividadePipe } from './servico.filter.pipes';
 
@@ -28,18 +30,18 @@ export class TipoServicoModule { }
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
-        ModalModule, SelectModule, BusyModule],
+        ModalModule, SelectModule, Ng2AutoCompleteModule, BusyModule],
     providers: [ServicoService, ProcessoService, AtividadeService],
-    declarations: [ServicoMasterComponent],
-    exports: [ServicoMasterComponent]
+    declarations: [ServicoHistoricoMasterComponent, ServicoHistoricoDetailComponent],
+    exports: [ServicoHistoricoMasterComponent, ServicoHistoricoDetailComponent]
 })
-export class ServicoMasterModule { }
+export class HistoricoServicoModule { }
 
 @NgModule({
     imports: [CommonModule, PaginationModule, RouterModule, TextMaskModule,
         ModalModule, SelectModule, Ng2AutoCompleteModule, BusyModule],
     providers: [ServicoService, ProcessoService, AtividadeService],
-    declarations: [ServicoDetailComponent, FilterEtapaAtividadePipe],
-    exports: [ServicoDetailComponent]
+    declarations: [ServicoMasterComponent, ServicoDetailComponent, FilterEtapaAtividadePipe],
+    exports: [ServicoMasterComponent, ServicoDetailComponent]
 })
-export class ServicoDetailModule { }
+export class ServicoModule { }

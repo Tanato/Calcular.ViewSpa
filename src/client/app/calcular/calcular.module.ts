@@ -8,7 +8,7 @@ import { ClienteModule } from './cliente/cliente.module';
 import { ProcessoModule } from './processo/processo.module';
 import { UsuarioMasterModule, UsuarioDetailModule, UsuarioAlterarSenhaModule } from './usuario/usuario.module';
 import { HonorarioMasterModule, HonorarioDetailModule } from './honorario/honorario.module';
-import { ServicoMasterModule, ServicoDetailModule, TipoServicoModule } from './servico/servico.module';
+import { ServicoModule, HistoricoServicoModule, TipoServicoModule } from './servico/servico.module';
 import { EventoMasterModule } from './evento/evento.module';
 import { TipoAtividadeModule, AtividadeExecucaoModule, AtividadeResponsavelModule } from './atividade/atividade.module';
 import { CobrancaModule } from './cobranca/cobranca.module';
@@ -39,8 +39,8 @@ import { SidebarComponent } from '../shared/index';
         UsuarioAlterarSenhaModule,
         HonorarioMasterModule,
         HonorarioDetailModule,
-        ServicoMasterModule,
-        ServicoDetailModule,
+        HistoricoServicoModule,
+        ServicoModule,
         TipoServicoModule,
         EventoMasterModule,
         TipoAtividadeModule,

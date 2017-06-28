@@ -43,6 +43,15 @@ export class ServicoService {
             .catch(this.handleError);
     }
 
+    getServicosByProcessoId(processoId: string): Observable<Servico[]> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('processoId', processoId);
+
+        return this.http.get(this.url + '/processo', { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     getServicosSelect(numero: string): Observable<Servico[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('filter', numero);

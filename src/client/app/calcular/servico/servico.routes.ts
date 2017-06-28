@@ -1,8 +1,12 @@
 import { Route } from '@angular/router';
 
-import { ServicoMasterComponent } from './index';
-import { ServicoDetailComponent } from './index';
-import { TipoServicoComponent } from './index';
+import {
+	ServicoMasterComponent,
+	ServicoDetailComponent,
+	TipoServicoComponent,
+	ServicoHistoricoMasterComponent,
+	ServicoHistoricoDetailComponent,
+} from './index';
 
 export const ServicoRoutes: Route[] = [
 	{
@@ -16,5 +20,13 @@ export const ServicoRoutes: Route[] = [
 	{
 		path: 'servico/detail',
 		component: ServicoDetailComponent
+	},
+	{
+		path: 'servico/historico',
+		component: ServicoHistoricoMasterComponent
+	},
+	{
+		path: 'servico/historico/detail',
+		component: ServicoHistoricoDetailComponent
 	},
 ];

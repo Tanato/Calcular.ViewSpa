@@ -1,0 +1,142 @@
+<div class="container-fluid" [ngBusy]="busy">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li><a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li><a href="Javascript:void(0);" routerLink="/calcular/servico/cadastro">Serviços</a>
+				</li>
+				<li class="active">
+					Histórico do Processo
+				</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row col-xl-12">
+		<form role="form" #form="ngForm">
+			<fieldset [disabled]="blockEdit">
+
+				<div class="row">
+					<div class="form-group col-lg-3">
+						<label>Tipo:</label>
+						<select class="form-control" id="localSelect" [ngModel]="model.local"
+							name="localSelect">
+							<option *ngFor="let item of local" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Numero:</label>
+						<input class="form-control" id="numero" [ngModel]="model.numero" name="numero" />
+					</div>
+
+					<div class="form-group col-lg-6">
+						<label>Advogado/Cliente:</label>
+						<input class="form-control" ng2-auto-complete no-match-found-text="sem registro, cadastrar novo cliente" [source]="advogados"
+							[ngModel]="model.advogado" (ngModelChange)="refreshValueAdvogado($event)" value-property-name="none" display-property-name="nome"
+							name="advogadoSelect" min-chars="3" accept-user-input="false">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6">
+						<label>Autor:</label>
+						<input class="form-control" [ngModel]="model.autor" name="autor"/>
+					</div>
+					<div class="form-group col-lg-6">
+						<label>Réu:</label>
+						<input class="form-control" [ngModel]="model.reu" name="reu" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-3">
+						<label>Parte:</label>
+						<select class="form-control" id="parteSelect" [ngModel]="model.parte" name="parteSelect">
+							<option *ngFor="let item of parte" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-3">
+						<label>Vara:</label>
+						<input class="form-control" id="vara" [ngModel]="model.vara" name="vara"/>
+					</div>
+					<div class="form-group col-lg-2">
+						<label>Nº Autores:</label>
+						<input type="number" class="form-control" id="numeroAutores" [ngModel]="model.numeroAutores" name="numeroAutores"/>
+					</div>
+					<div class="form-group col-lg-4">
+						<label>Fase Processual:</label>
+						<select class="form-control" [ngModel]="model.faseProcessoId" name="faseProcessoSelect">
+							<option *ngFor="let item of faseProcesso" [ngValue]="item.key">{{item.value}}</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group col-lg-6" [hidden]="model.parte === 2"></div>
+					<div class="form-group col-lg-6" [hidden]="model.parte !== 2">
+						<label>Perito Nomeado:</label>
+						<input class="form-control" ng2-auto-complete [source]="perito" id="perito" [(ngModel)]="model.perito" name="perito">
+					</div>
+					<div class="form-group col-lg-6">
+						<label>Indicação:</label>
+						<input class="form-control" id="indicacao" [ngModel]="model.indicacao" name="indicacao">
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					 <div class="col-lg-12">
+						<div class="card card-default" *ngFor="let servico of servicos">
+							<div class="card-header">
+								&nbsp;
+								<div class="col-sm-4">
+									Serviço:&nbsp;<b>{{ servico.tipoServico.nome }}</b>
+								</div>
+								<div class="col-sm-3">
+									Status:&nbsp;<b>{{ statusDescription(servico.status) }}</b>
+								</div>
+								<div class="col-sm-2">
+									Entrada:&nbsp;<b>{{servico.entrada | date:"dd/MM/yyyy" }}</b>
+								</div>
+								<div *ngIf="servico.saida" class="col-sm-2">
+									Saída:&nbsp;<b>{{servico.saida | date:"dd/MM/yyyy" }}</b>
+								</div>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-hover table-striped table-sm">
+									<thead class="thead-default">
+										<tr>
+											<th width="20"></th>
+											<th width="250">Atividade</th>
+											<th>Responsável</th>
+											<th width="140">Entrega</th>
+											<th width="150">Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let item of servico?.atividades">
+											<td></td>
+											<td>{{ item?.tipoAtividade?.nome }}</td>
+											<td>{{ item?.responsavel?.name }}</td>
+											<td>{{ item.entrega | date:"dd/MM/yyyy" }}</td>
+											<td>{{ tipoExecucaoDescription(item.tipoExecucao) }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>	
+				</div>
+
+			</fieldset>
+
+			<div class="row">
+				<div class="col-lg-10">
+				</div>
+				<div class="col-lg-2">
+					<button routerLink="/calcular/servico/historico" class="btn btn-default btn-block">Cancelar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

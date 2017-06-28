@@ -72,6 +72,13 @@
 						</a>
 					</li>
 				</ul>
+				<ul class="submenu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
+					<li>
+						<a routerLink="/calcular/servico/historico" [routerLinkActive]="['router-link-active']" class="list-group-item">
+							<i class="fa fa-fw fa-search"></i> Histórico
+						</a>
+					</li>
+				</ul>
 			</li>
 		</div>
 
