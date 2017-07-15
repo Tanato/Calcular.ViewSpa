@@ -44,6 +44,15 @@ export class UsuarioDetailComponent implements OnInit {
         this.blockEdit = false;
     }
 
+    resetarSenha() {
+        this.service.postResetarSenha(this.model)
+            .subscribe(x => {
+                this.toastr.success('Senha do usuário ' + this.model.name + ' resetada com sucesso');
+            }, x => {
+                this.toastr.error(x);
+            });
+    }
+
     ngOnInit() {
 
         this.busy = this.service.getRolesSelect()

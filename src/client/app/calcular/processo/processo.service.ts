@@ -213,7 +213,8 @@ export class ProcessoService {
             body.forEach((element: any) => {
                 switch (element.key) {
                     case 0:
-                        element.mask = [/\d/, /\d/, /\d/, /\d/, '.', /\d/, /\d/, '.', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/];
+                        element.mask = [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '.',
+                        /\d/, /\d/, /\d/, /\d/, '.', /\d/, '.', /\d/, /\d/, '.', /\d/, /\d/, /\d/, /\d/];
                         break;
                     case 1:
                         element.mask = [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, '.',

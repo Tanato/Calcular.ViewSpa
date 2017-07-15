@@ -31,7 +31,7 @@
 					</div>
 
 					<div class="form-group col-lg-6">
-						<label>Advogado/Cliente:</label>
+						<label>Cliente:</label>
 						<input class="form-control" ng2-auto-complete no-match-found-text="sem registro, cadastrar novo cliente" [source]="advogados"
 							[ngModel]="model.advogado" (ngModelChange)="refreshValueAdvogado($event)" value-property-name="none" display-property-name="nome"
 							name="advogadoSelect" min-chars="3" accept-user-input="false">

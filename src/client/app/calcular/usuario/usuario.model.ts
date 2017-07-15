@@ -2,6 +2,7 @@ export class Usuario {
     id: number;
     userName: string;
     nome: string;
+    name: string;
     birthDate: any;
     email: string;
     roles: string[];

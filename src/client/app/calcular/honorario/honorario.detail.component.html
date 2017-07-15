@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group col-lg-6">
-                <label>Advogado/Cliente:</label>
+                <label>Cliente:</label>
                 <input class="form-control" id="advogado" [ngModel]="model?.advogado?.nome" name="advogado" required disabled/>
             </div>
         </div>
@@ -75,7 +75,7 @@
                             </select>
                         </div>
                         <div class="form-group col-lg-3">
-                            <label>Forma de Pagamento:</label>
+                            <label>Forma:</label>
                             <select class="form-control" id="tipoPagamentoSelect" [disabled]="honorario.registro !== 0 && honorario.registro !== 1" [(ngModel)]="honorario.tipoPagamento"
                                 name="tipoPagamentoSelect" required>
                                 <option *ngFor="let item of tipoPagamento" [ngValue]="item.key">{{item.value}}</option>

@@ -26,8 +26,7 @@ import { BusyModule } from 'angular2-busy';
 export class UsuarioMasterModule { }
 
 @NgModule({
-    imports: [CommonModule, PaginationModule,
-        RouterModule, TextMaskModule,
+    imports: [CommonModule, PaginationModule, RouterModule, ModalModule, TextMaskModule,
         Ng2AutoCompleteModule, BusyModule],
     providers: [UsuarioService],
     declarations: [UsuarioDetailComponent],

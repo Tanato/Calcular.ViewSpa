@@ -234,3 +234,11 @@ td {
         height: 900px; /* control height here */
     }
 }
+
+.autorReuTooltip .tooltip .tooltip-inner {
+    text-align: left;
+    margin-left: 70px !important;
+    max-width: 100% !important;
+    width: 17rem;
+    white-space: normal;
+}

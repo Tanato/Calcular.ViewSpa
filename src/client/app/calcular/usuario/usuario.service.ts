@@ -51,6 +51,11 @@ export class UsuarioService {
             .catch(this.handleError);
     }
 
+    postResetarSenha(user: Usuario) {
+        return this.http.post(this.urlAccount + '/resetpassword', user)
+            .catch(this.handleError);
+    }
+
     deleteUsuario(id: number) {
         return this.http.delete(this.url + '/' + id)
             .map(this.handleResult)
