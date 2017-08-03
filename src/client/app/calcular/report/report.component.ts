@@ -35,7 +35,7 @@ export class ReportCustoProcessoComponent implements OnInit {
 export class ReportHonorariosComponent implements OnInit {
 
     private busy: Subscription;
-    private data: any = {};
+    private data: any = null;
     private mesFilter: number;
     private anoFilter: number;
     private quantidadeMesesFilter: number = 4;
@@ -105,3 +105,59 @@ export class ReportProdutividadeColaboradorComponent implements OnInit {
     }
 }
 
+@Component({
+    moduleId: module.id,
+    templateUrl: './report.tipo-processo.html',
+})
+export class ReportTipoProcessoComponent implements OnInit {
+
+    private busy: Subscription;
+    private data: any = {};
+    private mesFilter: number;
+    private anoFilter: number;
+    private quantidadeMesesFilter: number = 12;
+
+    constructor(private service: ReportService) { }
+
+    ngOnInit() {
+        this.filter();
+    }
+
+    filter() {
+        var date: Date = new Date();
+        if (this.anoFilter && this.mesFilter) {
+            date = new Date(this.anoFilter, this.mesFilter - 1);
+        } else {
+            date = new Date(date.getFullYear(), date.getMonth());
+        }
+        this.busy = this.service.getTipoProcesso(date, this.quantidadeMesesFilter)
+            .subscribe(response => {
+                this.data = response;
+                var produtividadecolaborador: any = $('#tipoProcessoChart');
+                produtividadecolaborador.highcharts({
+
+                    colors: ['#7cb5ec', '#f7a35c', '#8bbc21' ],
+
+                    title: { text: '' },
+
+                    xAxis: { categories: response.meses, crosshair: true },
+
+                    yAxis: { title: { text: 'Quantidade' } },
+
+                    series: [{
+                        name: 'Oficial',
+                        type: 'column',
+                        data: response.quantidadeOficial
+                    }, {
+                        name: 'Assistência',
+                        type: 'column',
+                        data: response.quantidadeAssistencia
+                    }, {
+                        name: 'Novo',
+                        type: 'spline',
+                        data: response.quantidadeNovos
+                    }]
+                });
+            });
+    }
+}

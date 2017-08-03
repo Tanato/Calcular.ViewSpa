@@ -11,7 +11,8 @@ import { SharedModule } from '../../shared/shared.module';
 import {
     ReportCustoProcessoComponent,
     ReportProdutividadeColaboradorComponent,
-    ReportHonorariosComponent
+    ReportHonorariosComponent,
+    ReportTipoProcessoComponent
 } from './report.component';
 
 @NgModule({
@@ -25,11 +26,13 @@ import {
     providers: [ReportService],
     declarations: [ReportCustoProcessoComponent,
         ReportProdutividadeColaboradorComponent,
-        ReportHonorariosComponent
+        ReportHonorariosComponent,
+        ReportTipoProcessoComponent
     ],
     exports: [ReportCustoProcessoComponent,
         ReportProdutividadeColaboradorComponent,
-        ReportHonorariosComponent
+        ReportHonorariosComponent,
+        ReportTipoProcessoComponent
     ]
 })
 export class ReportModule { }

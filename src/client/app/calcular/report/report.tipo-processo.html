@@ -1,0 +1,63 @@
+<div class="container-fluid" [ngBusy]="busy">
+	<!-- Report Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li>
+					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li class="active"> Relatório Tipo de Processo </li>
+			</ol>
+		</div>
+    </div>
+    <!-- Report Filter -->
+	<div class="row">
+		<div class="col-xl-7">
+		</div>
+		<div class="col-xl-2">
+			<label>Data Final:</label>
+			<month-picker name="mes" [(model)]="mesFilter"></month-picker>
+		</div>
+		<div class="col-xl-2">
+			<label>&nbsp;</label>
+			<year-picker name="year" [(model)]="anoFilter" yearBase="2016"></year-picker>
+		</div>
+		<div class="col-xl-1">
+			<label>&nbsp;</label>
+			<button class="btn btn-primary btn-block" (click)="filter()"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+	<br>
+    <!-- Report Body -->
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-hover table-striped table-sm">
+				<thead>
+					<tr>
+						<th width="100"></th>
+						<th *ngFor="let item of data?.meses">{{ item }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					 <tr>
+						<td>Oficial</td>
+						<td *ngFor="let item of data?.quantidadeOficial">{{ item }}</td>
+					</tr> 
+					<tr>
+						<td>Assistência</td>
+						<td *ngFor="let item of data?.quantidadeAssistencia">{{ item }}</td>
+					</tr> 
+					<tr>
+						<td>Novo</td>
+						<td *ngFor="let item of data?.quantidadeNovos">{{ item }}</td>
+					</tr> 
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div id="tipoProcessoChart">
+	</div>
+    <hr>
+</div>

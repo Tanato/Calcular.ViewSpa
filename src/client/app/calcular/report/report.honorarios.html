@@ -46,7 +46,7 @@
 	</div>
 	<br>
     <!-- Report Body -->
-	<div class="row">
+	<div [hidden]="!data" class="row">
 		<table class="table table-nonfluid table-hover table-striped table-sm">
 			<thead>
 				<tr>
@@ -94,7 +94,7 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="row">
+	<div [hidden]="!data" class="row">
 		<table class="table table-nonfluid table-hover table-striped table-sm">
 			<thead>
 				<tr>
@@ -107,26 +107,26 @@
 				<tr>
 					<td width="110" max-width="100" class="tdReport" rowspan="6">Honorários Pendentes</td>
 					<td width="110" max-width="100" class="tdReport" rowspan="2">Assistência</td>
-					<td width="110" max-width="100">R$ {{ data.pendenteAssistenciaValor?.toFixed(2) }}</td>
+					<td width="110" max-width="100">R$ {{ data?.pendenteAssistenciaValor?.toFixed(2) }}</td>
 				</tr>
 				<tr>
-					<td>{{ data.pendenteAssistenciaQuantidade }}</td>
+					<td>{{ data?.pendenteAssistenciaQuantidade }}</td>
 				</tr>
 
 				<tr>
 					<td class="tdReport" rowspan="2">Oficial</td>
-					<td>R$ {{ data.pendenteOficialValor?.toFixed(2) }}</td>
+					<td>R$ {{ data?.pendenteOficialValor?.toFixed(2) }}</td>
 				</tr>
 				<tr>
-					<td>{{ data.pendenteOficialQuantidade }}</td>
+					<td>{{ data?.pendenteOficialQuantidade }}</td>
 				</tr>
 
 				<tr>
 					<td class="tdReport" rowspan="2">Total</td>
-					<td>R$ {{ data.totalPendenteValor?.toFixed(2) }}</td>
+					<td>R$ {{ data?.totalPendenteValor?.toFixed(2) }}</td>
 				</tr>
 				<tr>
-					<td>{{ data.totalPendenteQuantidade }}</td>
+					<td>{{ data?.totalPendenteQuantidade }}</td>
 				</tr>
 			</tbody>
 		</table>

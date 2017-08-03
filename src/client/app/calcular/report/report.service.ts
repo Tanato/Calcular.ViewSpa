@@ -40,6 +40,16 @@ export class ReportService {
             .catch(this.handleError);
     }
 
+    getTipoProcesso(data: Date, quantidadeMesesFilter: number): Observable<any> {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('dataFim', data.toISOString());
+        params.set('quantidadeMeses', quantidadeMesesFilter.toString());
+
+        return this.http.get(this.url + '/tipoprocesso', { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     private handleResult(res: Response) {
         let body = res.json();
         return body || {};

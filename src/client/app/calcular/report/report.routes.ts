@@ -1,7 +1,8 @@
 import { Route } from '@angular/router';
 import { ReportCustoProcessoComponent,
 	ReportProdutividadeColaboradorComponent,
-	ReportHonorariosComponent
+	ReportHonorariosComponent,
+	ReportTipoProcessoComponent
  } from './index';
 
 export const ReportRoutes: Route[] = [
@@ -16,5 +17,9 @@ export const ReportRoutes: Route[] = [
 	{
 		path: 'report/honorarios',
 		component: ReportHonorariosComponent
+	},
+	{
+		path: 'report/tipoprocesso',
+		component: ReportTipoProcessoComponent
 	}
 ];
