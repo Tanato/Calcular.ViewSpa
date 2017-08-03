@@ -145,22 +145,22 @@
 				<li class="nested" [ngClass]="{'expand' : showMenu === 'relatorios' }">
 					<ul class="submenu">
 						<li>
-							<a [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Financeiro
+							<a routerLink="/calcular/report/custoprocesso" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-line-chart"></i> Custo/Processo
 							</a>
 						</li>
 					</ul>
 					<ul class="submenu">
 						<li>
-							<a [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Cliente
+							<a routerLink="/calcular/report/produtividadecolaborador" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-line-chart"></i> Produtividade por Colaborador
 							</a>
 						</li>
 					</ul>
 					<ul class="submenu">
 						<li>
-							<a [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Equipe
+							<a routerLink="/calcular/report/honorarios" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-line-chart"></i> Honorários
 							</a>
 						</li>
 					</ul>

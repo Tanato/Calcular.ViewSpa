@@ -14,12 +14,12 @@ import { TipoAtividadeModule, AtividadeExecucaoModule, AtividadeResponsavelModul
 import { CobrancaModule } from './cobranca/cobranca.module';
 import { PropostaMasterModule, PropostaDetailModule } from './proposta/proposta.module';
 import { ComissaoModule } from './comissao/comissao.module';
-import { SharedModule } from '../shared/shared.module';
-
-import { CalcularComponent } from './calcular.component';
+import { ReportModule } from './report/report.module';
 
 import { HomeModule } from './home/home.module';
+import { CalcularComponent } from './calcular.component';
 
+import { SharedModule } from '../shared/shared.module';
 import { } from '../shared';
 
 import { TopNavComponent } from '../shared/index';
@@ -49,6 +49,7 @@ import { SidebarComponent } from '../shared/index';
         CobrancaModule,
         PropostaMasterModule,
         PropostaDetailModule,
+        ReportModule,
         ComissaoModule,
         SharedModule.forRoot(),
     ],
