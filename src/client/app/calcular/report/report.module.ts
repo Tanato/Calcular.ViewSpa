@@ -12,7 +12,8 @@ import {
     ReportCustoProcessoComponent,
     ReportProdutividadeColaboradorComponent,
     ReportHonorariosComponent,
-    ReportTipoProcessoComponent
+    ReportTipoProcessoComponent,
+    ReportTempoProdutividadeComponent
 } from './report.component';
 
 @NgModule({
@@ -27,12 +28,14 @@ import {
     declarations: [ReportCustoProcessoComponent,
         ReportProdutividadeColaboradorComponent,
         ReportHonorariosComponent,
-        ReportTipoProcessoComponent
+        ReportTipoProcessoComponent,
+        ReportTempoProdutividadeComponent
     ],
     exports: [ReportCustoProcessoComponent,
         ReportProdutividadeColaboradorComponent,
         ReportHonorariosComponent,
-        ReportTipoProcessoComponent
+        ReportTipoProcessoComponent,
+        ReportTempoProdutividadeComponent
     ]
 })
 export class ReportModule { }

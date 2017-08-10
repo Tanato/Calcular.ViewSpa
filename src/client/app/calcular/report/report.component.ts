@@ -8,7 +8,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../shared/user/user.service';
 import { CustoProcesso, ProdutividadeColaborador } from './report.model';
-
+import * as Highcharts from 'highcharts';
 import * as _ from 'lodash';
 
 @Component({
@@ -136,7 +136,7 @@ export class ReportTipoProcessoComponent implements OnInit {
                 var produtividadecolaborador: any = $('#tipoProcessoChart');
                 produtividadecolaborador.highcharts({
 
-                    colors: ['#7cb5ec', '#f7a35c', '#8bbc21' ],
+                    colors: ['#7cb5ec', '#f7a35c', '#8bbc21'],
 
                     title: { text: '' },
 
@@ -159,5 +159,90 @@ export class ReportTipoProcessoComponent implements OnInit {
                     }]
                 });
             });
+    }
+}
+
+@Component({
+    moduleId: module.id,
+    templateUrl: './report.tempo-produtividade.html',
+})
+export class ReportTempoProdutividadeComponent implements OnInit {
+
+    private busy: Subscription;
+    private data: any = {};
+    private tipoAtividades: any[];
+    private mesFilter: number;
+    private anoFilter: number;
+
+    constructor(private service: ReportService) { }
+
+    ngOnInit() {
+        this.anoFilter = new Date().getFullYear();
+        this.filter();
+    }
+
+    filter() {
+        var date: Date = new Date();
+        if (this.anoFilter && this.mesFilter) {
+            date = new Date(this.anoFilter, this.mesFilter - 1);
+        } else {
+            date = new Date(date.getFullYear(), date.getMonth());
+        }
+        this.busy = this.service.getTempoProdutividade(date)
+            .subscribe(response => {
+                this.data = response;
+                this.tipoAtividades = response.tipoAtividade;
+
+                this.createGraph(this.data.reportCalculo, this.data.calculos,
+                    '#tempoProdutividadeCalculo', 'Cálculo Mês');
+                this.createGraph(this.data.reportLevantamento, this.data.levantamentos,
+                    '#tempoProdutividadeLevantamento', 'Levantamento Mês');
+                this.createGraph(this.data.reportDemais, this.data.demais,
+                    '#tempoProdutividadeDemais', 'Demais Atividades Mês');
+                this.createGraph(this.data.reportCalculoAnual, this.data.calculosAnual,
+                    '#tempoProdutividadeCalculoAnual', 'Cálculo Anual');
+            });
+    }
+
+    createGraph(data: any, categories: any[], element: string, title: string) {
+        var produtividadecolaborador: any = $(element);
+        produtividadecolaborador.highcharts({
+            colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
+                '#492970', '#f28f43', '#77a1e5', '#c42525'],
+
+            title: { text: title },
+
+            xAxis: { categories: categories },
+
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>Média: ' +
+                        Highcharts.dateFormat('%H:%M:%S', this.y);
+                }
+            },
+
+            plotOptions: {
+                areaspline: {
+                    fillOpacity: 0.25
+                }
+            },
+
+            yAxis: {
+                title: { text: 'Tempo' },
+                type: 'datetime',
+                dateTimeLabelFormats: { //force all formats to be hour:minute:second
+                    second: '%H:%M:%S',
+                    minute: '%H:%M:%S',
+                    hour: '%H:%M:%S',
+                    day: '%H:%M:%S',
+                    week: '%H:%M:%S',
+                    month: '%H:%M:%S',
+                    year: '%H:%M:%S'
+                }
+            },
+
+            series: data
+        });
+
     }
 }

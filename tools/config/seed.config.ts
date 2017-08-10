@@ -339,6 +339,7 @@ export class SeedConfig {
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
 
       'lodash': 'node_modules/lodash/lodash.js',
+      'highcharts': 'node_modules/highcharts/highcharts.js',
       'angular2-text-mask': 'node_modules/angular2-text-mask/dist/angular2TextMask.js',
       'ng2-toastr': 'node_modules/ng2-toastr/bundles/ng2-toastr.js',
       'ts-metadata-helper': 'npm:ts-metadata-helper',
@@ -421,6 +422,10 @@ export class SeedConfig {
       },
       'lodash': {
         main: 'lodash.js',
+        defaultExtension: 'js'
+      },
+      'highcharts': {
+        main: 'highcharts.js',
         defaultExtension: 'js'
       },
       'ng2-auto-complete': {

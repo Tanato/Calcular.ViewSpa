@@ -27,8 +27,7 @@ export class ProjectConfig extends SeedConfig {
       { src: 'ng2-toastr/bundles/ng2-toastr.min.css', inject: true },
       { src: 'select2/dist/css/select2.css', inject: true },
       { src: 'angular2-busy/build/style/busy.css', inject: true},
-      { src: 'jquery/dist/jquery.min.js', inject: 'libs' },
-      { src: 'highcharts/highcharts.js', inject: 'libs' },
+      { src: 'jquery/dist/jquery.min.js', inject: 'libs' }
     ];
 
     // Add `local` third-party libraries to be injected/bundled.

@@ -1,0 +1,61 @@
+<div class="container-fluid" [ngBusy]="busy">
+	<!-- Report Heading -->
+	<div class="row">
+		<div class="col-xl-12">
+			<ol class="breadcrumb">
+				<li>
+					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
+				</li>
+				<li class="active"> Relatório Tempo Produtividade </li>
+			</ol>
+		</div>
+    </div>
+    <!-- Report Filter -->
+	<div class="row">
+		<div class="col-xl-7">
+		</div>
+		<div class="col-xl-2">
+			<label>Data Final:</label>
+			<month-picker name="mes" [(model)]="mesFilter"></month-picker>
+		</div>
+		<div class="col-xl-2">
+			<label>&nbsp;</label>
+			<year-picker name="year" [(model)]="anoFilter" yearBase="2016"></year-picker>
+		</div>
+		<div class="col-xl-1">
+			<label>&nbsp;</label>
+			<button class="btn btn-primary btn-block" (click)="filter()"><i class="fa fa-search"></i></button>
+		</div>
+	</div>
+    <!-- Report Body -->
+	<div class="row">
+		<!-- <div class="table-responsive">
+			<table class="table table-hover table-striped table-sm">
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of data">
+						<td>{{ item.nome }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div> -->
+	</div>
+	<hr>
+	<div class="row">
+		<div id="tempoProdutividadeCalculo"></div>
+	</div>
+	<div class="row">
+		<div id="tempoProdutividadeLevantamento"></div>
+	</div>
+	<div class="row">
+		<div id="tempoProdutividadeDemais"></div>
+	</div>
+	<div class="row">
+		<div id="tempoProdutividadeCalculoAnual"></div>
+	</div>
+    <hr>
+</div>

@@ -50,6 +50,15 @@ export class ReportService {
             .catch(this.handleError);
     }
 
+    getTempoProdutividade(data: Date) {
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('mes', data.toISOString());
+
+        return this.http.get(this.url + '/tempoprodutividade', { search: params })
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
     private handleResult(res: Response) {
         let body = res.json();
         return body || {};
