@@ -128,13 +128,6 @@
 							</a>
 						</li>
 					</ul>
-					<!--<ul class="submenu" [hidden]="isInRole('Calculista')">
-						<li>
-							<a routerLink="/calcular/comissao/associados" [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-calculator"></i> Associados
-							</a>
-						</li>
-					</ul>-->
 				</li>
 			</div>
 
@@ -145,36 +138,36 @@
 				<li class="nested" [ngClass]="{'expand' : showMenu === 'relatorios' }">
 					<ul class="submenu">
 						<li>
-							<a routerLink="/calcular/report/custoprocesso" [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Custo/Processo
+							<a routerLink="/calcular/report/tipoprocesso" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Processo - Tipo
 							</a>
 						</li>
 					</ul>
 					<ul class="submenu">
 						<li>
 							<a routerLink="/calcular/report/produtividadecolaborador" [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Produtividade por Colaborador
-							</a>
-						</li>
-					</ul>
-					<ul class="submenu">
-						<li>
-							<a routerLink="/calcular/report/honorarios" [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Honorários
-							</a>
-						</li>
-					</ul>
-					<ul class="submenu">
-						<li>
-							<a routerLink="/calcular/report/tipoprocesso" [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Tipo Processo / Mês
+								<i class="fa fa-fw fa-table"></i> Colaborador - Atividades
 							</a>
 						</li>
 					</ul>
 					<ul class="submenu">
 						<li>
 							<a routerLink="/calcular/report/tempoprodutividade" [routerLinkActive]="['router-link-active']" class="list-group-item">
-								<i class="fa fa-fw fa-line-chart"></i> Tempo Colaborador
+								<i class="fa fa-fw fa-table"></i> Colaborador - Tempo
+							</a>
+						</li>
+					</ul>
+					<ul class="submenu">
+						<li>
+							<a routerLink="/calcular/report/custocomissao" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Custo - Comissão
+							</a>
+						</li>
+					</ul>
+					<ul class="submenu">
+						<li>
+							<a routerLink="/calcular/report/honorarios" [routerLinkActive]="['router-link-active']" class="list-group-item">
+								<i class="fa fa-fw fa-table"></i> Honorários
 							</a>
 						</li>
 					</ul>

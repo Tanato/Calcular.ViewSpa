@@ -26,7 +26,7 @@
 			<table class="table table-hover table-striped table-sm">
 				<thead>
 					<tr>
-						<th width="50"></th>
+						<th width="65"></th>
 						<th>Nome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
 						<th>Empresa</th>
 						<th width="160">Celular</th>
@@ -38,15 +38,16 @@
 				<tbody>
 					<tr *ngFor="let item of rows">
 						<td>
-							&nbsp; &nbsp;
+							&nbsp;&nbsp;
 							<a [routerLink]="['detail', {id: item.id}]"><i class="fa fa-edit"></i></a>
-							<!--<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
+							&nbsp;
+							<a (click)="closeModal.show()"><i class="fa fa-remove"></i></a>
 							<div bsModal #closeModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 								aria-hidden="true">
 								<div class="modal-dialog modal-sm">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title">Deseja excluir o registro?</h5>
+											<h5 class="modal-title">Deseja excluir o cliente?</h5>
 										</div>
 										<div class="modal-footer">
 											<button type="button" (click)="closeModal.hide()" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -54,7 +55,7 @@
 										</div>
 									</div>
 								</div>
-							</div>-->
+							</div>
 						</td>
 						<td>{{ item.nome }}</td>
 						<td>{{ item.empresa }}</td>

@@ -8,7 +8,7 @@ import { ReportCustoProcessoComponent,
 
 export const ReportRoutes: Route[] = [
 	{
-		path: 'report/custoprocesso',
+		path: 'report/custocomissao',
 		component: ReportCustoProcessoComponent
 	},
 	{

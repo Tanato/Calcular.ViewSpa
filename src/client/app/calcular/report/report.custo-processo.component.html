@@ -6,7 +6,7 @@
 				<li>
 					<a href="Javascript:void(0);" routerLink="/calcular/home">Calcular</a>
 				</li>
-				<li class="active"> Relatório Custo/Processo </li>
+				<li class="active"> Relatório Custo Comissão </li>
 			</ol>
 		</div>
     </div>
@@ -29,9 +29,8 @@
 						<th>Cliente</th>
 						<th>Empresa</th>
 						<th width="110">Nº Processos</th>
-						<th width="120">Total Honorário</th>
-						<th width="100">Total Custo</th>
-						<th width="100">Diferença</th>
+						<th width="120">Soma Honorários</th>
+						<th width="130">Soma Custos Comissão</th>
 						<th width="120">Média Honorário</th>
 						<th width="100">Média Custo</th>
 					</tr>
@@ -44,7 +43,6 @@
 						<td>{{ item.quantidadeProcessos }}</td>
 						<td>R$ {{ item.totalHonorario.toFixed(2) }}</td>
 						<td>R$ {{ item.totalCusto.toFixed(2) }}</td>
-						<td>R$ {{ item.diferenca.toFixed(2) }}</td>
 						<td>R$ {{ item.mediaHonorario.toFixed(2) }}</td>
 						<td>R$ {{ item.mediaCusto.toFixed(2) }}</td>
 					</tr>

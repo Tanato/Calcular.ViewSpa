@@ -32,7 +32,6 @@ export class ProcessoDetailComponent implements OnInit {
 
     private id: Observable<string>;
     private busy: Subscription;
-    private disableChangeNumero: boolean = false;
 
     constructor(public service: ProcessoService,
         private route: ActivatedRoute,
@@ -103,7 +102,6 @@ export class ProcessoDetailComponent implements OnInit {
                 this.busy = this.service.getProcessoById(id)
                     .subscribe((data: Processo) => {
                         this.model = data;
-                        this.disableChangeNumero = data.id && data.local !== 3;
                     });
             } else {
                 this.blockEdit = false;

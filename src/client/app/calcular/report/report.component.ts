@@ -194,13 +194,13 @@ export class ReportTempoProdutividadeComponent implements OnInit {
                 this.tipoAtividades = response.tipoAtividade;
 
                 this.createGraph(this.data.reportCalculo, this.data.calculos,
-                    '#tempoProdutividadeCalculo', 'Cálculo Mês');
-                this.createGraph(this.data.reportLevantamento, this.data.levantamentos,
-                    '#tempoProdutividadeLevantamento', 'Levantamento Mês');
-                this.createGraph(this.data.reportDemais, this.data.demais,
-                    '#tempoProdutividadeDemais', 'Demais Atividades Mês');
+                    '#tempoProdutividadeCalculo', 'Atividades de Cálculo - Tempo médio mensal');
                 this.createGraph(this.data.reportCalculoAnual, this.data.calculosAnual,
-                    '#tempoProdutividadeCalculoAnual', 'Cálculo Anual');
+                    '#tempoProdutividadeCalculoAnual', 'Atividades de Cálculo - Tempo médio anual');
+                this.createGraph(this.data.reportLevantamento, this.data.levantamentos,
+                    '#tempoProdutividadeLevantamento', 'Atividades de Levantamento - Tempo médio mensal');
+                this.createGraph(this.data.reportDemais, this.data.demais,
+                    '#tempoProdutividadeDemais', 'Atividades Diversas - Tempo médio mensal');
             });
     }
 
@@ -217,7 +217,8 @@ export class ReportTempoProdutividadeComponent implements OnInit {
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.series.name + '</b><br/>Média: ' +
-                        Highcharts.dateFormat('%H:%M:%S', this.y);
+                        Math.floor(this.y / 3600000) +
+                        Highcharts.dateFormat(':%M:%S', this.y);
                 }
             },
 
@@ -243,6 +244,5 @@ export class ReportTempoProdutividadeComponent implements OnInit {
 
             series: data
         });
-
     }
 }

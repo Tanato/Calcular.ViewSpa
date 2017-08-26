@@ -55,6 +55,9 @@ export class ClienteMasterComponent implements OnInit {
             .subscribe(x => {
                 this.toastr.success(this.modelName + ' excluído com sucesso!');
                 this.filter();
+            },
+            error => {
+                this.toastr.warning(error);
             });
     }
 
