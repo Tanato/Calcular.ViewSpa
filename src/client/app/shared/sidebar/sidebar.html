@@ -174,7 +174,7 @@
 				</li>
 			</div>
 
-			<div class="nested-menu" *ngIf="isInRole('Administrativo')">
+			<div class="nested-menu" *ngIf="isInRole('Administrativo') || isInRole('Gerencial')">
 				<a class="list-group-item" (click)="addExpandClass('parametrizacao')">
 					<span><i class="fa" [class.fa-chevron-down]="showMenu === 'parametrizacao'" [class.fa-chevron-right]="showMenu !== 'parametrizacao'"></i>&nbsp; Parametrização</span>
 				</a>

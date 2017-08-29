@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { IUser, UserService } from '../../shared/user/user.service';
 
 @Component({
     moduleId: module.id,
@@ -25,13 +26,15 @@ export class UsuarioDetailComponent implements OnInit {
     public blockEdit: boolean = true;
 
     public id: Observable<string>;
+	user: IUser = <IUser>{};
 
     private busy: Subscription;
 
     constructor(public service: UsuarioService,
         private route: ActivatedRoute,
         private router: Router,
-        private toastr: ToastsManager) {
+        private toastr: ToastsManager,
+        private userService: UserService) {
     }
 
     selectedOptions(): string[] {
@@ -54,6 +57,7 @@ export class UsuarioDetailComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.userService.getUser().subscribe((data: IUser) => this.user = data);
 
         this.busy = this.service.getRolesSelect()
             .subscribe((data: any[]) => {
@@ -109,4 +113,10 @@ export class UsuarioDetailComponent implements OnInit {
         let link = ['/calcular/usuario'];
         this.router.navigate(link);
     }
+
+	isInRole(role: string) {
+		return this.user
+			&& this.user.roles
+			&& this.user.roles.indexOf(role) !== -1;
+	}
 }
