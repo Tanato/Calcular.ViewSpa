@@ -12,6 +12,9 @@ export class YearPickerComponent implements OnInit {
     @Input()
     public yearBase: string;
 
+    @Input()
+    public nextMonthYear: boolean = false;
+
     @Input() model: number;
     @Output() modelChange: any = new EventEmitter();
 
@@ -33,6 +36,11 @@ export class YearPickerComponent implements OnInit {
 
     getYear() {
         var today = new Date();
+
+        if(this.nextMonthYear) {
+            today = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+        }
+
         this.yy = today.getFullYear();
         var diff = this.yy - (this.yearBase ? parseInt(this.yearBase) : 2017);
         for (var i = (this.yy - diff); i <= this.yy; i++) {
